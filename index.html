@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bablu Studio Pakadi Bazar</title>
+<style>
+:root{--gold:#d4af37;--black:#0b0b0b;--card:#171717;--text:#f5f5f5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--black);color:var(--text);line-height:1.6}
+header{position:sticky;top:0;z-index:10;background:#090909ee;border-bottom:1px solid #4b3b12;padding:16px 6%}
+nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-size:1.4rem;font-weight:bold;color:var(--gold)}
+nav a{color:white;text-decoration:none;margin:0 8px}
+.hero{min-height:72vh;display:grid;place-items:center;text-align:center;padding:70px 6%;background:linear-gradient(#0009,#000c),url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=80') center/cover}
+.hero h1{font-size:clamp(2.3rem,7vw,5rem);color:var(--gold);text-transform:uppercase}
+.hero p{font-size:1.2rem;margin:15px 0 25px}
+.btn{display:inline-block;background:var(--gold);color:#111;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:bold;border:0;cursor:pointer}
+section{padding:55px 6%;max-width:1250px;margin:auto}
+h2{text-align:center;color:var(--gold);font-size:2rem;margin-bottom:30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid #4b3b12;border-radius:12px;padding:24px;text-align:center}
+.card h3{color:var(--gold);margin-bottom:10px}
+.price{font-size:1.8rem;font-weight:bold;margin:12px 0}
+.gallery img{width:100%;height:230px;object-fit:cover;border-radius:10px;border:1px solid #4b3b12}
+form{max-width:650px;margin:auto;display:grid;gap:14px}
+input,select,textarea{width:100%;padding:13px;border-radius:6px;border:1px solid #5a4818;background:#161616;color:white}
+footer{text-align:center;padding:25px;background:#050505;border-top:1px solid #4b3b12;color:#bbb}
+.note{text-align:center;color:#bbb;margin-top:-15px;margin-bottom:25px}
+@media(max-width:600px){nav a{font-size:.9rem;margin:3px}.hero{min-height:65vh}}
+</style>
+</head>
+<body>
+<header>
+<nav>
+<div class="logo">BABLU STUDIO</div>
+<div><a href="#home">Home</a><a href="#services">Services</a><a href="#packages">Packages</a><a href="#gallery">Gallery</a><a href="#booking">Booking</a><a href="#contact">Contact</a></div>
+</nav>
+</header>
+
+<section class="hero" id="home">
+<div>
+<h1>Bablu Studio<br>Pakadi Bazar</h1>
+<p>Wedding Photography • Cinematic Films • Drone Shoot</p>
+<a class="btn" href="#booking">Book Your Date</a>
+</div>
+</section>
+
+<section id="services">
+<h2>हमारी सेवाएँ</h2>
+<div class="grid">
+<div class="card"><h3>Wedding Photography</h3><p>आपकी शादी के हर खास पल को यादगार बनाएं।</p></div>
+<div class="card"><h3>Videography</h3><p>शानदार शादी वीडियो और सिनेमैटिक फिल्म।</p></div>
+<div class="card"><h3>Drone Shoot</h3><p>हाई-क्वालिटी एरियल और वेडिंग शॉट्स।</p></div>
+<div class="card"><h3>Premium Album</h3><p>प्रीमियम डिजाइन के साथ खूबसूरत वेडिंग एल्बम।</p></div>
+</div>
+</section>
+
+<section id="packages">
+<h2>हमारे वेडिंग पैकेज</h2>
+<p class="note">Bablu Studio Pakadi Bazar के पारंपरिक और सिनेमैटिक वेडिंग पैकेज</p>
+<div class="package-posters">
+  <img src="traditional-wedding-packages.png" alt="Traditional Wedding Packages - Bablu Studio Pakadi Bazar">
+  <img src="cinematic-wedding-packages.png" alt="Cinematic Wedding Packages - Bablu Studio Pakadi Bazar">
+</div>
+<style>
+.package-posters{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;align-items:start}
+.package-posters img{width:100%;height:auto;display:block;border:1px solid #4b3b12;border-radius:12px;background:#111}
+</style>
+</section>
+<section id="gallery">
+<h2>Photo Gallery</h2>
+<p class="note">यह डेमो गैलरी है। बाद में अपनी फोटो यहाँ लगाएं।</p>
+<div class="grid gallery">
+<img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Wedding photography">
+<img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80" alt="Wedding couple">
+<img src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=900&q=80" alt="Wedding ceremony">
+</div>
+</section>
+
+<section id="contact">
+<h2>संपर्क करें</h2>
+<div class="card">
+<p><strong>पता:</strong> पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर, पिन 272205</p>
+<p><strong>WhatsApp:</strong> +91 9565302930</p>
+<p style="margin-top:15px"><a class="btn" href="https://wa.me/919565302930" target="_blank">WhatsApp पर संपर्क करें</a></p>
+</div>
+</section>
+
+<section id="booking">
+<h2>Online Booking</h2>
+<form onsubmit="sendBooking(event)">
+<input id="name" placeholder="आपका नाम" required>
+<input id="phone" type="tel" placeholder="मोबाइल नंबर" required>
+<input id="date" type="date" required>
+<select id="service" required><option value="">सेवा चुनें</option><option>Wedding Photography</option><option>Videography</option><option>Drone Shoot</option><option>Complete Wedding Package</option></select>
+<textarea id="message" rows="4" placeholder="अतिरिक्त जानकारी"></textarea>
+<button class="btn" type="submit">WhatsApp पर बुकिंग भेजें</button>
+</form>
+</section>
+
+<footer>
+<p>© 2026 Bablu Studio Pakadi Bazar. All Rights Reserved.</p>
+<p>📍 पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर, उत्तर प्रदेश — 272205</p><p>📞 WhatsApp: 9565302930</p>
+</footer>
+
+<script>
+function sendBooking(e){
+ e.preventDefault();
+ const studioNumber="919565302930";
+ const text=`नमस्ते Bablu Studio Pakadi Bazar,%0Aनाम: ${name.value}%0Aमोबाइल: ${phone.value}%0Aकार्यक्रम की तारीख: ${date.value}%0Aसेवा: ${service.value}%0Aजानकारी: ${message.value}`;
+ window.open("https://wa.me/"+studioNumber+"?text="+text,"_blank");
+}
+</script>
+</body>
+</html>
