@@ -145,7 +145,10 @@ footer{
       <h3>🛡️ एडमिन लॉगिन</h3>
       <p class="note">बुकिंग स्वीकार/अस्वीकार और पेमेंट वेरिफिकेशन के लिए।</p>
       
-      <input id="adminLoginEmail" type="password" inputmode="numeric" maxlength="8" placeholder="एडमिन ईमेल और पासवर्ड">
+      <label for="adminLoginEmail">एडमिन ईमेल</label>
+      <input id="adminLoginEmail" type="email" placeholder="admin@example.com" autocomplete="username">
+      <label for="adminLoginPassword">पासवर्ड</label>
+      <input id="adminLoginPassword" type="password" placeholder="Firebase पासवर्ड" autocomplete="current-password">
       <button type="button" onclick="firebaseAdminLogin()">एडमिन लॉगिन</button>
       <p id="adminLoginStatus" class="note">एडमिन लॉगिन नहीं किया गया है।</p>
       <button type="button" onclick="firebaseAdminLogout()">लॉगआउट</button>
@@ -264,7 +267,7 @@ function submitPayment(){
 }
 function adminVerify(){
  const pin=prompt('एडमिन ईमेल और पासवर्ड दर्ज करें:');
- if(pin!=='9565'){alert('गलत एडमिन ईमेल और पासवर्ड।');return;}
+ 
  if(!localStorage.getItem('babluPaymentUTR')){alert('पहले ग्राहक का UTR दर्ज होना चाहिए।');return;}
  localStorage.setItem('babluPaymentVerified','yes');
  document.getElementById('paymentStatus').textContent='स्थिति: पेमेंट वेरिफाई हो गया है। अब बिल बनाया जा सकता है।';
@@ -490,7 +493,7 @@ function submitBookingRequest(){
 }
 function adminApproveBooking(){
   const pin=prompt('एडमिन ईमेल और पासवर्ड दर्ज करें:');
-  if(pin!=='9565'){alert('गलत एडमिन ईमेल और पासवर्ड।');return;}
+  
   if(localStorage.getItem('babluBookingRequested')!=='yes'){alert('पहले ग्राहक की बुकिंग रिक्वेस्ट होनी चाहिए।');return;}
   localStorage.setItem('babluBookingApproved','yes');
   document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग स्वीकार कर ली है।';
@@ -498,7 +501,7 @@ function adminApproveBooking(){
 }
 function adminRejectBooking(){
   const pin=prompt('एडमिन ईमेल और पासवर्ड दर्ज करें:');
-  if(pin!=='9565'){alert('गलत एडमिन ईमेल और पासवर्ड।');return;}
+  
   localStorage.setItem('babluBookingApproved','no');
   document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।';
   document.getElementById('billButton').disabled=true;
@@ -566,52 +569,6 @@ function customerPortalLogout(){
   localStorage.removeItem(CUSTOMER_LOGIN_KEY);
   document.getElementById('customerLoginStatus').textContent='ग्राहक लॉगआउट हो गया है।';
 }
-function adminPortalLogin(){
-  const pin=(document.getElementById('adminLoginEmail').value||'').trim();
-  if(pin!=='9565'){alert('गलत एडमिन ईमेल और पासवर्ड।');return;}
-  localStorage.setItem(ADMIN_LOGIN_KEY,'yes');
-  document.getElementById('adminLoginStatus').textContent='एडमिन लॉगिन सफल।';
-  document.getElementById('adminLoginEmail').value='';
-}
-function adminPortalLogout(){
-  localStorage.removeItem(ADMIN_LOGIN_KEY);
-  document.getElementById('adminLoginStatus').textContent='एडमिन लॉगआउट हो गया है।';
-}
-function isAdminLoggedIn(){return localStorage.getItem(ADMIN_LOGIN_KEY)==='yes';}
-
-window.addEventListener('load',()=>{
-  const mobile=localStorage.getItem(CUSTOMER_LOGIN_KEY);
-  if(mobile){
-    document.getElementById('customerLoginMobile').value=mobile;
-    document.getElementById('customerLoginStatus').textContent='ग्राहक लॉगिन सक्रिय: '+mobile;
-    const phone=document.getElementById('phone'); if(phone && !phone.value) phone.value=mobile;
-  }
-  if(isAdminLoggedIn()) document.getElementById('adminLoginStatus').textContent='एडमिन लॉगिन सक्रिय है।';
-});
-
-const oldApprove=window.adminApproveBooking;
-if(typeof oldApprove==='function'){
-  window.adminApproveBooking=function(){
-    if(!isAdminLoggedIn()){alert('पहले एडमिन लॉगिन करें।');return;}
-    return oldApprove.apply(this,arguments);
-  };
-}
-const oldReject=window.adminRejectBooking;
-if(typeof oldReject==='function'){
-  window.adminRejectBooking=function(){
-    if(!isAdminLoggedIn()){alert('पहले एडमिन लॉगिन करें।');return;}
-    return oldReject.apply(this,arguments);
-  };
-}
-const oldVerify=window.adminVerify;
-if(typeof oldVerify==='function'){
-  window.adminVerify=function(){
-    if(!isAdminLoggedIn()){alert('पहले एडमिन लॉगिन करें।');return;}
-    return oldVerify.apply(this,arguments);
-  };
-}
-</script>
-
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -644,73 +601,65 @@ onAuthStateChanged(auth, user => {
 </script>
 
 
+
+
+
 <script type="module">
-  import { getApps, getApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-  let auth = null;
-  function setAdminStatus(message) {
+  function status(message) {
     const el = document.getElementById("adminLoginStatus");
     if (el) el.textContent = message;
   }
-  function readyAuth() {
-    try {
-      if (!getApps().length) return null;
-      auth = getAuth(getApp());
-      return auth;
-    } catch (e) {
-      return null;
-    }
+
+  function authReady() {
+    return window.babluFirebase && window.babluFirebase.auth
+      ? window.babluFirebase.auth
+      : null;
   }
 
   window.firebaseAdminLogin = async function () {
     const email = (document.getElementById("adminLoginEmail")?.value || "").trim();
     const password = document.getElementById("adminLoginPassword")?.value || "";
     if (!email || !password) {
-      setAdminStatus("ईमेल और पासवर्ड भरिए।");
+      status("ईमेल और पासवर्ड दोनों भरिए।");
       return;
     }
-    const a = readyAuth();
-    if (!a) {
-      setAdminStatus("Firebase अभी तैयार नहीं है। पेज रिफ्रेश करके फिर प्रयास करें।");
+    const auth = authReady();
+    if (!auth) {
+      status("Firebase लोड नहीं हुआ। पेज रिफ्रेश करके फिर प्रयास करें।");
       return;
     }
     try {
-      await signInWithEmailAndPassword(a, email, password);
-      setAdminStatus("Firebase एडमिन लॉगिन सफल।");
-      const p = document.getElementById("adminLoginPassword");
-      if (p) p.value = "";
+      await signInWithEmailAndPassword(auth, email, password);
+      status("एडमिन लॉगिन सफल: " + email);
+      document.getElementById("adminLoginPassword").value = "";
     } catch (error) {
-      setAdminStatus("लॉगिन असफल: " + (error.code || "कृपया ईमेल/पासवर्ड जाँचें।"));
+      status("लॉगिन असफल: " + (error.code || "ईमेल/पासवर्ड जाँचें"));
     }
   };
 
   window.firebaseAdminLogout = async function () {
-    const a = readyAuth();
-    if (a) await signOut(a);
-    setAdminStatus("एडमिन लॉगआउट हो गया है।");
+    const auth = authReady();
+    if (auth) await signOut(auth);
+    status("एडमिन लॉगआउट हो गया है।");
   };
 
-  // Remove the old local PIN gate completely.
   window.isAdminLoggedIn = function () {
-    const a = readyAuth();
-    return !!(a && a.currentUser);
+    const auth = authReady();
+    return !!(auth && auth.currentUser);
   };
 
-  function requireFirebaseAdmin() {
+  function guard() {
     if (!window.isAdminLoggedIn()) {
-      alert("पहले Firebase एडमिन लॉगिन करें।");
+      alert("पहले Firebase ईमेल और पासवर्ड से एडमिन लॉगिन करें।");
       return false;
     }
     return true;
   }
 
   window.adminApproveBooking = function () {
-    if (!requireFirebaseAdmin()) return;
-    if (localStorage.getItem("babluBookingRequested") !== "yes") {
-      alert("पहले ग्राहक की बुकिंग रिक्वेस्ट होनी चाहिए।");
-      return;
-    }
+    if (!guard()) return;
     localStorage.setItem("babluBookingApproved", "yes");
     const el = document.getElementById("bookingStatus");
     if (el) el.textContent = "बुकिंग स्थिति: स्टूडियो ने बुकिंग स्वीकार कर ली है।";
@@ -718,39 +667,27 @@ onAuthStateChanged(auth, user => {
   };
 
   window.adminRejectBooking = function () {
-    if (!requireFirebaseAdmin()) return;
+    if (!guard()) return;
     localStorage.setItem("babluBookingApproved", "no");
     const el = document.getElementById("bookingStatus");
     if (el) el.textContent = "बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।";
-    const bill = document.getElementById("billButton");
-    if (bill) bill.disabled = true;
     alert("बुकिंग अस्वीकार कर दी गई है।");
   };
 
   window.adminVerify = function () {
-    if (!requireFirebaseAdmin()) return;
-    if (!localStorage.getItem("babluPaymentUTR")) {
-      alert("पहले ग्राहक का UTR दर्ज होना चाहिए।");
-      return;
-    }
+    if (!guard()) return;
     localStorage.setItem("babluPaymentVerified", "yes");
     const el = document.getElementById("paymentStatus");
-    if (el) el.textContent = "स्थिति: पेमेंट वेरिफाई हो गया है। अब बिल बनाया जा सकता है।";
-    const b = document.getElementById("billButton");
-    if (b) {
-      b.disabled = false;
-      b.textContent = "✅ बुकिंग बिल बनाएं और डाउनलोड करें";
-      b.classList.remove("locked");
-    }
+    if (el) el.textContent = "स्थिति: पेमेंट वेरिफाई हो गया है।";
+    const bill = document.getElementById("billButton");
+    if (bill) bill.disabled = false;
     alert("पेमेंट वेरिफाई कर दिया गया है।");
   };
 
-  const a = readyAuth();
-  if (a) {
-    onAuthStateChanged(a, user => {
-      setAdminStatus(user ? ("Firebase एडमिन लॉगिन सक्रिय: " + user.email) : "एडमिन लॉगिन नहीं किया गया है।");
-    });
-  }
+  window.addEventListener("bablu-firebase-auth", (event) => {
+    const user = event.detail;
+    status(user ? "एडमिन लॉगिन सक्रिय: " + user.email : "एडमिन लॉगिन नहीं किया गया है।");
+  });
 </script>
 
 </body>
