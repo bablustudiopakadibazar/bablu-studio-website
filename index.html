@@ -1,5 +1,4 @@
 
-<!-- Bablu Studio Final Complete Version: booking permission + payment verification + state/city + gallery -->
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -27,7 +26,6 @@ footer{text-align:center;padding:25px;color:#ccc}
 
 
 .login-box h2{color:#ffd76a;margin-top:0}
-.payment-box{margin-top:20px;padding:18px;background:#241f10;border:1px solid #8f7220;border-radius:12px}.locked{opacity:.65}
 </style>
 
 <style>
@@ -123,224 +121,8 @@ footer{
 }
 </style>
 
-
-<style id="bablu-polish-style">
-:root{
-  --bablu-navy:#172554;
-  --bablu-blue:#2563eb;
-  --bablu-gold:#d97706;
-  --bablu-cream:#fffaf0;
-  --bablu-text:#1f2937;
-  --bablu-muted:#64748b;
-}
-body{
-  background:linear-gradient(180deg,#fffaf0 0%,#f8fafc 45%,#eef2ff 100%) !important;
-  color:var(--bablu-text) !important;
-  font-family:"Segoe UI","Noto Sans Devanagari",Arial,sans-serif !important;
-  line-height:1.6;
-}
-header{
-  background:linear-gradient(135deg,#172554,#2563eb) !important;
-  color:#fff !important;
-  border-radius:0 0 24px 24px;
-  padding:28px 18px !important;
-  box-shadow:0 10px 30px rgba(23,37,84,.18);
-}
-header h1, header p{color:#fff !important;}
-h1,h2,h3{color:var(--bablu-navy) !important;}
-button{
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
-  color:#fff !important;
-  border:0 !important;
-  border-radius:10px !important;
-  padding:11px 18px !important;
-  font-weight:700 !important;
-  cursor:pointer;
-  box-shadow:0 4px 12px rgba(37,99,235,.18);
-  transition:transform .15s ease,box-shadow .15s ease;
-}
-button:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(37,99,235,.28);}
-input,textarea,select{
-  border:1px solid #cbd5e1 !important;
-  border-radius:10px !important;
-  padding:11px !important;
-  background:#fff !important;
-  color:#111827 !important;
-}
-#adminEntry{max-width:1100px;margin:18px auto !important;text-align:right;padding:0 18px;}
-#openAdminPanelBtn{
-  background:linear-gradient(135deg,#b45309,#d97706) !important;
-  font-size:15px !important;
-  padding:12px 20px !important;
-}
-#secureAdminPanel{
-  background:rgba(255,255,255,.98) !important;
-  border:1px solid #dbeafe !important;
-  box-shadow:0 15px 45px rgba(15,23,42,.12) !important;
-}
-#secureAdminPanel h2{border-bottom:2px solid #fbbf24;padding-bottom:10px;}
-.professional-hero,.container>section,.card,.package-card{
-  border-radius:18px !important;
-  box-shadow:0 8px 24px rgba(15,23,42,.06);
-}
-</style>
-
-
-<style id="bablu-package-highlight-style">
-/* Package details: dark, clear and highlighted typography */
-.package-card, .packages, #packages, .package, .pricing-card {
-  color: #111827 !important;
-}
-.package-card h1, .package-card h2, .package-card h3,
-.package-card h4, .packages h1, .packages h2, .packages h3,
-#packages h1, #packages h2, #packages h3,
-.package h1, .package h2, .package h3,
-.pricing-card h1, .pricing-card h2, .pricing-card h3 {
-  color: #0f172a !important;
-  font-weight: 800 !important;
-  text-shadow: 0 1px 0 rgba(255,255,255,.65);
-}
-.package-card p, .package-card li, .package-card span,
-.packages p, .packages li, .packages span,
-#packages p, #packages li, #packages span,
-.package p, .package li, .package span,
-.pricing-card p, .pricing-card li, .pricing-card span {
-  color: #1e293b !important;
-  font-weight: 600 !important;
-}
-.package-card .price, .package-card .amount, .package-card strong,
-.packages .price, .packages .amount, #packages .price,
-.package .price, .pricing-card .price {
-  color: #7c2d12 !important;
-  font-size: 1.35em !important;
-  font-weight: 900 !important;
-  background: #fef3c7 !important;
-  border-radius: 8px !important;
-  padding: 4px 10px !important;
-}
-.package-card li::marker, .packages li::marker, #packages li::marker {
-  color: #d97706 !important;
-}
-.package-card, .pricing-card {
-  background: linear-gradient(145deg,#ffffff,#fff7ed) !important;
-  border: 1px solid #fbbf24 !important;
-  box-shadow: 0 8px 22px rgba(15,23,42,.10) !important;
-}
-.package-card:hover, .pricing-card:hover {
-  border-color: #d97706 !important;
-  box-shadow: 0 12px 28px rgba(217,119,6,.20) !important;
-}
-</style>
-
-
-<style id="bablu-professional-dashboard-style">
-#secureAdminPanel.bablu-dashboard{
-  display:block;
-  max-width:1400px!important;
-  margin:32px auto!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:24px!important;
-  overflow:hidden;
-  background:#071426!important;
-  color:#eaf2ff!important;
-  box-shadow:0 24px 80px rgba(2,12,27,.30)!important;
-  font-family:"Segoe UI","Noto Sans Devanagari",Arial,sans-serif!important;
-}
-.bablu-dashboard *{box-sizing:border-box}
-.bablu-dashboard .bd-shell{display:grid;grid-template-columns:235px 1fr;min-height:720px}
-.bablu-dashboard .bd-sidebar{
-  padding:24px 14px;background:linear-gradient(180deg,#0b2340,#061426);
-  border-right:1px solid rgba(148,163,184,.18)
-}
-.bablu-dashboard .bd-brand{padding:6px 12px 24px;border-bottom:1px solid rgba(148,163,184,.18);margin-bottom:18px}
-.bablu-dashboard .bd-brand strong{display:block;font-size:23px;color:#fff}
-.bablu-dashboard .bd-brand strong span{color:#fbbf24}
-.bablu-dashboard .bd-brand small{color:#9fb5d2;font-size:11px;letter-spacing:.7px}
-.bablu-dashboard .bd-nav{display:grid;gap:8px}
-.bablu-dashboard .bd-nav button{
-  width:100%;text-align:left;background:transparent!important;color:#cbd5e1!important;
-  box-shadow:none!important;border:1px solid transparent!important;border-radius:12px!important;
-  padding:12px 14px!important;font-weight:700!important
-}
-.bablu-dashboard .bd-nav button:hover,.bablu-dashboard .bd-nav button.active{
-  background:linear-gradient(90deg,#fbbf24,#f59e0b)!important;color:#101827!important;
-}
-.bablu-dashboard .bd-side-foot{margin-top:40px;color:#7892b4;font-size:12px;text-align:center}
-.bablu-dashboard .bd-main{padding:24px;background:radial-gradient(circle at 85% 0%,rgba(37,99,235,.22),transparent 35%),#08192e}
-.bablu-dashboard .bd-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}
-.bablu-dashboard .bd-top h2{margin:0;color:#fff!important;font-size:28px}
-.bablu-dashboard .bd-top p{margin:3px 0 0;color:#91a8c7;font-size:13px}
-.bablu-dashboard .bd-top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.bablu-dashboard .bd-pill{border:1px solid #29486d;border-radius:10px;padding:9px 12px;color:#dbeafe;background:#0b2543}
-.bablu-dashboard .bd-logout{background:linear-gradient(135deg,#ef4444,#be123c)!important}
-.bablu-dashboard .bd-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
-.bablu-dashboard .bd-stat{padding:18px;border-radius:16px;border:1px solid rgba(96,165,250,.35);background:linear-gradient(145deg,#0d3156,#0b2039);box-shadow:inset 0 1px rgba(255,255,255,.06)}
-.bablu-dashboard .bd-stat:nth-child(2){border-color:rgba(34,197,94,.45)}
-.bablu-dashboard .bd-stat:nth-child(3){border-color:rgba(168,85,247,.5)}
-.bablu-dashboard .bd-stat:nth-child(4){border-color:rgba(244,63,94,.5)}
-.bablu-dashboard .bd-stat label{display:block;color:#9fb5d2;font-size:12px}
-.bablu-dashboard .bd-stat strong{display:block;color:#fff;font-size:29px;margin:5px 0}
-.bablu-dashboard .bd-stat span{color:#6ee7b7;font-size:12px}
-.bablu-dashboard .bd-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,1fr);gap:16px}
-.bablu-dashboard .bd-card{background:rgba(9,31,55,.92);border:1px solid #21466d;border-radius:18px;padding:18px;margin-bottom:16px;min-width:0}
-.bablu-dashboard .bd-card h3{margin:0 0 4px;color:#fff!important;font-size:18px}
-.bablu-dashboard .bd-card .bd-sub{color:#91a8c7;font-size:12px;margin-bottom:14px}
-.bablu-dashboard .bd-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.bablu-dashboard .bd-action{
-  min-height:105px!important;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
-  text-align:left!important;border:0!important;color:#fff!important;border-radius:14px!important;
-  padding:14px!important;box-shadow:none!important
-}
-.bablu-dashboard .bd-action b{font-size:15px}.bablu-dashboard .bd-action small{opacity:.85;margin-top:5px}
-.bablu-dashboard .bd-action.blue{background:linear-gradient(135deg,#2563eb,#1d4ed8)!important}
-.bablu-dashboard .bd-action.green{background:linear-gradient(135deg,#16a34a,#047857)!important}
-.bablu-dashboard .bd-action.purple{background:linear-gradient(135deg,#9333ea,#6d28d9)!important}
-.bablu-dashboard .bd-action.orange{background:linear-gradient(135deg,#f59e0b,#ea580c)!important}
-.bablu-dashboard .bd-action.pink{background:linear-gradient(135deg,#ec4899,#be185d)!important}
-.bablu-dashboard .bd-action.cyan{background:linear-gradient(135deg,#06b6d4,#0e7490)!important}
-.bablu-dashboard .bd-status{display:grid;gap:12px}
-.bablu-dashboard .bd-status-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(148,163,184,.14);color:#cbd5e1;font-size:13px}
-.bablu-dashboard .bd-status-row:last-child{border-bottom:0}
-.bablu-dashboard .bd-ok{color:#4ade80;font-weight:800}
-.bablu-dashboard .bd-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.bablu-dashboard .bd-tools .bd-card{margin-bottom:0}
-.bablu-dashboard .bd-tools h4{color:#fbbf24;margin:0 0 12px;font-size:16px}
-.bablu-dashboard #adminAuthStatus,.bablu-dashboard #uploadStatus,.bablu-dashboard #packageStatus{color:#a7f3d0;font-weight:700}
-.bablu-dashboard #adminPhoneBox{background:#0b2543;border:1px solid #315579;border-radius:14px;padding:16px}
-.bablu-dashboard #adminPhoneBox label{display:block;color:#cbd5e1;margin-bottom:7px}
-.bablu-dashboard #adminPhone,.bablu-dashboard #adminOtp,.bablu-dashboard #mediaFile,.bablu-dashboard #mediaTitle,.bablu-dashboard #packageData{width:100%;background:#061426!important;color:#f8fafc!important;border:1px solid #385777!important}
-.bablu-dashboard #adminRecaptcha{margin:12px 0}
-.bablu-dashboard #adminTools{margin-top:18px!important}
-.bablu-dashboard #mediaList{max-height:260px;overflow:auto}
-.bablu-dashboard #mediaList>div{background:#071b31;border:1px solid #254463;border-radius:10px;padding:10px!important;color:#dbeafe;margin-bottom:8px!important}
-.bablu-dashboard #mediaList button{background:#dc2626!important;padding:6px 10px!important;font-size:12px!important}
-.bablu-dashboard .bd-footer{display:flex;justify-content:space-between;gap:12px;color:#7892b4;font-size:11px;margin-top:18px;flex-wrap:wrap}
-@media(max-width:1000px){.bablu-dashboard .bd-shell{grid-template-columns:1fr}.bablu-dashboard .bd-sidebar{display:none}.bablu-dashboard .bd-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.bablu-dashboard .bd-grid{grid-template-columns:1fr}}
-@media(max-width:600px){.bablu-dashboard .bd-main{padding:14px}.bablu-dashboard .bd-top{align-items:flex-start;flex-direction:column}.bablu-dashboard .bd-actions,.bablu-dashboard .bd-tools{grid-template-columns:1fr}.bablu-dashboard .bd-stats{grid-template-columns:1fr 1fr}.bablu-dashboard .bd-stat strong{font-size:23px}}
-</style>
-
 </head>
 <body>
-
-
-    <div class="card" style="margin:0;">
-      <h3>🛡️ </h3>
-      <p class="note">बुकिंग स्वीकार/अस्वीकार और पेमेंट वेरिफिकेशन के लिए।</p>
-      
-      
-      
-      
-      <div id="adminOtpArea" style="display:none;">
-        
-        
-        
-      </div>
-      
-  </div>
-  <p class="note">नोट:  Firebase Email/Password Authentication से होगा।</p>
-</section>
-
 <section class="professional-hero" style="text-align:center;background:linear-gradient(135deg,#fffaf0,#ffffff);border:1px solid #ead9ad;">
   <div style="display:inline-block;padding:6px 14px;border-radius:30px;background:#fff1c7;color:#7a5200;font-weight:700;font-size:13px;">WEDDING • PHOTO • VIDEO • CINEMATIC</div>
   <h2 style="font-size:clamp(26px,4vw,42px)!important;margin:14px 0 8px!important;">आपके खास पलों की प्रोफेशनल यादें</h2>
@@ -348,15 +130,6 @@ input,textarea,select{
 </section>
 
 <header><h1>बबलू स्टूडियो</h1><p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p><p>📞 9565302930</p></header>
-
-<div id="adminEntry" style="max-width:1100px;margin:14px auto;text-align:right;padding:0 16px;">
-  <button type="button" id="openAdminPanelBtn" onclick="document.getElementById(\'secureAdminPanel\').scrollIntoView({behavior:\'smooth\',block:\'start\'});"
-    style="background:#111827;color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:700;">
-    🔐 Admin Login / Dashboard
-  </button>
-</div>
-
-
 <div class="container">
 <div class="intro"><h2>वेडिंग पैकेज और सर्विस</h2><p>पैकेज या सर्विस चुनें और ऑनलाइन बुकिंग फॉर्म भरें।</p></div>
 
@@ -402,11 +175,10 @@ input,textarea,select{
 <div><label>जिला *</label><input id="district" required></div>
 <div><label>शहर *</label><select id="city" required><option value="">शहर चुनें</option></select></div>
 <div><label>गाँव *</label><input id="village" required></div>
-<div><label>पिन कोड *</label>
+<div><label>पिन कोड *</label><input id="pincode" pattern="[0-9]{6}" required></div>
 <div><label>कार्यक्रम की तारीख *</label><input id="date" type="date" required></div>
 </div>
 <label>अतिरिक्त जानकारी</label><textarea id="message" rows="3"></textarea>
-<div class="payment-box"><h2>💳 मैनुअल पेमेंट वेरिफिकेशन</h2><p>कृपया एडवांस पेमेंट करने के बाद UTR/ट्रांजैक्शन आईडी दर्ज करें। स्टूडियो द्वारा वेरिफाई किए जाने तक बिल डाउनलोड नहीं होगा।</p><label>पेमेंट का माध्यम</label><select id="paymentMethod"><option value="UPI">UPI</option><option value="Bank Transfer">Bank Transfer</option><option value="Cash">Cash</option></select><label>UTR / ट्रांजैक्शन आईडी *</label><input id="utr" placeholder="ट्रांजैक्शन आईडी दर्ज करें"><label>पेमेंट का स्क्रीनशॉट (वैकल्पिक)</label><input id="paymentProof" type="file" accept="image/*"><button type="button" onclick="submitPayment()">पेमेंट वेरिफिकेशन के लिए भेजें</button><p id="paymentStatus" class="note">स्थिति: पेमेंट वेरिफिकेशन लंबित है।</p>
 <p id="bookingStatus" class="note">बुकिंग स्थिति: स्टूडियो की अनुमति लंबित है।</p>
 <button type="button" onclick="submitBookingRequest()">📩 बुकिंग रिक्वेस्ट भेजें</button>
 <button type="button" onclick="adminApproveBooking()">✅ एडमिन: बुकिंग स्वीकार करें</button>
@@ -436,7 +208,6 @@ function details(){
 }
 function createBill(e){
  e.preventDefault(); const d=details();
- if(localStorage.getItem('babluBookingApproved')!=='yes'){alert('स्टूडियो की अनुमति मिलने के बाद ही बिल बनाया जा सकता है।');return;}\n if(localStorage.getItem('babluPaymentVerified')!=='yes'){alert('पहले पेमेंट वेरिफाई करवाइए।');return;}
  if(!d.selected.length){alert('कृपया कम से कम एक पैकेज या सर्विस चुनें।');return;}
  const bill=`बबलू स्टूडियो\\nबुकिंग बिल / अनुमानित एडवांस रसीद\\n--------------------------------\\nग्राहक का नाम: ${name.value}\\nपिता का नाम: ${father.value}\\nमोबाइल: ${phone.value}\\nपता: गाँव ${village.value}, शहर ${city.value}, जिला ${district.value}, राज्य ${state.value}, पिन ${pincode.value}\\nकार्यक्रम की तारीख: ${date.value}\\n\\nचयनित सर्विस:\\n${d.selected.map(x=>x.name+' - ₹'+x.price).join('\\n')}\\n\\nकुल राशि: ₹${d.total}\\n25% एडवांस: ₹${d.advance}\\nबाकी राशि: ₹${d.balance}\\n\\nनोट: यह बिल पेमेंट की पुष्टि नहीं है। वास्तविक पेमेंट गेटवे से भुगतान होने के बाद ही बुकिंग कन्फर्म होगी।\\nधन्यवाद!`;
  const blob=new Blob([bill],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob);
@@ -449,31 +220,20 @@ function sendWhatsApp(){
 }
 updateTotal();
 
-function submitPayment(){
  const utr=document.getElementById('utr').value.trim();
  if(!utr){alert('कृपया UTR/ट्रांजैक्शन आईडी दर्ज करें।');return;}
- localStorage.setItem('babluPaymentUTR',utr);
- localStorage.setItem('babluPaymentMethod',document.getElementById('paymentMethod').value);
- localStorage.setItem('babluPaymentVerified','pending');
- document.getElementById('paymentStatus').textContent='स्थिति: वेरिफिकेशन के लिए भेज दिया गया है। एडमिन की पुष्टि का इंतजार करें।';
  alert('पेमेंट विवरण सेव हो गया है। अब स्टूडियो से वेरिफिकेशन करवाइए।');
 }
 function adminVerify(){
- const pin=prompt(' और पासवर्ड दर्ज करें:');
- 
- if(!localStorage.getItem('babluPaymentUTR')){alert('पहले ग्राहक का UTR दर्ज होना चाहिए।');return;}
- localStorage.setItem('babluPaymentVerified','yes');
- document.getElementById('paymentStatus').textContent='स्थिति: पेमेंट वेरिफाई हो गया है। अब बिल बनाया जा सकता है।';
+ const pin=prompt('एडमिन PIN दर्ज करें:');
+ if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
  const b=document.getElementById('billButton');b.disabled=false;b.textContent='✅ बुकिंग बिल बनाएं और डाउनलोड करें';b.classList.remove('locked');
  alert('पेमेंट वेरिफाई कर दिया गया है।');
 }
 window.addEventListener('load',()=>{
- const status=localStorage.getItem('babluPaymentVerified');
  if(status==='yes'){
-  document.getElementById('paymentStatus').textContent='स्थिति: पेमेंट वेरिफाई हो गया है।';
   const b=document.getElementById('billButton');b.disabled=false;b.textContent='✅ बुकिंग बिल बनाएं और डाउनलोड करें';
  }
- const utr=localStorage.getItem('babluPaymentUTR'); if(utr) document.getElementById('utr').value=utr;
 });
 
 
@@ -607,7 +367,6 @@ if (stateSelect && citySelect) {
 
   // फॉर्म का ड्राफ्ट सेव करें
   if(form){
-    const fields=['name','father','phone','state','district','city','village','pincode','date','message','paymentMethod','utr'];
     const saveDraft=()=>{
       const data={};
       fields.forEach(id=>{
@@ -685,16 +444,16 @@ function submitBookingRequest(){
   alert('बुकिंग रिक्वेस्ट स्टूडियो को भेजने के लिए सेव हो गई है।');
 }
 function adminApproveBooking(){
-  const pin=prompt(' और पासवर्ड दर्ज करें:');
-  
+  const pin=prompt('एडमिन PIN दर्ज करें:');
+  if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
   if(localStorage.getItem('babluBookingRequested')!=='yes'){alert('पहले ग्राहक की बुकिंग रिक्वेस्ट होनी चाहिए।');return;}
   localStorage.setItem('babluBookingApproved','yes');
   document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग स्वीकार कर ली है।';
   alert('बुकिंग स्वीकार कर दी गई है। अब पेमेंट वेरिफिकेशन के बाद बिल बनाया जा सकता है।');
 }
 function adminRejectBooking(){
-  const pin=prompt(' और पासवर्ड दर्ज करें:');
-  
+  const pin=prompt('एडमिन PIN दर्ज करें:');
+  if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
   localStorage.setItem('babluBookingApproved','no');
   document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।';
   document.getElementById('billButton').disabled=true;
@@ -741,280 +500,6 @@ document.getElementById('galleryFiles')?.addEventListener('change',async(e)=>{
 });
 function clearGallery(){if(confirm('क्या पूरी गैलरी साफ करनी है?')){localStorage.removeItem(galleryKey);renderGallery();}}
 window.addEventListener('load',renderGallery);
-</script>
-
-
-<script>
-const CUSTOMER_LOGIN_KEY='babluCustomerPortalMobile';
-const ADMIN_LOGIN_KEY='babluAdminPortalLoggedIn';
-
-function customerPortalLogin(){
-  const mobile=(document.getElementById('customerLoginMobile').value||'').trim();
-  if(!/^[6-9]\d{9}$/.test(mobile)){
-    alert('कृपया सही 10 अंकों का मोबाइल नंबर दर्ज करें।'); return;
-  }
-  localStorage.setItem(CUSTOMER_LOGIN_KEY,mobile);
-  const phone=document.getElementById('phone');
-  if(phone) phone.value=mobile;
-  document.getElementById('customerLoginStatus').textContent='ग्राहक लॉगिन सफल: '+mobile;
-}
-function customerPortalLogout(){
-  localStorage.removeItem(CUSTOMER_LOGIN_KEY);
-  document.getElementById('customerLoginStatus').textContent='ग्राहक लॉगआउट हो गया है।';
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section id="secureAdminPanel" class="bablu-dashboard">
-  <div class="bd-shell">
-    <aside class="bd-sidebar">
-      <div class="bd-brand">
-        <strong>Bablu <span>Studio</span></strong>
-        <small>PHOTO & VIDEO SERVICES</small>
-      </div>
-      <nav class="bd-nav">
-        <button class="active" type="button">⌂ &nbsp; Dashboard</button>
-        <button type="button" onclick="document.getElementById('packageData').scrollIntoView({behavior:'smooth'})">▣ &nbsp; Packages</button>
-        <button type="button" onclick="document.getElementById('mediaList').scrollIntoView({behavior:'smooth'})">▧ &nbsp; Gallery</button>
-        <button type="button" onclick="alert('Bookings module अगली अपडेट में जोड़ा जा सकता है।')">▦ &nbsp; Bookings</button>
-        <button type="button" onclick="alert('Customers module अगली अपडेट में जोड़ा जा सकता है।')">♟ &nbsp; Customers</button>
-        <button type="button" onclick="alert('Enquiries module अगली अपडेट में जोड़ा जा सकता है।')">☏ &nbsp; Enquiries</button>
-        <button type="button" onclick="document.getElementById('mediaFile').scrollIntoView({behavior:'smooth'})">⬆ &nbsp; Media Upload</button>
-        <button type="button" onclick="document.getElementById('packageData').scrollIntoView({behavior:'smooth'})">⚙ &nbsp; Website Settings</button>
-      </nav>
-      <div class="bd-side-foot">Capture Your Special Moments<br><br>© 2026 Bablu Studio</div>
-    </aside>
-
-    <main class="bd-main">
-      <div class="bd-top">
-        <div>
-          <h2>Admin Dashboard</h2>
-          <p>Manage your photography business easily</p>
-        </div>
-        <div class="bd-top-actions">
-          <span class="bd-pill">● Live Dashboard</span>
-          <button type="button" id="adminLogoutBtn" class="bd-logout">Logout</button>
-        </div>
-      </div>
-
-      <div class="bd-card" style="margin-bottom:18px;background:linear-gradient(110deg,#0b3157,#12284a 55%,#2b1d32);">
-        <h3 style="font-size:26px;">Welcome Back, <span style="color:#fbbf24;">Admin</span> 👋</h3>
-        <div class="bd-sub" style="margin:0;">Manage • Create • Grow your Bablu Studio website</div>
-        <p id="adminAuthStatus" style="margin:12px 0 0;">एडमिन लॉगिन नहीं किया गया है।</p>
-      </div>
-
-      <div class="bd-stats">
-        <div class="bd-stat"><label>Total Bookings</label><strong>0</strong><span>● This Month</span></div>
-        <div class="bd-stat"><label>Total Revenue</label><strong>₹0</strong><span>● This Month</span></div>
-        <div class="bd-stat"><label>Gallery Items</label><strong id="bdGalleryCount">0</strong><span>● Photos / Videos</span></div>
-        <div class="bd-stat"><label>New Enquiries</label><strong>0</strong><span>● Pending</span></div>
-      </div>
-
-      <div class="bd-grid">
-        <div>
-          <div class="bd-card">
-            <h3>⚡ Quick Actions</h3>
-            <div class="bd-sub">जल्दी काम शुरू करें</div>
-            <div class="bd-actions">
-              <button type="button" class="bd-action blue" onclick="document.getElementById('packageData').scrollIntoView({behavior:'smooth'})"><b>＋ नया पैकेज</b><small>Add / Edit Packages</small></button>
-              <button type="button" class="bd-action green" onclick="document.getElementById('mediaFile').scrollIntoView({behavior:'smooth'})"><b>▧ फोटो/वीडियो</b><small>Upload Media</small></button>
-              <button type="button" class="bd-action purple" onclick="document.getElementById('mediaList').scrollIntoView({behavior:'smooth'})"><b>▤ गैलरी मैनेज</b><small>Manage Gallery</small></button>
-              <button type="button" class="bd-action orange" onclick="alert('Bookings module अभी तैयार नहीं है।')"><b>▦ बुकिंग देखें</b><small>View Bookings</small></button>
-              <button type="button" class="bd-action pink" onclick="alert('Enquiries module अभी तैयार नहीं है।')"><b>☏ पूछताछ</b><small>View Enquiries</small></button>
-              <button type="button" class="bd-action cyan" onclick="document.getElementById('packageData').scrollIntoView({behavior:'smooth'})"><b>⚙ वेबसाइट सेटिंग</b><small>Site Settings</small></button>
-            </div>
-          </div>
-
-          <div class="bd-card">
-            <h3>🔐 Admin Login</h3>
-            <div class="bd-sub">मोबाइल OTP से सुरक्षित लॉगिन</div>
-            <div id="adminPhoneBox">
-              <label>एडमिन मोबाइल नंबर</label>
-              <input id="adminPhone" type="tel" placeholder="+91XXXXXXXXXX">
-              <div id="adminRecaptcha"></div>
-              <button type="button" id="sendAdminOtpBtn">OTP भेजें</button>
-              <div id="adminOtpBox" style="display:none;margin-top:10px;">
-                <input id="adminOtp" type="text" inputmode="numeric" maxlength="6" placeholder="OTP दर्ज करें">
-                <button type="button" id="verifyAdminOtpBtn">लॉगिन करें</button>
-              </div>
-            </div>
-          </div>
-
-          <div id="adminTools" style="display:none;">
-            <div class="bd-tools">
-              <div class="bd-card">
-                <h4>⬆ फोटो / वीडियो अपलोड</h4>
-                <input id="mediaFile" type="file" accept="image/*,video/*" multiple>
-                <input id="mediaTitle" type="text" placeholder="फोटो/वीडियो का नाम" style="margin-top:10px;">
-                <button type="button" id="uploadMediaBtn" style="margin-top:10px;">अपलोड करें</button>
-                <p id="uploadStatus"></p>
-              </div>
-              <div class="bd-card">
-                <h4>⚙ पैकेज और कीमतें</h4>
-                <textarea id="packageData" rows="8" placeholder="पैकेज की जानकारी JSON या साधारण टेक्स्ट में लिखें"></textarea>
-                <button type="button" id="savePackagesBtn" style="margin-top:10px;">पैकेज सेव करें</button>
-                <p id="packageStatus"></p>
-              </div>
-            </div>
-            <div class="bd-card" style="margin-top:16px;">
-              <h4 style="color:#fbbf24;">▧ गैलरी कंट्रोल</h4>
-              <div id="mediaList">लॉगिन के बाद गैलरी लोड होगी।</div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bd-card">
-            <h3>▤ Package Overview</h3>
-            <div class="bd-sub">आपके पैकेज का सारांश</div>
-            <div class="bd-status">
-              <div class="bd-status-row"><span>Basic Package</span><b style="color:#fbbf24;">₹6,000</b></div>
-              <div class="bd-status-row"><span>Premium Package</span><b style="color:#fbbf24;">₹10,000</b></div>
-              <div class="bd-status-row"><span>Drone Package</span><b style="color:#fbbf24;">₹12,000</b></div>
-              <div class="bd-status-row"><span>Album Package</span><b style="color:#fbbf24;">₹18,000</b></div>
-              <div class="bd-status-row"><span>Cinematic Package</span><b style="color:#fbbf24;">₹30,000</b></div>
-              <div class="bd-status-row"><span>Video + Album</span><b style="color:#fbbf24;">₹13,000</b></div>
-            </div>
-          </div>
-          <div class="bd-card">
-            <h3>✓ System Status</h3>
-            <div class="bd-sub">सिस्टम की स्थिति</div>
-            <div class="bd-status">
-              <div class="bd-status-row"><span>Firebase Authentication</span><span class="bd-ok">● Ready</span></div>
-              <div class="bd-status-row"><span>Firestore Database</span><span class="bd-ok">● Ready</span></div>
-              <div class="bd-status-row"><span>Firebase Storage</span><span class="bd-ok">● Ready</span></div>
-              <div class="bd-status-row"><span>Website Status</span><span class="bd-ok">● Online</span></div>
-            </div>
-          </div>
-          <div class="bd-card" style="background:linear-gradient(145deg,#2c1c0b,#14253b);border-color:#76521d;">
-            <h3 style="color:#fbbf24!important;">“Capture Your Special Moments”</h3>
-            <div class="bd-sub" style="color:#d6b77a;">Bablu Studio • Photography & Video Services</div>
-            <p style="color:#e2e8f0;font-size:13px;">आपकी हर याद को खूबसूरत बनाने के लिए।</p>
-          </div>
-        </div>
-      </div>
-      <div class="bd-footer"><span>© 2026 Bablu Studio. All Rights Reserved.</span><span>Admin Panel • Secure Access</span></div>
-    </main>
-  </div>
-</section>
-
-
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, listAll, deleteObject } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBoCErKm6vgUQa4DNiyjftEGFI1VtbCWoQ",
-  authDomain: "bablu-studio.firebaseapp.com",
-  projectId: "bablu-studio",
-  storageBucket: "bablu-studio.firebasestorage.app",
-  messagingSenderId: "510616423703",
-  appId: "1:510616423703:web:59f5f609dab410c22d7b52",
-  measurementId: "G-2HQFT3NXJJ"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const storage = getStorage(app);
-const db = getFirestore(app);
-let confirmationResult = null;
-let verifier = null;
-
-const $ = id => document.getElementById(id);
-const status = msg => { if ($("adminAuthStatus")) $("adminAuthStatus").textContent = msg; };
-
-function showTools(user) {
-  $("secureAdminPanel").style.display = "block";
-  $("adminTools").style.display = user ? "block" : "none";
-  $("adminPhoneBox").style.display = user ? "none" : "block";
-  status(user ? "लॉगिन: " + user.phoneNumber : "मोबाइल OTP से लॉगिन करें।");
-}
-onAuthStateChanged(auth, user => showTools(user));
-
-$("sendAdminOtpBtn").addEventListener("click", async () => {
-  const phone = $("adminPhone").value.trim();
-  if (!/^\+[1-9]\d{7,14}$/.test(phone)) { status("नंबर +91XXXXXXXXXX फॉर्मेट में भरें।"); return; }
-  try {
-    if (!verifier) verifier = new RecaptchaVerifier(auth, "adminRecaptcha", {size:"normal"});
-    confirmationResult = await signInWithPhoneNumber(auth, phone, verifier);
-    $("adminOtpBox").style.display = "block";
-    status("OTP भेज दिया गया है।");
-  } catch (e) { status("OTP भेजने में समस्या: " + (e.code || e.message)); }
-});
-
-$("verifyAdminOtpBtn").addEventListener("click", async () => {
-  if (!confirmationResult) { status("पहले OTP भेजें।"); return; }
-  try { await confirmationResult.confirm($("adminOtp").value.trim()); }
-  catch (e) { status("OTP गलत है या समाप्त हो गया है।"); }
-});
-
-$("adminLogoutBtn").addEventListener("click", () => signOut(auth));
-
-$("uploadMediaBtn").addEventListener("click", async () => {
-  const user = auth.currentUser;
-  const files = Array.from($("mediaFile").files || []);
-  if (!user) { $("uploadStatus").textContent = "पहले लॉगिन करें।"; return; }
-  if (!files.length) { $("uploadStatus").textContent = "पहले फोटो या वीडियो चुनें।"; return; }
-  $("uploadStatus").textContent = "अपलोड हो रहा है...";
-  try {
-    for (const file of files) {
-      const safeName = Date.now() + "_" + file.name.replace(/[^\w.\-]/g, "_");
-      const fileRef = ref(storage, "gallery/" + safeName);
-      await uploadBytes(fileRef, file);
-      const url = await getDownloadURL(fileRef);
-      await addDoc(collection(db, "gallery"), {name: $("mediaTitle").value || file.name, fileName:safeName, url, type:file.type, createdAt:serverTimestamp()});
-    }
-    $("uploadStatus").textContent = "अपलोड सफल।";
-    await refreshMedia();
-  } catch (e) { $("uploadStatus").textContent = "अपलोड असफल: " + (e.code || e.message); }
-});
-
-async function refreshMedia() {
-  const list = $("mediaList");
-  list.innerHTML = "लोड हो रहा है...";
-  try {
-    const snap = await getDocs(collection(db, "gallery"));
-    list.innerHTML = ""; if (document.getElementById("bdGalleryCount")) document.getElementById("bdGalleryCount").textContent = snap.size;
-    snap.forEach(item => {
-      const d = item.data();
-      const row = document.createElement("div");
-      row.style.cssText = "padding:8px;border-bottom:1px solid #ddd;margin-bottom:8px;";
-      row.innerHTML = `<b>${d.name || d.fileName}</b> — <a href="${d.url}" target="_blank" rel="noopener">देखें</a> `;
-      const btn = document.createElement("button");
-      btn.textContent = "डिलीट";
-      btn.onclick = async () => {
-        if (!confirm("इसे डिलीट करें?")) return;
-        try {
-          await deleteObject(ref(storage, "gallery/" + d.fileName));
-          await deleteDoc(doc(db, "gallery", item.id));
-          await refreshMedia();
-        } catch (e) { alert("डिलीट असफल: " + (e.code || e.message)); }
-      };
-      row.appendChild(btn); list.appendChild(row);
-    });
-  } catch (e) { list.textContent = "गैलरी लोड नहीं हुई: " + (e.code || e.message); }
-}
-$("savePackagesBtn").addEventListener("click", async () => {
-  try {
-    await setDoc(doc(db, "siteSettings", "packages"), {content:$("packageData").value, updatedAt:serverTimestamp()});
-    $("packageStatus").textContent = "पैकेज सेव हो गए।";
-  } catch (e) { $("packageStatus").textContent = "सेव असफल: " + (e.code || e.message); }
-});
-onAuthStateChanged(auth, user => { if (user) refreshMedia(); });
 </script>
 
 </body>
