@@ -22,12 +22,27 @@ label{display:block;margin-top:8px}input,textarea,select{width:100%;padding:12px
 button{background:#d4af37;border:0;padding:13px 24px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:16px;margin:5px}
 button:hover{background:#f1cf55}.note{color:#ccc;font-size:14px}.amount{font-size:22px;color:#ffd76a;font-weight:bold}
 footer{text-align:center;padding:25px;color:#ccc}
+
+.login-box{max-width:520px;margin:25px auto;background:#1d1d1d;border:1px solid #8f7220;border-radius:14px;padding:22px}
+.login-box h2{color:#ffd76a;margin-top:0}.login-status{color:#9cff9c;margin:10px 0}
+.logout{background:#7d2424;color:#fff}.payment-box{margin-top:20px;padding:18px;background:#241f10;border:1px solid #8f7220;border-radius:12px}.locked{opacity:.65}
 </style>
 </head>
 <body>
 <header><h1>बबलू स्टूडियो</h1><p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p><p>📞 9565302930</p></header>
 <div class="container">
 <div class="intro"><h2>वेडिंग पैकेज और सर्विस</h2><p>पैकेज या सर्विस चुनें और ऑनलाइन बुकिंग फॉर्म भरें।</p></div>
+<div class="login-box" id="loginBox">
+<h2>📱 ग्राहक लॉगिन</h2>
+<p>मोबाइल नंबर से लॉगिन करके बुकिंग फॉर्म भरें।</p>
+<label>मोबाइल नंबर</label>
+<input id="loginMobile" type="tel" pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर">
+<button type="button" onclick="customerLogin()">लॉगिन करें</button>
+<button type="button" class="logout" onclick="customerLogout()">लॉगआउट</button>
+<div id="loginStatus" class="login-status"></div>
+<p class="note">डेमो लॉगिन: वास्तविक OTP सुरक्षा के लिए Firebase/बैकएंड जोड़ना आवश्यक है।</p>
+</div>
+
 <div class="packages">
 <div class="card"><h3>सामान्य वीडियो</h3><div class="price">₹6,000</div><ul><li>सामान्य वीडियो शूट</li></ul><label class="select"><input type="checkbox" name="service" data-price="6000" value="सामान्य वीडियो"> चुनें</label></div>
 <div class="card"><h3>प्रीमियम पैकेज</h3><div class="price">₹10,000</div><ul><li>प्रीमियम वीडियो</li><li>हाइलाइट वीडियो</li><li>डिजिटल निमंत्रण वीडियो</li></ul><label class="select"><input type="checkbox" name="service" data-price="10000" value="प्रीमियम पैकेज"> चुनें</label></div>
@@ -57,8 +72,8 @@ footer{text-align:center;padding:25px;color:#ccc}
 <div><label>कार्यक्रम की तारीख *</label><input id="date" type="date" required></div>
 </div>
 <label>अतिरिक्त जानकारी</label><textarea id="message" rows="3"></textarea>
-<div class="summary"><h2>पेमेंट सारांश</h2><p>कुल राशि: <span class="amount" id="total">₹0</span></p><p>25% एडवांस: <span class="amount" id="advance">₹0</span></p><p>बाकी राशि: <span class="amount" id="balance">₹0</span></p><p class="note">नोट: यह बिल/एडवांस कैलकुलेटर है। वास्तविक ऑनलाइन पेमेंट के लिए पेमेंट गेटवे कनेक्शन आवश्यक होगा।</p></div>
-<button type="submit">बुकिंग बिल बनाएं और डाउनलोड करें</button>
+<div class="payment-box"><h2>💳 मैनुअल पेमेंट वेरिफिकेशन</h2><p>कृपया एडवांस पेमेंट करने के बाद UTR/ट्रांजैक्शन आईडी दर्ज करें। स्टूडियो द्वारा वेरिफाई किए जाने तक बिल डाउनलोड नहीं होगा।</p><label>पेमेंट का माध्यम</label><select id="paymentMethod"><option value="UPI">UPI</option><option value="Bank Transfer">Bank Transfer</option><option value="Cash">Cash</option></select><label>UTR / ट्रांजैक्शन आईडी *</label><input id="utr" placeholder="ट्रांजैक्शन आईडी दर्ज करें"><label>पेमेंट का स्क्रीनशॉट (वैकल्पिक)</label><input id="paymentProof" type="file" accept="image/*"><button type="button" onclick="submitPayment()">पेमेंट वेरिफिकेशन के लिए भेजें</button><p id="paymentStatus" class="note">स्थिति: पेमेंट वेरिफिकेशन लंबित है।</p><button type="button" onclick="adminVerify()">स्टूडियो एडमिन: पेमेंट वेरिफाई करें</button></div><div class="summary"><h2>पेमेंट सारांश</h2><p>कुल राशि: <span class="amount" id="total">₹0</span></p><p>25% एडवांस: <span class="amount" id="advance">₹0</span></p><p>बाकी राशि: <span class="amount" id="balance">₹0</span></p><p class="note">नोट: यह बिल/एडवांस कैलकुलेटर है। वास्तविक ऑनलाइन पेमेंट के लिए पेमेंट गेटवे कनेक्शन आवश्यक होगा।</p></div>
+<button id="billButton" type="submit" disabled>🔒 पेमेंट वेरिफिकेशन के बाद बिल बनाएं</button>
 <button type="button" onclick="sendWhatsApp()">WhatsApp पर बुकिंग भेजें</button>
 </form>
 </div>
@@ -82,6 +97,7 @@ function details(){
 }
 function createBill(e){
  e.preventDefault(); const d=details();
+ if(localStorage.getItem('babluPaymentVerified')!=='yes'){alert('पहले पेमेंट वेरिफाई करवाइए।');return;}
  if(!d.selected.length){alert('कृपया कम से कम एक पैकेज या सर्विस चुनें।');return;}
  const bill=`बबलू स्टूडियो\\nबुकिंग बिल / अनुमानित एडवांस रसीद\\n--------------------------------\\nग्राहक का नाम: ${name.value}\\nपिता का नाम: ${father.value}\\nमोबाइल: ${phone.value}\\nपता: गाँव ${village.value}, शहर ${city.value}, जिला ${district.value}, राज्य ${state.value}, पिन ${pincode.value}\\nकार्यक्रम की तारीख: ${date.value}\\n\\nचयनित सर्विस:\\n${d.selected.map(x=>x.name+' - ₹'+x.price).join('\\n')}\\n\\nकुल राशि: ₹${d.total}\\n25% एडवांस: ₹${d.advance}\\nबाकी राशि: ₹${d.balance}\\n\\nनोट: यह बिल पेमेंट की पुष्टि नहीं है। वास्तविक पेमेंट गेटवे से भुगतान होने के बाद ही बुकिंग कन्फर्म होगी।\\nधन्यवाद!`;
  const blob=new Blob([bill],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob);
@@ -93,6 +109,55 @@ function sendWhatsApp(){
  window.open('https://wa.me/919565302930?text='+text,'_blank');
 }
 updateTotal();
+
+function submitPayment(){
+ const utr=document.getElementById('utr').value.trim();
+ if(!utr){alert('कृपया UTR/ट्रांजैक्शन आईडी दर्ज करें।');return;}
+ localStorage.setItem('babluPaymentUTR',utr);
+ localStorage.setItem('babluPaymentMethod',document.getElementById('paymentMethod').value);
+ localStorage.setItem('babluPaymentVerified','pending');
+ document.getElementById('paymentStatus').textContent='स्थिति: वेरिफिकेशन के लिए भेज दिया गया है। एडमिन की पुष्टि का इंतजार करें।';
+ alert('पेमेंट विवरण सेव हो गया है। अब स्टूडियो से वेरिफिकेशन करवाइए।');
+}
+function adminVerify(){
+ const pin=prompt('एडमिन PIN दर्ज करें:');
+ if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
+ if(!localStorage.getItem('babluPaymentUTR')){alert('पहले ग्राहक का UTR दर्ज होना चाहिए।');return;}
+ localStorage.setItem('babluPaymentVerified','yes');
+ document.getElementById('paymentStatus').textContent='स्थिति: पेमेंट वेरिफाई हो गया है। अब बिल बनाया जा सकता है।';
+ const b=document.getElementById('billButton');b.disabled=false;b.textContent='✅ बुकिंग बिल बनाएं और डाउनलोड करें';b.classList.remove('locked');
+ alert('पेमेंट वेरिफाई कर दिया गया है।');
+}
+window.addEventListener('load',()=>{
+ const status=localStorage.getItem('babluPaymentVerified');
+ if(status==='yes'){
+  document.getElementById('paymentStatus').textContent='स्थिति: पेमेंट वेरिफाई हो गया है।';
+  const b=document.getElementById('billButton');b.disabled=false;b.textContent='✅ बुकिंग बिल बनाएं और डाउनलोड करें';
+ }
+ const utr=localStorage.getItem('babluPaymentUTR'); if(utr) document.getElementById('utr').value=utr;
+});
+
+function customerLogin(){
+ const mobile=document.getElementById('loginMobile').value.trim();
+ if(!/^[0-9]{10}$/.test(mobile)){alert('कृपया सही 10 अंकों का मोबाइल नंबर दर्ज करें।');return;}
+ localStorage.setItem('babluCustomerMobile',mobile);
+ document.getElementById('phone').value=mobile;
+ document.getElementById('loginStatus').textContent='लॉगिन सफल: '+mobile;
+ alert('डेमो लॉगिन सफल हुआ।');
+}
+function customerLogout(){
+ localStorage.removeItem('babluCustomerMobile');
+ document.getElementById('loginStatus').textContent='आप लॉगआउट हो गए हैं।';
+}
+window.addEventListener('load',()=>{
+ const mobile=localStorage.getItem('babluCustomerMobile');
+ if(mobile){
+   document.getElementById('loginMobile').value=mobile;
+   document.getElementById('phone').value=mobile;
+   document.getElementById('loginStatus').textContent='लॉगिन: '+mobile;
+ }
+});
+
 </script>
 </body>
 </html>
