@@ -158,15 +158,17 @@ footer{
 
 <section id="gallerySection" class="card" style="margin-top:24px;">
   <h2>📸 फोटो और वीडियो गैलरी</h2>
-  <p>यहाँ अपने स्टूडियो के फोटो और वीडियो डेमो जोड़ें।</p>
-  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-    <label>डेमो चुनें:
+  <p>हमारे स्टूडियो के फोटो और वीडियो डेमो देखें।</p>
+  <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px;"></div>
+  <button type="button" onclick="openGalleryAdmin()">🔐 Admin Gallery</button>
+  <div id="galleryAdminBox" style="display:none;margin-top:15px;padding:15px;border:1px dashed #b8860b;border-radius:12px;">
+    <h3>Gallery Admin</h3>
+    <label>फोटो/वीडियो चुनें:
       <input type="file" id="galleryFiles" accept="image/*,video/*" multiple>
     </label>
     <button type="button" onclick="clearGallery()">🗑️ गैलरी साफ करें</button>
+    <p class="note">फाइलें इस ब्राउज़र के लोकल स्टोरेज में सेव होंगी।</p>
   </div>
-  <p class="note">नोट: अभी डेमो इसी ब्राउज़र में सेव रहेगा। दूसरे ग्राहकों को दिखाने के लिए फाइलें वेबसाइट/स्टोरेज पर अपलोड करनी होंगी।</p>
-  <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px;"></div>
 </section>
 
 <form id="bookingForm" onsubmit="createBill(event)">
@@ -487,7 +489,7 @@ function renderGallery(){
     const media=document.createElement(item.type.startsWith('video/')?'video':'img');
     media.src=item.data; media.style.cssText='width:100%;height:180px;object-fit:cover;border-radius:8px;';
     if(item.type.startsWith('video/')){media.controls=true;media.preload='metadata';}
-    const del=document.createElement('button'); del.type='button';del.textContent='हटाएँ';del.style.marginTop='8px';
+    const del=document.createElement('button'); del.type='button';del.textContent='हटाएँ';del.style.marginTop='8px';del.style.display=document.getElementById('galleryAdminBox')?.style.display==='block'?'inline-block':'none';
     del.onclick=()=>{const arr=getGalleryItems();arr.splice(i,1);saveGalleryItems(arr);renderGallery();};
     box.appendChild(media);box.appendChild(del);grid.appendChild(box);
   });
@@ -502,6 +504,13 @@ document.getElementById('galleryFiles')?.addEventListener('change',async(e)=>{
   }
   saveGalleryItems(items);renderGallery();e.target.value='';
 });
+function openGalleryAdmin(){
+  const pin=prompt('Gallery Admin PIN दर्ज करें:');
+  if(pin!=='9565'){alert('गलत Admin PIN।');return;}
+  const box=document.getElementById('galleryAdminBox');
+  box.style.display='block';
+  renderGallery();
+}
 function clearGallery(){if(confirm('क्या पूरी गैलरी साफ करनी है?')){localStorage.removeItem(galleryKey);renderGallery();}}
 window.addEventListener('load',renderGallery);
 </script>
