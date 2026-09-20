@@ -194,6 +194,23 @@ footer{
   </div>
   <div id="adminPanel" class="admin-panel" style="display:none;"></div>
 </section>
+
+<section class="card" id="shareRatingSection">
+  <h2>⭐ अपना अनुभव साझा करें</h2>
+  <p class="note">Bablu Studio को रेटिंग दें और वेबसाइट अपने दोस्तों के साथ शेयर करें।</p>
+  <div id="ratingStars" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;">
+    <button type="button" class="rating-star" data-rating="1" aria-label="1 स्टार">★</button>
+    <button type="button" class="rating-star" data-rating="2" aria-label="2 स्टार">★</button>
+    <button type="button" class="rating-star" data-rating="3" aria-label="3 स्टार">★</button>
+    <button type="button" class="rating-star" data-rating="4" aria-label="4 स्टार">★</button>
+    <button type="button" class="rating-star" data-rating="5" aria-label="5 स्टार">★</button>
+  </div>
+  <p id="ratingText" class="note">रेटिंग चुनें</p>
+  <textarea id="reviewText" rows="3" placeholder="अपना रिव्यू लिखें (वैकल्पिक)"></textarea>
+  <button type="button" onclick="saveRating()">⭐ रेटिंग सबमिट करें</button>
+  <button type="button" onclick="shareWebsite()">📤 वेबसाइट शेयर करें</button>
+  <p id="ratingSummary" class="note"></p>
+</section>
 <footer>© बबलू स्टूडियो — सभी अधिकार सुरक्षित</footer>
 <script>
 const checks=[...document.querySelectorAll('input[name="service"]')];
@@ -540,6 +557,37 @@ function managePackages(){const msg=document.getElementById('adminMessage');msg.
 function addCustomPackage(){const name=document.getElementById('newPkgName').value.trim(),price=Number(document.getElementById('newPkgPrice').value);if(!name||!price)return alert('नाम और कीमत भरें।');const list=JSON.parse(localStorage.getItem('babluCustomPackages')||'[]');list.push({name,price});localStorage.setItem('babluCustomPackages',JSON.stringify(list));alert('नया आइटम सेव हो गया। वेबसाइट में दिखाने के लिए पेज रिफ्रेश करें।');}
 function adminLogout(){ localStorage.removeItem('babluAdminLoggedIn'); document.getElementById('adminPanel').style.display='none'; document.getElementById('loginNotice').textContent='आप लॉगआउट हो गए हैं।'; }
 window.addEventListener('load',()=>{ if(localStorage.getItem('babluAdminLoggedIn')==='yes') renderAdminPanel(); });
+</script>
+
+<script>
+let selectedRating=0;
+const ratingButtons=[...document.querySelectorAll('.rating-star')];
+ratingButtons.forEach(btn=>btn.addEventListener('click',()=>{
+  selectedRating=Number(btn.dataset.rating);
+  ratingButtons.forEach(b=>{b.style.background=Number(b.dataset.rating)<=selectedRating?'#d4af37':'#e5e7eb';b.style.color=Number(b.dataset.rating)<=selectedRating?'#fff':'#6b7280';});
+  document.getElementById('ratingText').textContent=selectedRating+' / 5 स्टार चुने गए';
+}));
+function saveRating(){
+  if(!selectedRating){alert('कृपया पहले स्टार रेटिंग चुनें।');return;}
+  const reviews=JSON.parse(localStorage.getItem('babluStudioRatings')||'[]');
+  reviews.push({rating:selectedRating,review:(document.getElementById('reviewText').value||'').trim(),date:new Date().toISOString()});
+  localStorage.setItem('babluStudioRatings',JSON.stringify(reviews));
+  document.getElementById('reviewText').value='';
+  updateRatingSummary();
+  alert('धन्यवाद! आपकी रेटिंग सेव हो गई है।');
+}
+function updateRatingSummary(){
+  const reviews=JSON.parse(localStorage.getItem('babluStudioRatings')||'[]');
+  if(!reviews.length){document.getElementById('ratingSummary').textContent='अभी कोई रेटिंग नहीं है।';return;}
+  const avg=reviews.reduce((s,r)=>s+r.rating,0)/reviews.length;
+  document.getElementById('ratingSummary').textContent='कुल रेटिंग: '+reviews.length+' | औसत: '+avg.toFixed(1)+' / 5 ⭐';
+}
+async function shareWebsite(){
+  const data={title:'Bablu Studio',text:'Bablu Studio की वेबसाइट देखें',url:window.location.href};
+  if(navigator.share){try{await navigator.share(data);}catch(e){}}
+  else{try{await navigator.clipboard.writeText(window.location.href);alert('वेबसाइट का लिंक कॉपी हो गया है। अब आप इसे WhatsApp या Facebook पर शेयर कर सकते हैं।');}catch(e){prompt('इस लिंक को कॉपी करें:',window.location.href);}}
+}
+window.addEventListener('load',updateRatingSummary);
 </script>
 </body>
 </html>
