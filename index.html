@@ -27,6 +27,15 @@ footer{text-align:center;padding:25px;color:#ccc}
 .login-box h2{color:#ffd76a;margin-top:0}.login-status{color:#9cff9c;margin:10px 0}
 .logout{background:#7d2424;color:#fff}.payment-box{margin-top:20px;padding:18px;background:#241f10;border:1px solid #8f7220;border-radius:12px}.locked{opacity:.65}
 </style>
+
+<style>
+.validation-note{font-size:13px;color:#777;margin-top:4px}
+.booking-id{background:#eef7ff;border:1px solid #b9dcff;border-radius:10px;padding:12px;margin:12px 0;font-weight:700}
+.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+button:disabled{opacity:.55;cursor:not-allowed}
+.field-error{border:2px solid #d33!important;background:#fff6f6!important}
+</style>
+
 </head>
 <body>
 <header><h1>बबलू स्टूडियो</h1><p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p><p>📞 9565302930</p></header>
@@ -72,7 +81,12 @@ footer{text-align:center;padding:25px;color:#ccc}
 <div><label>कार्यक्रम की तारीख *</label><input id="date" type="date" required></div>
 </div>
 <label>अतिरिक्त जानकारी</label><textarea id="message" rows="3"></textarea>
-<div class="payment-box"><h2>💳 मैनुअल पेमेंट वेरिफिकेशन</h2><p>कृपया एडवांस पेमेंट करने के बाद UTR/ट्रांजैक्शन आईडी दर्ज करें। स्टूडियो द्वारा वेरिफाई किए जाने तक बिल डाउनलोड नहीं होगा।</p><label>पेमेंट का माध्यम</label><select id="paymentMethod"><option value="UPI">UPI</option><option value="Bank Transfer">Bank Transfer</option><option value="Cash">Cash</option></select><label>UTR / ट्रांजैक्शन आईडी *</label><input id="utr" placeholder="ट्रांजैक्शन आईडी दर्ज करें"><label>पेमेंट का स्क्रीनशॉट (वैकल्पिक)</label><input id="paymentProof" type="file" accept="image/*"><button type="button" onclick="submitPayment()">पेमेंट वेरिफिकेशन के लिए भेजें</button><p id="paymentStatus" class="note">स्थिति: पेमेंट वेरिफिकेशन लंबित है।</p><button type="button" onclick="adminVerify()">स्टूडियो एडमिन: पेमेंट वेरिफाई करें</button></div><div class="summary"><h2>पेमेंट सारांश</h2><p>कुल राशि: <span class="amount" id="total">₹0</span></p><p>25% एडवांस: <span class="amount" id="advance">₹0</span></p><p>बाकी राशि: <span class="amount" id="balance">₹0</span></p><p class="note">नोट: यह बिल/एडवांस कैलकुलेटर है। वास्तविक ऑनलाइन पेमेंट के लिए पेमेंट गेटवे कनेक्शन आवश्यक होगा।</p></div>
+<div class="payment-box"><h2>💳 मैनुअल पेमेंट वेरिफिकेशन</h2><p>कृपया एडवांस पेमेंट करने के बाद UTR/ट्रांजैक्शन आईडी दर्ज करें। स्टूडियो द्वारा वेरिफाई किए जाने तक बिल डाउनलोड नहीं होगा।</p><label>पेमेंट का माध्यम</label><select id="paymentMethod"><option value="UPI">UPI</option><option value="Bank Transfer">Bank Transfer</option><option value="Cash">Cash</option></select><label>UTR / ट्रांजैक्शन आईडी *</label><input id="utr" placeholder="ट्रांजैक्शन आईडी दर्ज करें"><label>पेमेंट का स्क्रीनशॉट (वैकल्पिक)</label><input id="paymentProof" type="file" accept="image/*"><button type="button" onclick="submitPayment()">पेमेंट वेरिफिकेशन के लिए भेजें</button><p id="paymentStatus" class="note">स्थिति: पेमेंट वेरिफिकेशन लंबित है।</p>
+<p id="bookingStatus" class="note">बुकिंग स्थिति: स्टूडियो की अनुमति लंबित है।</p>
+<button type="button" onclick="submitBookingRequest()">📩 बुकिंग रिक्वेस्ट भेजें</button>
+<button type="button" onclick="adminApproveBooking()">✅ एडमिन: बुकिंग स्वीकार करें</button>
+<button type="button" onclick="adminRejectBooking()">❌ एडमिन: बुकिंग अस्वीकार करें</button>
+<button type="button" onclick="adminVerify()">स्टूडियो एडमिन: पेमेंट वेरिफाई करें</button></div><div class="summary"><h2>पेमेंट सारांश</h2><p>कुल राशि: <span class="amount" id="total">₹0</span></p><p>25% एडवांस: <span class="amount" id="advance">₹0</span></p><p>बाकी राशि: <span class="amount" id="balance">₹0</span></p><p class="note">नोट: यह बिल/एडवांस कैलकुलेटर है। वास्तविक ऑनलाइन पेमेंट के लिए पेमेंट गेटवे कनेक्शन आवश्यक होगा।</p></div>
 <button id="billButton" type="submit" disabled>🔒 पेमेंट वेरिफिकेशन के बाद बिल बनाएं</button>
 <button type="button" onclick="sendWhatsApp()">WhatsApp पर बुकिंग भेजें</button>
 </form>
@@ -97,7 +111,7 @@ function details(){
 }
 function createBill(e){
  e.preventDefault(); const d=details();
- if(localStorage.getItem('babluPaymentVerified')!=='yes'){alert('पहले पेमेंट वेरिफाई करवाइए।');return;}
+ if(localStorage.getItem('babluBookingApproved')!=='yes'){alert('स्टूडियो की अनुमति मिलने के बाद ही बिल बनाया जा सकता है।');return;}\n if(localStorage.getItem('babluPaymentVerified')!=='yes'){alert('पहले पेमेंट वेरिफाई करवाइए।');return;}
  if(!d.selected.length){alert('कृपया कम से कम एक पैकेज या सर्विस चुनें।');return;}
  const bill=`बबलू स्टूडियो\\nबुकिंग बिल / अनुमानित एडवांस रसीद\\n--------------------------------\\nग्राहक का नाम: ${name.value}\\nपिता का नाम: ${father.value}\\nमोबाइल: ${phone.value}\\nपता: गाँव ${village.value}, शहर ${city.value}, जिला ${district.value}, राज्य ${state.value}, पिन ${pincode.value}\\nकार्यक्रम की तारीख: ${date.value}\\n\\nचयनित सर्विस:\\n${d.selected.map(x=>x.name+' - ₹'+x.price).join('\\n')}\\n\\nकुल राशि: ₹${d.total}\\n25% एडवांस: ₹${d.advance}\\nबाकी राशि: ₹${d.balance}\\n\\nनोट: यह बिल पेमेंट की पुष्टि नहीं है। वास्तविक पेमेंट गेटवे से भुगतान होने के बाद ही बुकिंग कन्फर्म होगी।\\nधन्यवाद!`;
  const blob=new Blob([bill],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob);
@@ -219,6 +233,165 @@ if (stateSelect && citySelect) {
   stateSelect.addEventListener("change", fillCities);
   fillCities();
 }
+</script>
+
+
+<script>
+(function(){
+  const form = document.getElementById('bookingForm');
+  const billButton = document.getElementById('billButton');
+  const phone = document.getElementById('phone');
+  const pincode = document.getElementById('pincode');
+  const eventDate = document.getElementById('date');
+  const draftKey = 'babluBookingDraft';
+
+  // आज से पहले की तारीख रोकें
+  if(eventDate){
+    const now = new Date();
+    const localDate = new Date(now.getTime() - now.getTimezoneOffset()*60000)
+      .toISOString().slice(0,10);
+    eventDate.min = localDate;
+  }
+
+  // जरूरी फील्ड की जाँच
+  function mark(el, ok){
+    if(!el) return;
+    el.classList.toggle('field-error', !ok);
+  }
+
+  window.validateBookingForm = function(){
+    let ok = true;
+    const requiredIds = ['name','phone','state','district','city','village','pincode','date'];
+    requiredIds.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el){
+        const valid = String(el.value||'').trim() !== '';
+        mark(el, valid);
+        if(!valid) ok=false;
+      }
+    });
+
+    if(phone){
+      const valid=/^[6-9]\d{9}$/.test(phone.value.trim());
+      mark(phone,valid);
+      if(!valid) ok=false;
+    }
+    if(pincode){
+      const valid=/^\d{6}$/.test(pincode.value.trim());
+      mark(pincode,valid);
+      if(!valid) ok=false;
+    }
+    if(eventDate && eventDate.value){
+      const valid=!eventDate.min || eventDate.value>=eventDate.min;
+      mark(eventDate,valid);
+      if(!valid) ok=false;
+    }
+    if(!ok) alert('कृपया सभी जरूरी जानकारी सही-सही भरें।');
+    return ok;
+  };
+
+  // फॉर्म का ड्राफ्ट सेव करें
+  if(form){
+    const fields=['name','father','phone','state','district','city','village','pincode','date','message','paymentMethod','utr'];
+    const saveDraft=()=>{
+      const data={};
+      fields.forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) data[id]=el.value;
+      });
+      try{localStorage.setItem(draftKey,JSON.stringify(data));}catch(e){}
+    };
+    const loadDraft=()=>{
+      try{
+        const data=JSON.parse(localStorage.getItem(draftKey)||'{}');
+        fields.forEach(id=>{
+          const el=document.getElementById(id);
+          if(el && data[id]!==undefined && !el.value) el.value=data[id];
+        });
+        if(typeof window.fillCities==='function'){
+          const state=document.getElementById('state');
+          if(state && data.state){
+            state.value=data.state;
+            state.dispatchEvent(new Event('change'));
+            const city=document.getElementById('city');
+            if(city && data.city) city.value=data.city;
+          }
+        }
+      }catch(e){}
+    };
+    fields.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.addEventListener('input',saveDraft);
+      if(el) el.addEventListener('change',saveDraft);
+    });
+    loadDraft();
+  }
+
+  // यूनिक बुकिंग नंबर तैयार करने की सुविधा
+  window.generateBookingId = function(){
+    const d=new Date();
+    const datePart=d.getFullYear().toString().slice(-2)+
+      String(d.getMonth()+1).padStart(2,'0')+
+      String(d.getDate()).padStart(2,'0');
+    const random=Math.floor(1000+Math.random()*9000);
+    return 'BVL-'+datePart+'-'+random;
+  };
+
+  // बिल बनाने वाले फंक्शन के पहले वैलिडेशन जोड़ें
+  if(typeof window.createBill === 'function'){
+    const originalCreateBill=window.createBill;
+    window.createBill=function(){
+      if(!window.validateBookingForm()) return;
+      return originalCreateBill.apply(this,arguments);
+    };
+  }
+
+  // पेज बंद करने/रीलोड से पहले चेतावनी नहीं, सिर्फ ड्राफ्ट सेव रहता है।
+  window.addEventListener('beforeunload',()=>{
+    try{
+      if(form){
+        const event=new Event('input');
+        form.dispatchEvent(event);
+      }
+    }catch(e){}
+  });
+})();
+</script>
+
+
+<script>
+function submitBookingRequest(){
+  if(typeof window.validateBookingForm==='function' && !window.validateBookingForm()) return;
+  const selected = getSelected();
+  if(!selected.length){ alert('कृपया कम से कम एक पैकेज या सर्विस चुनें।'); return; }
+  localStorage.setItem('babluBookingRequested','yes');
+  localStorage.setItem('babluBookingApproved','pending');
+  document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: रिक्वेस्ट भेज दी गई है। स्टूडियो की अनुमति का इंतजार करें।';
+  alert('बुकिंग रिक्वेस्ट स्टूडियो को भेजने के लिए सेव हो गई है।');
+}
+function adminApproveBooking(){
+  const pin=prompt('एडमिन PIN दर्ज करें:');
+  if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
+  if(localStorage.getItem('babluBookingRequested')!=='yes'){alert('पहले ग्राहक की बुकिंग रिक्वेस्ट होनी चाहिए।');return;}
+  localStorage.setItem('babluBookingApproved','yes');
+  document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग स्वीकार कर ली है।';
+  alert('बुकिंग स्वीकार कर दी गई है। अब पेमेंट वेरिफिकेशन के बाद बिल बनाया जा सकता है।');
+}
+function adminRejectBooking(){
+  const pin=prompt('एडमिन PIN दर्ज करें:');
+  if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
+  localStorage.setItem('babluBookingApproved','no');
+  document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।';
+  document.getElementById('billButton').disabled=true;
+  alert('बुकिंग अस्वीकार कर दी गई है।');
+}
+window.addEventListener('load',()=>{
+  const s=localStorage.getItem('babluBookingApproved');
+  const el=document.getElementById('bookingStatus');
+  if(s==='yes') el.textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग स्वीकार कर ली है।';
+  else if(s==='no') el.textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।';
+  else if(s==='pending') el.textContent='बुकिंग स्थिति: स्टूडियो की अनुमति लंबित है।';
+});
 </script>
 
 </body>
