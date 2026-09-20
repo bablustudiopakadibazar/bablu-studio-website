@@ -67,6 +67,20 @@ button:disabled{opacity:.55;cursor:not-allowed}
 <div class="card"><h3>Album</h3><div class="price">₹400 / शीट</div><label>शीट की संख्या<input type="number" min="1" value="1" id="albumSheets"></label><label class="select"><input type="checkbox" name="service" data-price="400" value="Album" id="albumCheck"> चुनें</label></div>
 </div>
 
+
+<section id="gallerySection" class="card" style="margin-top:24px;">
+  <h2>📸 फोटो और वीडियो गैलरी</h2>
+  <p>यहाँ अपने स्टूडियो के फोटो और वीडियो डेमो जोड़ें।</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+    <label>डेमो चुनें:
+      <input type="file" id="galleryFiles" accept="image/*,video/*" multiple>
+    </label>
+    <button type="button" onclick="clearGallery()">🗑️ गैलरी साफ करें</button>
+  </div>
+  <p class="note">नोट: अभी डेमो इसी ब्राउज़र में सेव रहेगा। दूसरे ग्राहकों को दिखाने के लिए फाइलें वेबसाइट/स्टोरेज पर अपलोड करनी होंगी।</p>
+  <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px;"></div>
+</section>
+
 <form id="bookingForm" onsubmit="createBill(event)">
 <h2>बुकिंग के लिए जानकारी भरें</h2>
 <div class="fieldgrid">
@@ -392,6 +406,40 @@ window.addEventListener('load',()=>{
   else if(s==='no') el.textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।';
   else if(s==='pending') el.textContent='बुकिंग स्थिति: स्टूडियो की अनुमति लंबित है।';
 });
+</script>
+
+
+<script>
+const galleryKey='babluStudioGalleryItems';
+function getGalleryItems(){try{return JSON.parse(localStorage.getItem(galleryKey)||'[]')}catch(e){return[]}}
+function saveGalleryItems(items){localStorage.setItem(galleryKey,JSON.stringify(items))}
+function renderGallery(){
+  const grid=document.getElementById('galleryGrid'); if(!grid)return;
+  const items=getGalleryItems(); grid.innerHTML='';
+  if(!items.length){grid.innerHTML='<p class="note">अभी कोई फोटो या वीडियो नहीं जोड़ा गया है।</p>';return;}
+  items.forEach((item,i)=>{
+    const box=document.createElement('div');
+    box.style.cssText='border:1px solid #ddd;border-radius:12px;padding:8px;background:#fff;';
+    const media=document.createElement(item.type.startsWith('video/')?'video':'img');
+    media.src=item.data; media.style.cssText='width:100%;height:180px;object-fit:cover;border-radius:8px;';
+    if(item.type.startsWith('video/')){media.controls=true;media.preload='metadata';}
+    const del=document.createElement('button'); del.type='button';del.textContent='हटाएँ';del.style.marginTop='8px';
+    del.onclick=()=>{const arr=getGalleryItems();arr.splice(i,1);saveGalleryItems(arr);renderGallery();};
+    box.appendChild(media);box.appendChild(del);grid.appendChild(box);
+  });
+}
+document.getElementById('galleryFiles')?.addEventListener('change',async(e)=>{
+  const files=[...e.target.files]; const items=getGalleryItems();
+  for(const file of files){
+    if(!file.type.startsWith('image/')&&!file.type.startsWith('video/'))continue;
+    if(file.size>8*1024*1024){alert(file.name+' 8MB से बड़ी है, इसलिए नहीं जोड़ी गई।');continue;}
+    const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)});
+    items.push({name:file.name,type:file.type,data});
+  }
+  saveGalleryItems(items);renderGallery();e.target.value='';
+});
+function clearGallery(){if(confirm('क्या पूरी गैलरी साफ करनी है?')){localStorage.removeItem(galleryKey);renderGallery();}}
+window.addEventListener('load',renderGallery);
 </script>
 
 </body>
