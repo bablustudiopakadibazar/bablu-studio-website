@@ -144,11 +144,11 @@ footer{
     <div class="card" style="margin:0;">
       <h3>🛡️ एडमिन लॉगिन</h3>
       <p class="note">बुकिंग स्वीकार/अस्वीकार और पेमेंट वेरिफिकेशन के लिए।</p>
-      <label for="adminLoginPin">एडमिन PIN</label>
-      <input id="adminLoginPin" type="password" inputmode="numeric" maxlength="8" placeholder="एडमिन PIN">
-      <button type="button" onclick="adminPortalLogin()">एडमिन लॉगिन</button>
+      
+      <input id="adminLoginEmail" type="password" inputmode="numeric" maxlength="8" placeholder="एडमिन ईमेल और पासवर्ड">
+      <button type="button" onclick="firebaseAdminLogin()">एडमिन लॉगिन</button>
       <p id="adminLoginStatus" class="note">एडमिन लॉगिन नहीं किया गया है।</p>
-      <button type="button" onclick="adminPortalLogout()">लॉगआउट</button>
+      <button type="button" onclick="firebaseAdminLogout()">लॉगआउट</button>
     </div>
   </div>
   <p class="note">नोट: एडमिन लॉगिन Firebase Email/Password Authentication से होगा।</p>
@@ -206,7 +206,7 @@ footer{
 <div><label>जिला *</label><input id="district" required></div>
 <div><label>शहर *</label><select id="city" required><option value="">शहर चुनें</option></select></div>
 <div><label>गाँव *</label><input id="village" required></div>
-<div><label>पिन कोड *</label><input id="pincode" pattern="[0-9]{6}" required></div>
+<div><label>पिन कोड *</label>
 <div><label>कार्यक्रम की तारीख *</label><input id="date" type="date" required></div>
 </div>
 <label>अतिरिक्त जानकारी</label><textarea id="message" rows="3"></textarea>
@@ -263,8 +263,8 @@ function submitPayment(){
  alert('पेमेंट विवरण सेव हो गया है। अब स्टूडियो से वेरिफिकेशन करवाइए।');
 }
 function adminVerify(){
- const pin=prompt('एडमिन PIN दर्ज करें:');
- if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
+ const pin=prompt('एडमिन ईमेल और पासवर्ड दर्ज करें:');
+ if(pin!=='9565'){alert('गलत एडमिन ईमेल और पासवर्ड।');return;}
  if(!localStorage.getItem('babluPaymentUTR')){alert('पहले ग्राहक का UTR दर्ज होना चाहिए।');return;}
  localStorage.setItem('babluPaymentVerified','yes');
  document.getElementById('paymentStatus').textContent='स्थिति: पेमेंट वेरिफाई हो गया है। अब बिल बनाया जा सकता है।';
@@ -489,16 +489,16 @@ function submitBookingRequest(){
   alert('बुकिंग रिक्वेस्ट स्टूडियो को भेजने के लिए सेव हो गई है।');
 }
 function adminApproveBooking(){
-  const pin=prompt('एडमिन PIN दर्ज करें:');
-  if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
+  const pin=prompt('एडमिन ईमेल और पासवर्ड दर्ज करें:');
+  if(pin!=='9565'){alert('गलत एडमिन ईमेल और पासवर्ड।');return;}
   if(localStorage.getItem('babluBookingRequested')!=='yes'){alert('पहले ग्राहक की बुकिंग रिक्वेस्ट होनी चाहिए।');return;}
   localStorage.setItem('babluBookingApproved','yes');
   document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग स्वीकार कर ली है।';
   alert('बुकिंग स्वीकार कर दी गई है। अब पेमेंट वेरिफिकेशन के बाद बिल बनाया जा सकता है।');
 }
 function adminRejectBooking(){
-  const pin=prompt('एडमिन PIN दर्ज करें:');
-  if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
+  const pin=prompt('एडमिन ईमेल और पासवर्ड दर्ज करें:');
+  if(pin!=='9565'){alert('गलत एडमिन ईमेल और पासवर्ड।');return;}
   localStorage.setItem('babluBookingApproved','no');
   document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।';
   document.getElementById('billButton').disabled=true;
@@ -567,11 +567,11 @@ function customerPortalLogout(){
   document.getElementById('customerLoginStatus').textContent='ग्राहक लॉगआउट हो गया है।';
 }
 function adminPortalLogin(){
-  const pin=(document.getElementById('adminLoginPin').value||'').trim();
-  if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
+  const pin=(document.getElementById('adminLoginEmail').value||'').trim();
+  if(pin!=='9565'){alert('गलत एडमिन ईमेल और पासवर्ड।');return;}
   localStorage.setItem(ADMIN_LOGIN_KEY,'yes');
   document.getElementById('adminLoginStatus').textContent='एडमिन लॉगिन सफल।';
-  document.getElementById('adminLoginPin').value='';
+  document.getElementById('adminLoginEmail').value='';
 }
 function adminPortalLogout(){
   localStorage.removeItem(ADMIN_LOGIN_KEY);
