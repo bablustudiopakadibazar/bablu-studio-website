@@ -11,8 +11,8 @@ header{background:linear-gradient(135deg,#000,#3b2a08);padding:28px 15px;text-al
 h1{color:#ffd76a;margin:0 0 8px;font-size:32px}header p{margin:5px;font-size:16px}
 .container{max-width:1150px;margin:25px auto;padding:0 15px}.intro{text-align:center;margin-bottom:22px}.intro h2,.section-title{color:#ffd76a}
 .packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-.card{background:#1d1d1d;border:1px solid #8f7220;border-radius:14px;padding:20px;box-shadow:0 5px 18px #0008}
-.card h3{color:#ffd76a;margin-top:0}.price{font-size:28px;font-weight:bold;margin:12px 0}
+.card{background:linear-gradient(145deg,#fffdf5,#fff);border:1px solid #8f7220;border-radius:14px;padding:20px;box-shadow:0 5px 18px #0008}
+.card h3{color:#7a5200;margin-top:0}.price{font-size:32px;color:#b45309!important;text-shadow:0 1px 0 #fde68a;font-size:32px;font-weight:bold;margin:12px 0}
 .card ul{padding-left:22px;line-height:1.8;color:#eee}
 .select{display:flex;align-items:center;gap:10px;background:#2b240f;padding:12px;border-radius:8px;margin-top:15px;cursor:pointer}
 .select input{width:20px;height:20px;accent-color:#d4af37}
@@ -156,18 +156,7 @@ footer{
 </div>
 
 
-<section id="gallerySection" class="card" style="margin-top:24px;">
-  <h2>📸 फोटो और वीडियो गैलरी</h2>
-  <p>यहाँ अपने स्टूडियो के फोटो और वीडियो डेमो जोड़ें।</p>
-  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-    <label>डेमो चुनें:
-      <input type="file" id="galleryFiles" accept="image/*,video/*" multiple>
-    </label>
-    <button type="button" onclick="clearGallery()">🗑️ गैलरी साफ करें</button>
-  </div>
-  <p class="note">नोट: अभी डेमो इसी ब्राउज़र में सेव रहेगा। दूसरे ग्राहकों को दिखाने के लिए फाइलें वेबसाइट/स्टोरेज पर अपलोड करनी होंगी।</p>
-  <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px;"></div>
-</section>
+
 
 <form id="bookingForm" onsubmit="submitBookingRequest(event)">
 <h2>बुकिंग के लिए जानकारी भरें</h2>
@@ -189,6 +178,17 @@ footer{
 <button id="billButton" type="submit" disabled>🔒 पेमेंट वेरिफिकेशन के बाद बिल बनाएं</button>
 </form>
 </div>
+
+<section id="adminAccess" class="card" style="border:2px solid #b8860b;background:linear-gradient(135deg,#fff8df,#ffffff);text-align:center;">
+  <h2>🔐 Admin Control Panel</h2>
+  <p>वेबसाइट की सेटिंग्स और बुकिंग प्रबंधन के लिए एडमिन लॉगिन करें।</p>
+  <button type="button" onclick="openAdminLogin()">Admin Control Panel खोलें</button>
+  <div id="adminLoginBox" style="display:none;margin-top:15px;text-align:left;">
+    <label>एडमिन मोबाइल नंबर</label><input id="adminMobile" type="tel" value="9565302930" maxlength="10">
+    <button type="button" onclick="requestAdminOtp()">OTP भेजें</button>
+    <p id="otpNotice" class="note">वास्तविक SMS OTP के लिए Firebase Phone Authentication कनेक्शन आवश्यक है।</p>
+  </div>
+</section>
 <footer>© बबलू स्टूडियो — सभी अधिकार सुरक्षित</footer>
 <script>
 const checks=[...document.querySelectorAll('input[name="service"]')];
@@ -517,6 +517,15 @@ function sendBookingToWhatsApp(booking) {
   ].join("\n");
   window.open("https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message), "_blank");
 }
+<script>
+function openAdminLogin(){document.getElementById('adminLoginBox').style.display='block';}
+function requestAdminOtp(){
+ const n=(document.getElementById('adminMobile').value||'').trim();
+ if(n!=='9565302930'){alert('कृपया अधिकृत मोबाइल नंबर डालें।');return;}
+ document.getElementById('otpNotice').textContent='OTP सुविधा सक्रिय करने के लिए Firebase Phone Authentication सेटअप करना होगा।';
+ alert('Firebase OTP अभी कनेक्ट नहीं है। पहले Firebase Phone Authentication कॉन्फ़िगर करें।');
+}
+</script>
 </script>
 </body>
 </html>
