@@ -3,113 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bablu Studio Pakadi Bazar</title>
+<title>बबलू स्टूडियो - वेडिंग पैकेज</title>
 <style>
-:root{--gold:#d4af37;--black:#0b0b0b;--card:#171717;--text:#f5f5f5}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:var(--black);color:var(--text);line-height:1.6}
-header{position:sticky;top:0;z-index:10;background:#090909ee;border-bottom:1px solid #4b3b12;padding:16px 6%}
-nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.logo{font-size:1.4rem;font-weight:bold;color:var(--gold)}
-nav a{color:white;text-decoration:none;margin:0 8px}
-.hero{min-height:72vh;display:grid;place-items:center;text-align:center;padding:70px 6%;background:linear-gradient(#0009,#000c),url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=80') center/cover}
-.hero h1{font-size:clamp(2.3rem,7vw,5rem);color:var(--gold);text-transform:uppercase}
-.hero p{font-size:1.2rem;margin:15px 0 25px}
-.btn{display:inline-block;background:var(--gold);color:#111;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:bold;border:0;cursor:pointer}
-section{padding:55px 6%;max-width:1250px;margin:auto}
-h2{text-align:center;color:var(--gold);font-size:2rem;margin-bottom:30px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:var(--card);border:1px solid #4b3b12;border-radius:12px;padding:24px;text-align:center}
-.card h3{color:var(--gold);margin-bottom:10px}
-.price{font-size:1.8rem;font-weight:bold;margin:12px 0}
-.gallery img{width:100%;height:230px;object-fit:cover;border-radius:10px;border:1px solid #4b3b12}
-form{max-width:650px;margin:auto;display:grid;gap:14px}
-input,select,textarea{width:100%;padding:13px;border-radius:6px;border:1px solid #5a4818;background:#161616;color:white}
-footer{text-align:center;padding:25px;background:#050505;border-top:1px solid #4b3b12;color:#bbb}
-.note{text-align:center;color:#bbb;margin-top:-15px;margin-bottom:25px}
-@media(max-width:600px){nav a{font-size:.9rem;margin:3px}.hero{min-height:65vh}}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#111;color:#fff}
+header{background:linear-gradient(135deg,#000,#3b2a08);padding:28px 15px;text-align:center;border-bottom:2px solid #d4af37}
+h1{color:#ffd76a;margin:0 0 8px;font-size:32px}header p{margin:5px;font-size:16px}
+.container{max-width:1100px;margin:25px auto;padding:0 15px}
+.intro{text-align:center;margin-bottom:22px}.intro h2{color:#ffd76a}
+.packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.card{background:#1d1d1d;border:1px solid #8f7220;border-radius:14px;padding:20px;box-shadow:0 5px 18px #0008}
+.card h3{color:#ffd76a;margin-top:0}.price{font-size:28px;color:#fff;font-weight:bold;margin:12px 0}
+.card ul{padding-left:22px;line-height:1.8;color:#eee}
+.select{display:flex;align-items:center;gap:10px;background:#2b240f;padding:12px;border-radius:8px;margin-top:15px;cursor:pointer}
+.select input{width:20px;height:20px;accent-color:#d4af37}
+form{margin-top:28px;background:#1d1d1d;border:1px solid #8f7220;border-radius:14px;padding:22px}
+form h2{color:#ffd76a;margin-top:0}input[type=text],input[type=tel],input[type=date],textarea{width:100%;padding:12px;margin:7px 0 15px;border-radius:7px;border:1px solid #777;background:#292929;color:white}
+button{background:#d4af37;border:0;padding:13px 24px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:16px}
+button:hover{background:#f1cf55}.note{color:#ccc;font-size:14px}footer{text-align:center;padding:25px;color:#ccc}
 </style>
 </head>
 <body>
 <header>
-<nav>
-<div class="logo">BABLU STUDIO</div>
-<div><a href="#home">Home</a><a href="#services">Services</a><a href="#packages">Packages</a><a href="#gallery">Gallery</a><a href="#booking">Booking</a><a href="#contact">Contact</a></div>
-</nav>
+<h1>बबलू स्टूडियो</h1>
+<p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p>
+<p>📞 9565302930</p>
 </header>
-
-<section class="hero" id="home">
-<div>
-<h1>Bablu Studio<br>Pakadi Bazar</h1>
-<p>Wedding Photography • Cinematic Films • Drone Shoot</p>
-<a class="btn" href="#booking">Book Your Date</a>
-</div>
-</section>
-
-<section id="services">
-<h2>हमारी सेवाएँ</h2>
-<div class="grid">
-<div class="card"><h3>Wedding Photography</h3><p>आपकी शादी के हर खास पल को यादगार बनाएं।</p></div>
-<div class="card"><h3>Videography</h3><p>शानदार शादी वीडियो और सिनेमैटिक फिल्म।</p></div>
-<div class="card"><h3>Drone Shoot</h3><p>हाई-क्वालिटी एरियल और वेडिंग शॉट्स।</p></div>
-<div class="card"><h3>Premium Album</h3><p>प्रीमियम डिजाइन के साथ खूबसूरत वेडिंग एल्बम।</p></div>
-</div>
-</section>
-
-<section id="packages">
+<div class="container">
+<div class="intro">
 <h2>हमारे वेडिंग पैकेज</h2>
-<p class="note">Bablu Studio Pakadi Bazar के पारंपरिक और सिनेमैटिक वेडिंग पैकेज</p>
-<div class="package-posters">
-  <img src="traditional-wedding-packages.png" alt="Traditional Wedding Packages - Bablu Studio Pakadi Bazar">
-  <img src="cinematic-wedding-packages.png" alt="Cinematic Wedding Packages - Bablu Studio Pakadi Bazar">
+<p>अपनी पसंद का पैकेज चुनने के लिए चेक बॉक्स पर क्लिक करें।</p>
 </div>
-<style>
-.package-posters{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;align-items:start}
-.package-posters img{width:100%;height:auto;display:block;border:1px solid #4b3b12;border-radius:12px;background:#111}
-</style>
-</section>
-<section id="gallery">
-<h2>Photo Gallery</h2>
-<p class="note">यह डेमो गैलरी है। बाद में अपनी फोटो यहाँ लगाएं।</p>
-<div class="grid gallery">
-<img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Wedding photography">
-<img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80" alt="Wedding couple">
-<img src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=900&q=80" alt="Wedding ceremony">
+<div class="packages">
+<div class="card"><h3>पैकेज 1 — सामान्य वीडियो</h3><div class="price">₹6,000</div><ul><li>सामान्य वीडियो शूट</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 1 - सामान्य वीडियो - ₹6,000"> यह पैकेज बुक करना है</label></div>
+<div class="card"><h3>पैकेज 2 — प्रीमियम</h3><div class="price">₹10,000</div><ul><li>प्रीमियम वीडियो</li><li>हाइलाइट वीडियो</li><li>डिजिटल निमंत्रण वीडियो</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 2 - प्रीमियम - ₹10,000"> यह पैकेज बुक करना है</label></div>
+<div class="card"><h3>पैकेज 3 — ड्रोन सहित</h3><div class="price">₹12,000</div><ul><li>सामान्य वीडियो</li><li>ड्रोन शूट</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 3 - ड्रोन सहित - ₹12,000"> यह पैकेज बुक करना है</label></div>
+<div class="card"><h3>पैकेज 4 — एल्बम सहित</h3><div class="price">₹18,000</div><ul><li>सामान्य वीडियो</li><li>ड्रोन शूट</li><li>20 शीट एल्बम</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 4 - एल्बम सहित - ₹18,000"> यह पैकेज बुक करना है</label></div>
+<div class="card"><h3>पैकेज 5 — प्रीमियम कम्प्लीट</h3><div class="price">₹30,000</div><ul><li>प्रीमियम वीडियो</li><li>हाइलाइट वीडियो</li><li>डिजिटल निमंत्रण वीडियो</li><li>ड्रोन शूट</li><li>प्रीमियम एल्बम</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 5 - प्रीमियम कम्प्लीट - ₹30,000"> यह पैकेज बुक करना है</label></div>
+<div class="card"><h3>पैकेज 6 — वीडियो + एल्बम</h3><div class="price">₹13,000</div><ul><li>सामान्य वीडियो</li><li>एल्बम</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 6 - वीडियो + एल्बम - ₹13,000"> यह पैकेज बुक करना है</label></div>
 </div>
-</section>
-
-<section id="contact">
-<h2>संपर्क करें</h2>
-<div class="card">
-<p><strong>पता:</strong> पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर, पिन 272205</p>
-<p><strong>WhatsApp:</strong> +91 9565302930</p>
-<p style="margin-top:15px"><a class="btn" href="https://wa.me/919565302930" target="_blank">WhatsApp पर संपर्क करें</a></p>
-</div>
-</section>
-
-<section id="booking">
-<h2>Online Booking</h2>
 <form onsubmit="sendBooking(event)">
-<input id="name" placeholder="आपका नाम" required>
-<input id="phone" type="tel" placeholder="मोबाइल नंबर" required>
-<input id="date" type="date" required>
-<select id="service" required><option value="">सेवा चुनें</option><option>Wedding Photography</option><option>Videography</option><option>Drone Shoot</option><option>Complete Wedding Package</option></select>
-<textarea id="message" rows="4" placeholder="अतिरिक्त जानकारी"></textarea>
-<button class="btn" type="submit">WhatsApp पर बुकिंग भेजें</button>
+<h2>बुकिंग के लिए जानकारी भरें</h2>
+<label>नाम</label><input id="name" type="text" required>
+<label>मोबाइल नंबर</label><input id="phone" type="tel" required>
+<label>कार्यक्रम की तारीख</label><input id="date" type="date" required>
+<label>अतिरिक्त जानकारी</label><textarea id="message" rows="3"></textarea>
+<p class="note">चयनित पैकेज की जानकारी WhatsApp पर भेजने के लिए नीचे बटन दबाएँ।</p>
+<button type="submit">WhatsApp पर बुकिंग भेजें</button>
 </form>
-</section>
-
-<footer>
-<p>© 2026 Bablu Studio Pakadi Bazar. All Rights Reserved.</p>
-<p>📍 पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर, उत्तर प्रदेश — 272205</p><p>📞 WhatsApp: 9565302930</p>
-</footer>
-
+</div>
+<footer>© बबलू स्टूडियो — सभी अधिकार सुरक्षित</footer>
 <script>
 function sendBooking(e){
  e.preventDefault();
- const studioNumber="919565302930";
- const text=`नमस्ते Bablu Studio Pakadi Bazar,%0Aनाम: ${name.value}%0Aमोबाइल: ${phone.value}%0Aकार्यक्रम की तारीख: ${date.value}%0Aसेवा: ${service.value}%0Aजानकारी: ${message.value}`;
- window.open("https://wa.me/"+studioNumber+"?text="+text,"_blank");
+ const selected=[...document.querySelectorAll('input[name="package"]:checked')].map(x=>x.value);
+ if(!selected.length){alert('कृपया कम से कम एक पैकेज चुनें।');return;}
+ const text=`नमस्ते बबलू स्टूडियो,%0Aनाम: ${encodeURIComponent(document.getElementById('name').value)}%0Aमोबाइल: ${encodeURIComponent(document.getElementById('phone').value)}%0Aतारीख: ${encodeURIComponent(document.getElementById('date').value)}%0Aचयनित पैकेज:%0A${selected.map(encodeURIComponent).join('%0A')}%0Aअतिरिक्त जानकारी: ${encodeURIComponent(document.getElementById('message').value)}`;
+ window.open('https://wa.me/919565302930?text='+text,'_blank');
 }
 </script>
 </body>
