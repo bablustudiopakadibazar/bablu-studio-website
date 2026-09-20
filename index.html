@@ -570,5 +570,49 @@ function sendBookingToWhatsApp(booking) {
   if(saved){buttons.forEach(b=>b.classList.toggle('active',Number(b.dataset.rating)<=saved));msg.textContent='आपकी रेटिंग: '+saved+'/5 स्टार';}
 })();
 </script>
+
+<!-- Booking Status Admin Controls -->
+<style>
+#booking-status-admin{margin:20px 0;padding:18px;border:1px solid #dbe3ef;border-radius:14px;background:#f8fafc}
+#booking-status-admin h3{margin:0 0 12px}
+#booking-status-admin select,#booking-status-admin input{padding:9px;border:1px solid #cbd5e1;border-radius:8px;margin:4px 0}
+#booking-status-admin button{padding:9px 14px;border:0;border-radius:8px;background:#1d4ed8;color:#fff;cursor:pointer}
+#booking-status-admin .status-note{margin-top:10px;font-weight:600}
+</style>
+<section id="booking-status-admin">
+  <h3>📋 बुकिंग स्थिति प्रबंधन</h3>
+  <label>बुकिंग आईडी / ग्राहक का मोबाइल:</label><br>
+  <input id="booking-id-admin" placeholder="बुकिंग आईडी या मोबाइल नंबर">
+  <br>
+  <label>स्थिति चुनें:</label><br>
+  <select id="booking-status-select">
+    <option value="pending">लंबित — स्टूडियो की अनुमति लंबित है</option>
+    <option value="approved">स्वीकृत — बुकिंग कन्फर्म है</option>
+    <option value="cancelled">रद्द — बुकिंग रद्द कर दी गई है</option>
+  </select>
+  <br>
+  <button type="button" id="save-booking-status">स्थिति सेव करें</button>
+  <div class="status-note" id="booking-status-admin-message">बुकिंग की स्थिति यहाँ अपडेट होगी।</div>
+</section>
+<script>
+(function(){
+  const save=document.getElementById('save-booking-status');
+  if(!save) return;
+  save.addEventListener('click',function(){
+    const id=document.getElementById('booking-id-admin').value.trim();
+    const status=document.getElementById('booking-status-select').value;
+    const labels={
+      pending:'स्टूडियो की अनुमति लंबित है।',
+      approved:'बुकिंग स्वीकृत है।',
+      cancelled:'बुकिंग रद्द कर दी गई है।'
+    };
+    if(!id){document.getElementById('booking-status-admin-message').textContent='कृपया बुकिंग आईडी या मोबाइल नंबर दर्ज करें।';return;}
+    const all=JSON.parse(localStorage.getItem('babluStudioBookingStatuses')||'{}');
+    all[id]=status;
+    localStorage.setItem('babluStudioBookingStatuses',JSON.stringify(all));
+    document.getElementById('booking-status-admin-message').textContent='सेव हो गया: '+labels[status];
+  });
+})();
+</script>
 </body>
 </html>
