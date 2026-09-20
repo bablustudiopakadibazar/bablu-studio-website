@@ -145,11 +145,14 @@ footer{
       <h3>🛡️ एडमिन लॉगिन</h3>
       <p class="note">बुकिंग स्वीकार/अस्वीकार और पेमेंट वेरिफिकेशन के लिए।</p>
       
-      <label for="adminLoginEmail">एडमिन ईमेल</label>
-      <input id="adminLoginEmail" type="email" placeholder="admin@example.com" autocomplete="username">
-      <label for="adminLoginPassword">पासवर्ड</label>
-      <input id="adminLoginPassword" type="password" placeholder="Firebase पासवर्ड" autocomplete="current-password">
-      <button type="button" onclick="firebaseAdminLogin()">एडमिन लॉगिन</button>
+      <label for="adminPhoneNumber">एडमिन मोबाइल नंबर</label>
+      <input id="adminPhoneNumber" type="tel" placeholder="+91XXXXXXXXXX" autocomplete="tel">
+      <button type="button" onclick="sendAdminOtp()">OTP भेजें</button>
+      <div id="adminOtpArea" style="display:none;">
+        <label for="adminOtpCode">OTP दर्ज करें</label>
+        <input id="adminOtpCode" type="text" inputmode="numeric" maxlength="6" placeholder="6 अंकों का OTP" autocomplete="one-time-code">
+        <button type="button" onclick="verifyAdminOtp()">OTP से लॉगिन करें</button>
+      </div>
       <p id="adminLoginStatus" class="note">एडमिन लॉगिन नहीं किया गया है।</p>
       <button type="button" onclick="firebaseAdminLogout()">लॉगआउट</button>
     </div>
@@ -604,55 +607,82 @@ onAuthStateChanged(auth, user => {
 
 
 
+
+
+
 <script type="module">
-  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+  import { RecaptchaVerifier, signInWithPhoneNumber, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+  let confirmationResult = null;
+  let recaptchaVerifier = null;
 
   function status(message) {
     const el = document.getElementById("adminLoginStatus");
     if (el) el.textContent = message;
   }
 
-  function authReady() {
+  function getAuthInstance() {
     return window.babluFirebase && window.babluFirebase.auth
       ? window.babluFirebase.auth
       : null;
   }
 
-  window.firebaseAdminLogin = async function () {
-    const email = (document.getElementById("adminLoginEmail")?.value || "").trim();
-    const password = document.getElementById("adminLoginPassword")?.value || "";
-    if (!email || !password) {
-      status("ईमेल और पासवर्ड दोनों भरिए।");
+  window.sendAdminOtp = async function () {
+    const phone = (document.getElementById("adminPhoneNumber")?.value || "").trim();
+    if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
+      status("मोबाइल नंबर +91XXXXXXXXXX जैसे अंतरराष्ट्रीय फॉर्मेट में भरिए।");
       return;
     }
-    const auth = authReady();
+    const auth = getAuthInstance();
     if (!auth) {
       status("Firebase लोड नहीं हुआ। पेज रिफ्रेश करके फिर प्रयास करें।");
       return;
     }
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      status("एडमिन लॉगिन सफल: " + email);
-      document.getElementById("adminLoginPassword").value = "";
+      if (!recaptchaVerifier) {
+        recaptchaVerifier = new RecaptchaVerifier(auth, "adminLoginStatus", {});
+      }
+      confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier);
+      const area = document.getElementById("adminOtpArea");
+      if (area) area.style.display = "block";
+      status("OTP भेज दिया गया है।");
     } catch (error) {
-      status("लॉगिन असफल: " + (error.code || "ईमेल/पासवर्ड जाँचें"));
+      status("OTP भेजने में समस्या: " + (error.code || "कृपया नंबर जाँचें"));
+      if (recaptchaVerifier) {
+        try { recaptchaVerifier.clear(); } catch (e) {}
+        recaptchaVerifier = null;
+      }
+    }
+  };
+
+  window.verifyAdminOtp = async function () {
+    const otp = (document.getElementById("adminOtpCode")?.value || "").trim();
+    if (!confirmationResult || !otp) {
+      status("पहले OTP भेजें और OTP दर्ज करें।");
+      return;
+    }
+    try {
+      await confirmationResult.confirm(otp);
+      status("मोबाइल OTP से एडमिन लॉगिन सफल।");
+    } catch (error) {
+      status("OTP गलत है या समाप्त हो चुका है।");
     }
   };
 
   window.firebaseAdminLogout = async function () {
-    const auth = authReady();
+    const auth = getAuthInstance();
     if (auth) await signOut(auth);
     status("एडमिन लॉगआउट हो गया है।");
   };
 
   window.isAdminLoggedIn = function () {
-    const auth = authReady();
+    const auth = getAuthInstance();
     return !!(auth && auth.currentUser);
   };
 
   function guard() {
     if (!window.isAdminLoggedIn()) {
-      alert("पहले Firebase ईमेल और पासवर्ड से एडमिन लॉगिन करें।");
+      alert("पहले मोबाइल नंबर और OTP से एडमिन लॉगिन करें।");
       return false;
     }
     return true;
@@ -683,11 +713,6 @@ onAuthStateChanged(auth, user => {
     if (bill) bill.disabled = false;
     alert("पेमेंट वेरिफाई कर दिया गया है।");
   };
-
-  window.addEventListener("bablu-firebase-auth", (event) => {
-    const user = event.detail;
-    status(user ? "एडमिन लॉगिन सक्रिय: " + user.email : "एडमिन लॉगिन नहीं किया गया है।");
-  });
 </script>
 
 </body>
