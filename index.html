@@ -3,74 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>बबलू स्टूडियो - वेडिंग पैकेज और सर्विस</title>
+<title>बबलू स्टूडियो - ऑनलाइन बुकिंग</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#111;color:#fff}
 header{background:linear-gradient(135deg,#000,#3b2a08);padding:28px 15px;text-align:center;border-bottom:2px solid #d4af37}
 h1{color:#ffd76a;margin:0 0 8px;font-size:32px}header p{margin:5px;font-size:16px}
-.container{max-width:1150px;margin:25px auto;padding:0 15px}.intro{text-align:center;margin-bottom:22px}.intro h2{color:#ffd76a}
-.section-title{color:#ffd76a;text-align:center;margin:30px 0 18px}
+.container{max-width:1150px;margin:25px auto;padding:0 15px}.intro{text-align:center;margin-bottom:22px}.intro h2,.section-title{color:#ffd76a}
 .packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
 .card{background:#1d1d1d;border:1px solid #8f7220;border-radius:14px;padding:20px;box-shadow:0 5px 18px #0008}
-.card h3{color:#ffd76a;margin-top:0}.price{font-size:28px;color:#fff;font-weight:bold;margin:12px 0}
+.card h3{color:#ffd76a;margin-top:0}.price{font-size:28px;font-weight:bold;margin:12px 0}
 .card ul{padding-left:22px;line-height:1.8;color:#eee}
 .select{display:flex;align-items:center;gap:10px;background:#2b240f;padding:12px;border-radius:8px;margin-top:15px;cursor:pointer}
 .select input{width:20px;height:20px;accent-color:#d4af37}
-form{margin-top:28px;background:#1d1d1d;border:1px solid #8f7220;border-radius:14px;padding:22px}
-form h2{color:#ffd76a;margin-top:0}input[type=text],input[type=tel],input[type=date],input[type=number],textarea{width:100%;padding:12px;margin:7px 0 15px;border-radius:7px;border:1px solid #777;background:#292929;color:white}
-button{background:#d4af37;border:0;padding:13px 24px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:16px}
-button:hover{background:#f1cf55}.note{color:#ccc;font-size:14px}footer{text-align:center;padding:25px;color:#ccc}
+form,.summary{margin-top:28px;background:#1d1d1d;border:1px solid #8f7220;border-radius:14px;padding:22px}
+form h2,.summary h2{color:#ffd76a;margin-top:0}
+.fieldgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+label{display:block;margin-top:8px}input,textarea,select{width:100%;padding:12px;margin:7px 0 15px;border-radius:7px;border:1px solid #777;background:#292929;color:white}
+button{background:#d4af37;border:0;padding:13px 24px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:16px;margin:5px}
+button:hover{background:#f1cf55}.note{color:#ccc;font-size:14px}.amount{font-size:22px;color:#ffd76a;font-weight:bold}
+footer{text-align:center;padding:25px;color:#ccc}
 </style>
 </head>
 <body>
-<header>
-<h1>बबलू स्टूडियो</h1>
-<p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p>
-<p>📞 9565302930</p>
-</header>
+<header><h1>बबलू स्टूडियो</h1><p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p><p>📞 9565302930</p></header>
 <div class="container">
-<div class="intro"><h2>हमारे वेडिंग पैकेज और सर्विस</h2><p>अपनी पसंद के पैकेज या सर्विस चुनने के लिए चेक बॉक्स पर क्लिक करें।</p></div>
-
-<h2 class="section-title">वेडिंग पैकेज</h2>
+<div class="intro"><h2>वेडिंग पैकेज और सर्विस</h2><p>पैकेज या सर्विस चुनें और ऑनलाइन बुकिंग फॉर्म भरें।</p></div>
 <div class="packages">
-<div class="card"><h3>पैकेज 1 — सामान्य वीडियो</h3><div class="price">₹6,000</div><ul><li>सामान्य वीडियो शूट</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 1 - सामान्य वीडियो - ₹6,000"> चुनें</label></div>
-<div class="card"><h3>पैकेज 2 — प्रीमियम</h3><div class="price">₹10,000</div><ul><li>प्रीमियम वीडियो</li><li>हाइलाइट वीडियो</li><li>डिजिटल निमंत्रण वीडियो</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 2 - प्रीमियम - ₹10,000"> चुनें</label></div>
-<div class="card"><h3>पैकेज 3 — ड्रोन सहित</h3><div class="price">₹12,000</div><ul><li>सामान्य वीडियो</li><li>ड्रोन शूट</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 3 - ड्रोन सहित - ₹12,000"> चुनें</label></div>
-<div class="card"><h3>पैकेज 4 — एल्बम सहित</h3><div class="price">₹18,000</div><ul><li>सामान्य वीडियो</li><li>ड्रोन शूट</li><li>20 शीट एल्बम</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 4 - एल्बम सहित - ₹18,000"> चुनें</label></div>
-<div class="card"><h3>पैकेज 5 — प्रीमियम कम्प्लीट</h3><div class="price">₹30,000</div><ul><li>प्रीमियम वीडियो</li><li>हाइलाइट वीडियो</li><li>डिजिटल निमंत्रण वीडियो</li><li>ड्रोन शूट</li><li>प्रीमियम एल्बम</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 5 - प्रीमियम कम्प्लीट - ₹30,000"> चुनें</label></div>
-<div class="card"><h3>पैकेज 6 — वीडियो + एल्बम</h3><div class="price">₹13,000</div><ul><li>सामान्य वीडियो</li><li>एल्बम</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 6 - वीडियो + एल्बम - ₹13,000"> चुनें</label></div>
-<div class="card"><h3>पैकेज 7 — सिनेमैटिक वीडियो</h3><div class="price">₹20,000</div><ul><li>सिनेमैटिक वीडियो शूट</li><li>प्रोफेशनल वीडियो एडिटिंग</li><li>सिनेमैटिक इफेक्ट्स</li></ul><label class="select"><input type="checkbox" name="package" value="पैकेज 7 - सिनेमैटिक वीडियो - ₹20,000"> चुनें</label></div>
+<div class="card"><h3>सामान्य वीडियो</h3><div class="price">₹6,000</div><ul><li>सामान्य वीडियो शूट</li></ul><label class="select"><input type="checkbox" name="service" data-price="6000" value="सामान्य वीडियो"> चुनें</label></div>
+<div class="card"><h3>प्रीमियम पैकेज</h3><div class="price">₹10,000</div><ul><li>प्रीमियम वीडियो</li><li>हाइलाइट वीडियो</li><li>डिजिटल निमंत्रण वीडियो</li></ul><label class="select"><input type="checkbox" name="service" data-price="10000" value="प्रीमियम पैकेज"> चुनें</label></div>
+<div class="card"><h3>ड्रोन सहित पैकेज</h3><div class="price">₹12,000</div><ul><li>सामान्य वीडियो</li><li>ड्रोन शूट</li></ul><label class="select"><input type="checkbox" name="service" data-price="12000" value="ड्रोन सहित पैकेज"> चुनें</label></div>
+<div class="card"><h3>एल्बम सहित पैकेज</h3><div class="price">₹18,000</div><ul><li>सामान्य वीडियो</li><li>ड्रोन शूट</li><li>20 शीट एल्बम</li></ul><label class="select"><input type="checkbox" name="service" data-price="18000" value="एल्बम सहित पैकेज"> चुनें</label></div>
+<div class="card"><h3>प्रीमियम कम्प्लीट</h3><div class="price">₹30,000</div><ul><li>प्रीमियम वीडियो</li><li>हाइलाइट वीडियो</li><li>निमंत्रण वीडियो</li><li>ड्रोन और प्रीमियम एल्बम</li></ul><label class="select"><input type="checkbox" name="service" data-price="30000" value="प्रीमियम कम्प्लीट"> चुनें</label></div>
+<div class="card"><h3>वीडियो + एल्बम</h3><div class="price">₹13,000</div><ul><li>सामान्य वीडियो</li><li>एल्बम</li></ul><label class="select"><input type="checkbox" name="service" data-price="13000" value="वीडियो + एल्बम"> चुनें</label></div>
+<div class="card"><h3>Cinematic Video</h3><div class="price">₹20,000</div><ul><li>सिनेमैटिक शूट और एडिटिंग</li></ul><label class="select"><input type="checkbox" name="service" data-price="20000" value="Cinematic Video"> चुनें</label></div>
+<div class="card"><h3>Candid Photography</h3><div class="price">₹15,000</div><ul><li>कैंडिड फोटोग्राफी</li></ul><label class="select"><input type="checkbox" name="service" data-price="15000" value="Candid Photography"> चुनें</label></div>
+<div class="card"><h3>Drone Shoot</h3><div class="price">₹5,000</div><ul><li>ड्रोन वीडियो शूट</li></ul><label class="select"><input type="checkbox" name="service" data-price="5000" value="Drone Shoot"> चुनें</label></div>
+<div class="card"><h3>LED Wall</h3><div class="price">₹20,000</div><ul><li>LED वॉल सेटअप</li></ul><label class="select"><input type="checkbox" name="service" data-price="20000" value="LED Wall"> चुनें</label></div>
+<div class="card"><h3>Crane Set</h3><div class="price">₹14,000</div><ul><li>क्रेन कैमरा सेटअप</li></ul><label class="select"><input type="checkbox" name="service" data-price="14000" value="Crane Set"> चुनें</label></div>
+<div class="card"><h3>Album</h3><div class="price">₹400 / शीट</div><label>शीट की संख्या<input type="number" min="1" value="1" id="albumSheets"></label><label class="select"><input type="checkbox" name="service" data-price="400" value="Album" id="albumCheck"> चुनें</label></div>
 </div>
 
-<h2 class="section-title">अतिरिक्त सर्विस</h2>
-<div class="packages">
-<div class="card"><h3>🎬 Cinematic Video</h3><div class="price">₹20,000</div><ul><li>सिनेमैटिक शूट और एडिटिंग</li></ul><label class="select"><input type="checkbox" name="package" value="Cinematic Video - ₹20,000"> चुनें</label></div>
-<div class="card"><h3>📷 Candid Photography</h3><div class="price">₹15,000</div><ul><li>कैंडिड फोटोग्राफी</li></ul><label class="select"><input type="checkbox" name="package" value="Candid Photography - ₹15,000"> चुनें</label></div>
-<div class="card"><h3>🚁 Drone Shoot</h3><div class="price">₹5,000</div><ul><li>ड्रोन से वीडियो शूट</li></ul><label class="select"><input type="checkbox" name="package" value="Drone Shoot - ₹5,000"> चुनें</label></div>
-<div class="card"><h3>📺 LED Wall</h3><div class="price">₹20,000</div><ul><li>LED वॉल सेटअप</li></ul><label class="select"><input type="checkbox" name="package" value="LED Wall - ₹20,000"> चुनें</label></div>
-<div class="card"><h3>🎥 Crane Set</h3><div class="price">₹14,000</div><ul><li>क्रेन कैमरा सेटअप</li></ul><label class="select"><input type="checkbox" name="package" value="Crane Set - ₹14,000"> चुनें</label></div>
-<div class="card"><h3>📖 Album</h3><div class="price">₹400 / शीट</div><ul><li>वेडिंग एल्बम डिजाइन और प्रिंट</li></ul><label class="select"><input type="checkbox" name="package" value="Album - ₹400 प्रति शीट"> चुनें</label></div>
-</div>
-
-<form onsubmit="sendBooking(event)">
+<form id="bookingForm" onsubmit="createBill(event)">
 <h2>बुकिंग के लिए जानकारी भरें</h2>
-<label>नाम</label><input id="name" type="text" required>
-<label>मोबाइल नंबर</label><input id="phone" type="tel" required>
-<label>कार्यक्रम की तारीख</label><input id="date" type="date" required>
+<div class="fieldgrid">
+<div><label>ग्राहक का नाम *</label><input id="name" required></div>
+<div><label>पिता का नाम *</label><input id="father" required></div>
+<div><label>मोबाइल नंबर *</label><input id="phone" type="tel" required></div>
+<div><label>राज्य *</label><input id="state" required></div>
+<div><label>जिला *</label><input id="district" required></div>
+<div><label>शहर *</label><input id="city" required></div>
+<div><label>गाँव *</label><input id="village" required></div>
+<div><label>पिन कोड *</label><input id="pincode" pattern="[0-9]{6}" required></div>
+<div><label>कार्यक्रम की तारीख *</label><input id="date" type="date" required></div>
+</div>
 <label>अतिरिक्त जानकारी</label><textarea id="message" rows="3"></textarea>
-<p class="note">चयनित पैकेज/सर्विस की जानकारी WhatsApp पर भेजने के लिए नीचे बटन दबाएँ।</p>
-<button type="submit">WhatsApp पर बुकिंग भेजें</button>
+<div class="summary"><h2>पेमेंट सारांश</h2><p>कुल राशि: <span class="amount" id="total">₹0</span></p><p>25% एडवांस: <span class="amount" id="advance">₹0</span></p><p>बाकी राशि: <span class="amount" id="balance">₹0</span></p><p class="note">नोट: यह बिल/एडवांस कैलकुलेटर है। वास्तविक ऑनलाइन पेमेंट के लिए पेमेंट गेटवे कनेक्शन आवश्यक होगा।</p></div>
+<button type="submit">बुकिंग बिल बनाएं और डाउनलोड करें</button>
+<button type="button" onclick="sendWhatsApp()">WhatsApp पर बुकिंग भेजें</button>
 </form>
 </div>
 <footer>© बबलू स्टूडियो — सभी अधिकार सुरक्षित</footer>
 <script>
-function sendBooking(e){
- e.preventDefault();
- const selected=[...document.querySelectorAll('input[name="package"]:checked')].map(x=>x.value);
- if(!selected.length){alert('कृपया कम से कम एक पैकेज या सर्विस चुनें।');return;}
- const text=`नमस्ते बबलू स्टूडियो,%0Aनाम: ${encodeURIComponent(document.getElementById('name').value)}%0Aमोबाइल: ${encodeURIComponent(document.getElementById('phone').value)}%0Aतारीख: ${encodeURIComponent(document.getElementById('date').value)}%0Aचयनित पैकेज/सर्विस:%0A${selected.map(encodeURIComponent).join('%0A')}%0Aअतिरिक्त जानकारी: ${encodeURIComponent(document.getElementById('message').value)}`;
+const checks=[...document.querySelectorAll('input[name="service"]')];
+checks.forEach(c=>c.addEventListener('change',updateTotal));
+document.getElementById('albumSheets').addEventListener('input',updateTotal);
+function getSelected(){
+ return checks.filter(c=>c.checked).map(c=>({name:c.value,price:c.value==='Album'?400*Number(document.getElementById('albumSheets').value||1):Number(c.dataset.price)}));
+}
+function updateTotal(){
+ const total=getSelected().reduce((s,x)=>s+x.price,0);
+ document.getElementById('total').textContent='₹'+total.toLocaleString('en-IN');
+ document.getElementById('advance').textContent='₹'+(total*.25).toLocaleString('en-IN');
+ document.getElementById('balance').textContent='₹'+(total*.75).toLocaleString('en-IN');
+}
+function details(){
+ const selected=getSelected(); const total=selected.reduce((s,x)=>s+x.price,0);
+ return {selected,total,advance:total*.25,balance:total*.75};
+}
+function createBill(e){
+ e.preventDefault(); const d=details();
+ if(!d.selected.length){alert('कृपया कम से कम एक पैकेज या सर्विस चुनें।');return;}
+ const bill=`बबलू स्टूडियो\\nबुकिंग बिल / अनुमानित एडवांस रसीद\\n--------------------------------\\nग्राहक का नाम: ${name.value}\\nपिता का नाम: ${father.value}\\nमोबाइल: ${phone.value}\\nपता: गाँव ${village.value}, शहर ${city.value}, जिला ${district.value}, राज्य ${state.value}, पिन ${pincode.value}\\nकार्यक्रम की तारीख: ${date.value}\\n\\nचयनित सर्विस:\\n${d.selected.map(x=>x.name+' - ₹'+x.price).join('\\n')}\\n\\nकुल राशि: ₹${d.total}\\n25% एडवांस: ₹${d.advance}\\nबाकी राशि: ₹${d.balance}\\n\\nनोट: यह बिल पेमेंट की पुष्टि नहीं है। वास्तविक पेमेंट गेटवे से भुगतान होने के बाद ही बुकिंग कन्फर्म होगी।\\nधन्यवाद!`;
+ const blob=new Blob([bill],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download='Bablu_Studio_Booking_Bill.txt';a.click();URL.revokeObjectURL(url);
+}
+function sendWhatsApp(){
+ const d=details(); if(!d.selected.length){alert('कृपया सर्विस चुनें।');return;}
+ const text=`नमस्ते बबलू स्टूडियो,%0Aनाम: ${encodeURIComponent(name.value)}%0Aपिता का नाम: ${encodeURIComponent(father.value)}%0Aमोबाइल: ${encodeURIComponent(phone.value)}%0Aपता: ${encodeURIComponent(village.value+', '+city.value+', '+district.value+', '+state.value+', '+pincode.value)}%0Aकार्यक्रम की तारीख: ${encodeURIComponent(date.value)}%0Aसर्विस: ${encodeURIComponent(d.selected.map(x=>x.name+' - ₹'+x.price).join(', '))}%0Aकुल: ₹${d.total}%0A25%25 एडवांस: ₹${d.advance}`;
  window.open('https://wa.me/919565302930?text='+text,'_blank');
 }
+updateTotal();
 </script>
 </body>
 </html>
