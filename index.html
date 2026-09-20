@@ -123,31 +123,58 @@ footer{
 }
 </style>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+// Firebase configuration: replace YOUR_API_KEY with the Web App API key
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "bablu-studio.firebaseapp.com",
+  projectId: "bablu-studio",
+  storageBucket: "bablu-studio.firebasestorage.app",
+  messagingSenderId: "510616423703",
+  appId: "1:510616423703:web:59f5f609dab410c22d7b52",
+  measurementId: "G-2HQFT3NXJJ"
+};
+let firebaseReady = false;
+try {
+  if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+    firebase.initializeApp(firebaseConfig);
+    firebaseReady = true;
+  }
+} catch (error) { console.error("Firebase initialization failed:", error); }
+</script>
 </head>
 <body>
 <section id="loginSection" class="card" style="margin-top:24px;">
-  <h2>🔐 लॉगिन पोर्टल</h2>
+  <h2>🔐 सुरक्षित लॉगिन पोर्टल</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;">
     <div class="card" style="margin:0;">
-      <h3>👤 ग्राहक लॉगिन</h3>
-      <p class="note">अपनी बुकिंग की जानकारी देखने के लिए ग्राहक मोबाइल नंबर दर्ज करें।</p>
-      <label for="customerLoginMobile">मोबाइल नंबर</label>
-      <input id="customerLoginMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर">
+      <h3>👤 ग्राहक लॉगिन / रजिस्ट्रेशन</h3>
+      <p class="note">ईमेल और पासवर्ड से अपना अकाउंट बनाएँ या लॉगिन करें।</p>
+      <label for="customerEmail">ईमेल</label>
+      <input id="customerEmail" type="email" placeholder="customer@example.com" autocomplete="email">
+      <label for="customerPassword">पासवर्ड</label>
+      <input id="customerPassword" type="password" placeholder="कम से कम 6 अक्षर" autocomplete="current-password">
+      <button type="button" onclick="customerRegister()">नया अकाउंट बनाएँ</button>
       <button type="button" onclick="customerPortalLogin()">ग्राहक लॉगिन</button>
       <p id="customerLoginStatus" class="note">लॉगिन नहीं किया गया है।</p>
       <button type="button" onclick="customerPortalLogout()">लॉगआउट</button>
     </div>
     <div class="card" style="margin:0;">
       <h3>🛡️ एडमिन लॉगिन</h3>
-      <p class="note">बुकिंग स्वीकार/अस्वीकार और पेमेंट वेरिफिकेशन के लिए।</p>
-      <label for="adminLoginPin">एडमिन PIN</label>
-      <input id="adminLoginPin" type="password" inputmode="numeric" maxlength="8" placeholder="एडमिन PIN">
+      <p class="note">एडमिन अकाउंट से बुकिंग मैनेजमेंट के लिए।</p>
+      <label for="adminEmail">एडमिन ईमेल</label>
+      <input id="adminEmail" type="email" placeholder="admin@example.com" autocomplete="email">
+      <label for="adminPassword">एडमिन पासवर्ड</label>
+      <input id="adminPassword" type="password" placeholder="एडमिन पासवर्ड" autocomplete="current-password">
       <button type="button" onclick="adminPortalLogin()">एडमिन लॉगिन</button>
       <p id="adminLoginStatus" class="note">एडमिन लॉगिन नहीं किया गया है।</p>
       <button type="button" onclick="adminPortalLogout()">लॉगआउट</button>
     </div>
   </div>
-  <p class="note">नोट: यह अभी डेमो लॉगिन है। वास्तविक सुरक्षित लॉगिन के लिए Firebase/Supabase जैसे बैकएंड की जरूरत होगी।</p>
+  <p class="note">नोट: Firebase कॉन्फ़िगरेशन पूरा होने और Firestore में एडमिन रोल सेट करने के बाद ही वास्तविक सुरक्षित एडमिन एक्सेस काम करेगा।</p>
 </section>
 
 <section class="professional-hero" style="text-align:center;background:linear-gradient(135deg,#fffaf0,#ffffff);border:1px solid #ead9ad;">
@@ -608,5 +635,62 @@ if(typeof oldVerify==='function'){
 }
 </script>
 
+<script>
+// ===== Firebase authentication and role helpers =====
+let currentUser = null;
+let currentRole = null;
+function authMessage(id, text){ const el=document.getElementById(id); if(el) el.textContent=text; }
+function requireFirebase(){
+  if(!firebaseReady){ alert('पहले Firebase Web App की API key index.html में डालें।'); return false; }
+  return true;
+}
+async function customerRegister(){
+  if(!requireFirebase()) return;
+  const email=document.getElementById('customerEmail').value.trim();
+  const password=document.getElementById('customerPassword').value;
+  if(!email || password.length<6){ alert('सही ईमेल और कम से कम 6 अक्षर का पासवर्ड डालें।'); return; }
+  try{
+    const cred=await firebase.auth().createUserWithEmailAndPassword(email,password);
+    await firebase.firestore().collection('users').doc(cred.user.uid).set({email,role:'customer',createdAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    authMessage('customerLoginStatus','ग्राहक अकाउंट बन गया: '+email);
+  }catch(e){ alert('रजिस्ट्रेशन असफल: '+e.message); }
+}
+async function customerPortalLogin(){
+  if(!requireFirebase()) return;
+  const email=document.getElementById('customerEmail').value.trim();
+  const password=document.getElementById('customerPassword').value;
+  try{
+    const cred=await firebase.auth().signInWithEmailAndPassword(email,password);
+    currentUser=cred.user; currentRole='customer';
+    authMessage('customerLoginStatus','ग्राहक लॉगिन सफल: '+currentUser.email);
+  }catch(e){ alert('ग्राहक लॉगिन असफल: '+e.message); }
+}
+async function adminPortalLogin(){
+  if(!requireFirebase()) return;
+  const email=document.getElementById('adminEmail').value.trim();
+  const password=document.getElementById('adminPassword').value;
+  try{
+    const cred=await firebase.auth().signInWithEmailAndPassword(email,password);
+    const snap=await firebase.firestore().collection('users').doc(cred.user.uid).get();
+    if(!snap.exists || snap.data().role!=='admin'){
+      await firebase.auth().signOut();
+      alert('इस अकाउंट को एडमिन की अनुमति नहीं है। Firestore में users/'+cred.user.uid+' का role = admin सेट करें।');
+      return;
+    }
+    currentUser=cred.user; currentRole='admin';
+    authMessage('adminLoginStatus','एडमिन लॉगिन सफल: '+currentUser.email);
+  }catch(e){ alert('एडमिन लॉगिन असफल: '+e.message); }
+}
+async function customerPortalLogout(){ if(firebaseReady) await firebase.auth().signOut(); currentUser=null; currentRole=null; authMessage('customerLoginStatus','लॉगआउट हो गया।'); }
+async function adminPortalLogout(){ if(firebaseReady) await firebase.auth().signOut(); currentUser=null; currentRole=null; authMessage('adminLoginStatus','लॉगआउट हो गया।'); }
+if(firebaseReady){
+  firebase.auth().onAuthStateChanged(async user=>{
+    currentUser=user;
+    if(user){
+      try{ const snap=await firebase.firestore().collection('users').doc(user.uid).get(); currentRole=snap.exists?snap.data().role:null; }catch(e){}
+    }else currentRole=null;
+  });
+}
+</script>
 </body>
 </html>
