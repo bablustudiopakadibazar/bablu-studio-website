@@ -25,9 +25,9 @@ button{background:#d4af37;border:0;padding:13px 24px;border-radius:8px;font-weig
 button:hover{background:#f1cf55}.note{color:#ccc;font-size:14px}.amount{font-size:22px;color:#ffd76a;font-weight:bold}
 footer{text-align:center;padding:25px;color:#ccc}
 
-.login-box{max-width:520px;margin:25px auto;background:#1d1d1d;border:1px solid #8f7220;border-radius:14px;padding:22px}
-.login-box h2{color:#ffd76a;margin-top:0}.login-status{color:#9cff9c;margin:10px 0}
-.logout{background:#7d2424;color:#fff}.payment-box{margin-top:20px;padding:18px;background:#241f10;border:1px solid #8f7220;border-radius:12px}.locked{opacity:.65}
+
+.login-box h2{color:#ffd76a;margin-top:0}
+.payment-box{margin-top:20px;padding:18px;background:#241f10;border:1px solid #8f7220;border-radius:12px}.locked{opacity:.65}
 </style>
 
 <style>
@@ -38,20 +38,104 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .field-error{border:2px solid #d33!important;background:#fff6f6!important}
 </style>
 
+
+<style>
+:root{
+  --brand:#b8860b;
+  --brand-dark:#7a5200;
+  --ink:#1d2433;
+  --muted:#6b7280;
+  --surface:#ffffff;
+  --soft:#f7f5f0;
+}
+*{box-sizing:border-box}
+body{
+  margin:0!important;
+  font-family:Inter,Segoe UI,Arial,sans-serif!important;
+  color:var(--ink)!important;
+  background:linear-gradient(180deg,#faf9f6 0%,#f3f5f8 100%)!important;
+  line-height:1.6!important;
+}
+header{
+  background:linear-gradient(135deg,#111827,#293241)!important;
+  color:#fff!important;
+  padding:34px 22px!important;
+  border-bottom:4px solid var(--brand)!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.16)!important;
+}
+header h1{font-size:clamp(28px,5vw,48px)!important;letter-spacing:.5px!important;margin:0 0 8px!important}
+header p{opacity:.9!important;font-size:16px!important}
+main,.container{max-width:1180px!important;margin:0 auto!important;padding:24px!important}
+section,.card,form{
+  background:rgba(255,255,255,.96)!important;
+  border:1px solid #e8e5de!important;
+  border-radius:18px!important;
+  padding:24px!important;
+  margin:20px 0!important;
+  box-shadow:0 10px 30px rgba(17,24,39,.06)!important;
+}
+h2{color:#202938!important;font-size:clamp(22px,3vw,32px)!important;margin-top:0!important}
+h3{color:var(--brand-dark)!important}
+button,.btn,input[type=submit]{
+  background:linear-gradient(135deg,var(--brand),#d6a93a)!important;
+  color:#fff!important;
+  border:0!important;
+  border-radius:10px!important;
+  padding:12px 18px!important;
+  font-weight:700!important;
+  cursor:pointer!important;
+  box-shadow:0 5px 14px rgba(184,134,11,.2)!important;
+}
+button:hover,.btn:hover{filter:brightness(.96);transform:translateY(-1px)}
+button:disabled{opacity:.5!important;cursor:not-allowed!important}
+input,select,textarea{
+  width:100%!important;
+  border:1px solid #d7dce3!important;
+  border-radius:10px!important;
+  padding:12px!important;
+  background:#fff!important;
+  color:var(--ink)!important;
+  font-size:15px!important;
+}
+label{font-weight:600!important;color:#374151!important}
+.package,.service,.price-card,.feature-card{
+  border:1px solid #e8e5de!important;
+  border-radius:15px!important;
+  padding:18px!important;
+  background:linear-gradient(180deg,#fff,#fcfbf8)!important;
+  transition:all .2s ease!important;
+}
+.package:hover,.service:hover,.price-card:hover,.feature-card:hover{
+  transform:translateY(-3px)!important;
+  box-shadow:0 12px 25px rgba(17,24,39,.1)!important;
+}
+.note{color:var(--muted)!important;font-size:14px!important}
+#galleryGrid img,#galleryGrid video{box-shadow:0 5px 16px rgba(0,0,0,.12)!important}
+footer{
+  background:#111827!important;color:#e5e7eb!important;
+  padding:28px 20px!important;text-align:center!important;margin-top:35px!important;
+}
+@media(max-width:700px){
+  main,.container{padding:12px!important}
+  section,.card,form{padding:16px!important;border-radius:14px!important}
+  button{width:100%;margin:4px 0!important}
+  header{text-align:center!important;padding:28px 15px!important}
+}
+</style>
+
 </head>
 <body>
+<section class="professional-hero" style="text-align:center;background:linear-gradient(135deg,#fffaf0,#ffffff);border:1px solid #ead9ad;">
+  <div style="display:inline-block;padding:6px 14px;border-radius:30px;background:#fff1c7;color:#7a5200;font-weight:700;font-size:13px;">WEDDING • PHOTO • VIDEO • CINEMATIC</div>
+  <h2 style="font-size:clamp(26px,4vw,42px)!important;margin:14px 0 8px!important;">आपके खास पलों की प्रोफेशनल यादें</h2>
+  <p style="max-width:760px;margin:0 auto;color:#5b6472;">बबलू स्टूडियो में शादी, प्री-वेडिंग, सिनेमैटिक वीडियो, ड्रोन शूट और प्रीमियम एल्बम की सेवाएँ एक ही जगह पाएँ।</p>
+</section>
+
 <header><h1>बबलू स्टूडियो</h1><p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p><p>📞 9565302930</p></header>
 <div class="container">
 <div class="intro"><h2>वेडिंग पैकेज और सर्विस</h2><p>पैकेज या सर्विस चुनें और ऑनलाइन बुकिंग फॉर्म भरें।</p></div>
-<div class="login-box" id="loginBox">
-<h2>📱 ग्राहक लॉगिन</h2>
-<p>मोबाइल नंबर से लॉगिन करके बुकिंग फॉर्म भरें।</p>
-<label>मोबाइल नंबर</label>
-<input id="loginMobile" type="tel" pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर">
-<button type="button" onclick="customerLogin()">लॉगिन करें</button>
-<button type="button" class="logout" onclick="customerLogout()">लॉगआउट</button>
-<div id="loginStatus" class="login-status"></div>
-<p class="note">डेमो लॉगिन: वास्तविक OTP सुरक्षा के लिए Firebase/बैकएंड जोड़ना आवश्यक है।</p>
+
+
 </div>
 
 <div class="packages">
@@ -167,18 +251,8 @@ window.addEventListener('load',()=>{
  const utr=localStorage.getItem('babluPaymentUTR'); if(utr) document.getElementById('utr').value=utr;
 });
 
-function customerLogin(){
- const mobile=document.getElementById('loginMobile').value.trim();
- if(!/^[0-9]{10}$/.test(mobile)){alert('कृपया सही 10 अंकों का मोबाइल नंबर दर्ज करें।');return;}
- localStorage.setItem('babluCustomerMobile',mobile);
- document.getElementById('phone').value=mobile;
- document.getElementById('loginStatus').textContent='लॉगिन सफल: '+mobile;
- alert('डेमो लॉगिन सफल हुआ।');
-}
-function customerLogout(){
- localStorage.removeItem('babluCustomerMobile');
- document.getElementById('loginStatus').textContent='आप लॉगआउट हो गए हैं।';
-}
+
+
 window.addEventListener('load',()=>{
  const mobile=localStorage.getItem('babluCustomerMobile');
  if(mobile){
