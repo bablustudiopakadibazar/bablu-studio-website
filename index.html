@@ -506,5 +506,21 @@ function clearGallery(){if(confirm('क्या पूरी गैलरी �
 window.addEventListener('load',renderGallery);
 </script>
 
+
+<script>
+function sendBookingToWhatsApp(booking) {
+  const whatsappNumber = "919565302930"; // अपना WhatsApp नंबर यहाँ डालें
+  const message = [
+    "📸 *Bablu Studio Booking Request*",
+    "👤 नाम: " + (booking.name || ""),
+    "📞 मोबाइल: " + (booking.phone || ""),
+    "📦 पैकेज: " + (booking.package || ""),
+    "📅 तारीख: " + (booking.date || ""),
+    "📍 स्थान: " + (booking.location || ""),
+    "📝 जानकारी: " + (booking.message || "")
+  ].join("\n");
+  window.open("https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message), "_blank");
+}
+</script>
 </body>
 </html>
