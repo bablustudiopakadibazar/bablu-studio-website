@@ -186,8 +186,9 @@ footer{
   <button type="button" onclick="openAdminLogin()">Admin Control Panel खोलें</button>
   <div id="adminLoginBox" style="display:none;margin-top:15px;text-align:left;">
     <label>एडमिन मोबाइल नंबर</label><input id="adminMobile" type="tel" value="9565302930" maxlength="10">
-    <button type="button" onclick="requestAdminOtp()">OTP भेजें</button>
-    <p id="otpNotice" class="note">वास्तविक SMS OTP के लिए Firebase Phone Authentication कनेक्शन आवश्यक है।</p>
+    <label>पासवर्ड</label><input id="adminPassword" type="password" placeholder="पासवर्ड दर्ज करें">
+    <button type="button" onclick="adminPasswordLogin()">Login करें</button>
+    <p id="loginNotice" class="note">मोबाइल नंबर और पासवर्ड डालकर लॉगिन करें।</p>
   </div>
 </section>
 <footer>© बबलू स्टूडियो — सभी अधिकार सुरक्षित</footer>
@@ -364,6 +365,7 @@ if (stateSelect && citySelect) {
   };
 
   // फॉर्म का ड्राफ्ट सेव करें
+  const fields = ['name','father','phone','state','district','city','village','pincode','date','message'];
   if(form){
     const saveDraft=()=>{
       const data={};
@@ -506,27 +508,40 @@ window.addEventListener('load',renderGallery);
 
 <script>
 function sendBookingToWhatsApp(booking) {
-  const whatsappNumber = "919565302930"; // अपना WhatsApp नंबर यहाँ डालें
+  const whatsappNumber = "919565302930";
   const message = [
-    "📸 *Bablu Studio Booking Request*",
-    "👤 नाम: " + (booking.name || ""),
-    "📞 मोबाइल: " + (booking.phone || ""),
-    "📦 पैकेज: " + (booking.package || ""),
-    "📅 तारीख: " + (booking.date || ""),
-    "📍 स्थान: " + (booking.location || ""),
-    "📝 जानकारी: " + (booking.message || "")
+    "📸 Bablu Studio Booking Request",
+    "नाम: " + (booking.name || ""),
+    "मोबाइल: " + (booking.phone || ""),
+    "पैकेज: " + (booking.package || ""),
+    "तारीख: " + (booking.date || ""),
+    "स्थान: " + (booking.location || ""),
+    "जानकारी: " + (booking.message || "")
   ].join("\n");
   window.open("https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message), "_blank");
 }
-<script>
-function openAdminLogin(){document.getElementById('adminLoginBox').style.display='block';}
-function requestAdminOtp(){
- const n=(document.getElementById('adminMobile').value||'').trim();
- if(n!=='9565302930'){alert('कृपया अधिकृत मोबाइल नंबर डालें।');return;}
- document.getElementById('otpNotice').textContent='OTP सुविधा सक्रिय करने के लिए Firebase Phone Authentication सेटअप करना होगा।';
- alert('Firebase OTP अभी कनेक्ट नहीं है। पहले Firebase Phone Authentication कॉन्फ़िगर करें।');
+function openAdminLogin(){
+  const box=document.getElementById('adminLoginBox');
+  if(box) box.style.display='block';
 }
-</script>
+function adminPasswordLogin(){
+  const n=(document.getElementById('adminMobile').value||'').replace(/\D/g,'');
+  const pw=document.getElementById('adminPassword').value||'';
+  if(n!=='9565302930' || pw!=='Bablu@134317'){
+    alert('मोबाइल नंबर या पासवर्ड गलत है।');
+    return;
+  }
+  localStorage.setItem('babluAdminLoggedIn','yes');
+  const notice=document.getElementById('loginNotice');
+  if(notice) notice.textContent='लॉगिन सफल! एडमिन कंट्रोल पैनल खोलने के लिए नीचे जाएँ।';
+  let panel=document.getElementById('adminPanel');
+  if(!panel){
+    panel=document.createElement('div'); panel.id='adminPanel'; panel.className='card';
+    panel.innerHTML='<h2>⚙️ Admin Control Panel</h2><p>एडमिन लॉगिन सफल हुआ। यहाँ से वेबसाइट की सेटिंग्स नियंत्रित की जा सकती हैं।</p><button type="button" onclick="location.reload()">पैनल रीफ्रेश करें</button>';
+    document.getElementById('adminAccess').appendChild(panel);
+  }
+  panel.style.display='block';
+}
 </script>
 </body>
 </html>
