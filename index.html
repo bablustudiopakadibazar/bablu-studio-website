@@ -531,5 +531,44 @@ function sendBookingToWhatsApp(booking) {
   window.open("https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message), "_blank");
 }
 </script>
+
+<!-- Bablu Studio Star Rating -->
+<style>
+.star-rating-widget{margin:20px 0;padding:16px;border:1px solid #e5e7eb;border-radius:14px;background:#fff}
+.star-rating-widget h3{margin:0 0 10px;font-size:18px}
+.star-rating-widget .stars{display:flex;gap:6px;flex-wrap:wrap}
+.star-rating-widget .star-btn{border:0;background:transparent;font-size:30px;cursor:pointer;color:#cbd5e1;padding:2px 5px}
+.star-rating-widget .star-btn.active{color:#f59e0b}
+.star-rating-widget .rating-message{margin-top:8px;font-size:14px;color:#475569}
+</style>
+<div class="star-rating-widget" id="star-rating-widget">
+  <h3>⭐ हमें रेटिंग दें</h3>
+  <div class="stars" aria-label="Star rating">
+    <button class="star-btn" data-rating="1" aria-label="1 star">★</button>
+    <button class="star-btn" data-rating="2" aria-label="2 stars">★</button>
+    <button class="star-btn" data-rating="3" aria-label="3 stars">★</button>
+    <button class="star-btn" data-rating="4" aria-label="4 stars">★</button>
+    <button class="star-btn" data-rating="5" aria-label="5 stars">★</button>
+  </div>
+  <div class="rating-message" id="rating-message">अपना अनुभव बताने के लिए स्टार चुनें।</div>
+</div>
+<script>
+(function(){
+  const box=document.getElementById('star-rating-widget');
+  if(!box) return;
+  const buttons=box.querySelectorAll('.star-btn');
+  const msg=box.querySelector('#rating-message');
+  buttons.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const rating=Number(btn.dataset.rating);
+      buttons.forEach(b=>b.classList.toggle('active',Number(b.dataset.rating)<=rating));
+      msg.textContent='धन्यवाद! आपने '+rating+' स्टार की रेटिंग दी।';
+      localStorage.setItem('babluStudioRating',String(rating));
+    });
+  });
+  const saved=Number(localStorage.getItem('babluStudioRating')||0);
+  if(saved){buttons.forEach(b=>b.classList.toggle('active',Number(b.dataset.rating)<=saved));msg.textContent='आपकी रेटिंग: '+saved+'/5 स्टार';}
+})();
+</script>
 </body>
 </html>
