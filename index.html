@@ -126,7 +126,9 @@ footer{
 <style>
 .payment-summary-highlight{font-weight:800!important;color:#b91c1c!important;background:#fff3cd!important;padding:4px 10px!important;border-radius:6px!important;display:inline-block!important;text-shadow:0 0 0.3px currentColor;}
 </style>
-</head>
+<style>
+.admin-access{border:2px solid #b8860b!important;background:linear-gradient(135deg,#fff8df,#fff)!important}.admin-heading,.admin-top{display:flex;justify-content:space-between;align-items:center;gap:15px}.admin-kicker{font-size:12px;letter-spacing:2px;color:#9a6b00;font-weight:800}.admin-badge{background:#202938;color:#ffd76a;padding:7px 12px;border-radius:999px;font-weight:800}.admin-panel{margin-top:20px;border-top:1px solid #eadfbd;padding-top:20px}.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:15px 0}.admin-stats>div{background:#202938;color:#fff;border-radius:12px;padding:15px}.admin-stats b{display:block;font-size:25px;color:#ffd76a}.admin-stats span{font-size:13px}.admin-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.admin-actions button{margin:0}.small-btn{padding:8px 12px!important;font-size:13px!important}.admin-message{margin-top:15px;padding:12px;border-radius:10px;background:#f8f5ea;color:#374151;border:1px solid #eadfbd}@media(max-width:600px){.admin-heading{align-items:flex-start;flex-direction:column}.admin-top{align-items:flex-start}}
+</style></head>
 <body>
 <section class="professional-hero" style="text-align:center;background:linear-gradient(135deg,#fffaf0,#ffffff);border:1px solid #ead9ad;">
   <div style="display:inline-block;padding:6px 14px;border-radius:30px;background:#fff1c7;color:#7a5200;font-weight:700;font-size:13px;">WEDDING • PHOTO • VIDEO • CINEMATIC</div>
@@ -180,16 +182,15 @@ footer{
 </form>
 </div>
 
-<section id="adminAccess" class="card" style="border:2px solid #b8860b;background:linear-gradient(135deg,#fff8df,#ffffff);text-align:center;">
-  <h2>🔐 Admin Control Panel</h2>
-  <p>वेबसाइट की सेटिंग्स और बुकिंग प्रबंधन के लिए एडमिन लॉगिन करें।</p>
-  <button type="button" onclick="openAdminLogin()">Admin Control Panel खोलें</button>
+<section id="adminAccess" class="card admin-access">
+  <div class="admin-heading"><div><span class="admin-kicker">STUDIO MANAGEMENT</span><h2>🔐 Admin Control Panel</h2><p class="note">बुकिंग, पैकेज और वेबसाइट सेटिंग्स को एक जगह से नियंत्रित करें।</p></div><span class="admin-badge">ADMIN</span></div>
+  <button type="button" onclick="openAdminLogin()">⚙️ Admin Control Panel खोलें</button>
   <div id="adminLoginBox" style="display:none;margin-top:15px;text-align:left;">
-    <label>एडमिन मोबाइल नंबर</label><input id="adminMobile" type="tel" value="9565302930" maxlength="10">
-    <label>पासवर्ड</label><input id="adminPassword" type="password" placeholder="पासवर्ड दर्ज करें">
-    <button type="button" onclick="adminPasswordLogin()">Login करें</button>
+    <div class="fieldgrid"><div><label>एडमिन मोबाइल नंबर</label><input id="adminMobile" type="tel" value="9565302930" maxlength="10"></div><div><label>पासवर्ड</label><input id="adminPassword" type="password" placeholder="पासवर्ड दर्ज करें"></div></div>
+    <button type="button" onclick="adminPasswordLogin()">🔓 Login करें</button>
     <p id="loginNotice" class="note">मोबाइल नंबर और पासवर्ड डालकर लॉगिन करें।</p>
   </div>
+  <div id="adminPanel" class="admin-panel" style="display:none;"></div>
 </section>
 <footer>© बबलू स्टूडियो — सभी अधिकार सुरक्षित</footer>
 <script>
@@ -509,39 +510,31 @@ window.addEventListener('load',renderGallery);
 <script>
 function sendBookingToWhatsApp(booking) {
   const whatsappNumber = "919565302930";
-  const message = [
-    "📸 Bablu Studio Booking Request",
-    "नाम: " + (booking.name || ""),
-    "मोबाइल: " + (booking.phone || ""),
-    "पैकेज: " + (booking.package || ""),
-    "तारीख: " + (booking.date || ""),
-    "स्थान: " + (booking.location || ""),
-    "जानकारी: " + (booking.message || "")
-  ].join("\n");
+  const message = ["📸 Bablu Studio Booking Request","नाम: " + (booking.name || ""),"मोबाइल: " + (booking.phone || ""),"पैकेज: " + (booking.package || ""),"तारीख: " + (booking.date || ""),"स्थान: " + (booking.location || ""),"जानकारी: " + (booking.message || "")].join("\n");
   window.open("https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message), "_blank");
 }
-function openAdminLogin(){
-  const box=document.getElementById('adminLoginBox');
-  if(box) box.style.display='block';
-}
+function openAdminLogin(){ const box=document.getElementById('adminLoginBox'); if(box) box.style.display=box.style.display==='none'?'block':'none'; }
 function adminPasswordLogin(){
   const n=(document.getElementById('adminMobile').value||'').replace(/\D/g,'');
   const pw=document.getElementById('adminPassword').value||'';
-  if(n!=='9565302930' || pw!=='Bablu@134317'){
-    alert('मोबाइल नंबर या पासवर्ड गलत है।');
-    return;
-  }
+  if(n!=='9565302930' || pw!=='Bablu@134317'){ alert('मोबाइल नंबर या पासवर्ड गलत है।'); return; }
   localStorage.setItem('babluAdminLoggedIn','yes');
-  const notice=document.getElementById('loginNotice');
-  if(notice) notice.textContent='लॉगिन सफल! एडमिन कंट्रोल पैनल खोलने के लिए नीचे जाएँ।';
-  let panel=document.getElementById('adminPanel');
-  if(!panel){
-    panel=document.createElement('div'); panel.id='adminPanel'; panel.className='card';
-    panel.innerHTML='<h2>⚙️ Admin Control Panel</h2><p>एडमिन लॉगिन सफल हुआ। यहाँ से वेबसाइट की सेटिंग्स नियंत्रित की जा सकती हैं।</p><button type="button" onclick="location.reload()">पैनल रीफ्रेश करें</button>';
-    document.getElementById('adminAccess').appendChild(panel);
-  }
-  panel.style.display='block';
+  document.getElementById('loginNotice').textContent='✅ लॉगिन सफल हुआ।';
+  renderAdminPanel();
 }
+function renderAdminPanel(){
+ const panel=document.getElementById('adminPanel'); if(!panel)return; panel.style.display='block';
+ const requested=localStorage.getItem('babluBookingRequested')==='yes';
+ panel.innerHTML=`<div class="admin-top"><div><h3>📊 Studio Dashboard</h3><p class="note">स्वागत है, Bablu Studio Admin</p></div><button type="button" class="small-btn" onclick="adminLogout()">🚪 Logout</button></div>
+ <div class="admin-stats"><div><b>${requested?'1':'0'}</b><span>बुकिंग रिक्वेस्ट</span></div><div><b>${document.querySelectorAll('input[name="service"]:checked').length}</b><span>चयनित सर्विस</span></div><div><b>₹${(typeof details==='function'?details().total:0).toLocaleString('en-IN')}</b><span>वर्तमान कुल</span></div></div>
+ <div class="admin-actions"><button type="button" onclick="showBookingInfo()">📋 बुकिंग डिटेल्स</button><button type="button" onclick="focusPackages()">📦 पैकेज देखें</button><button type="button" onclick="downloadAdminData()">⬇️ डेटा डाउनलोड</button><button type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">🏠 वेबसाइट होम</button><button type="button" onclick="clearLocalBooking()">🧹 बुकिंग डेटा साफ करें</button><button type="button" onclick="location.reload()">🔄 रिफ्रेश</button></div><div id="adminMessage" class="admin-message">यह पैनल इस ब्राउज़र में सेव होने वाली बुकिंग/सेटिंग्स को नियंत्रित करता है।</div>`;
+}
+function showBookingInfo(){ const d=localStorage.getItem('babluBookingRequested')==='yes'?'बुकिंग रिक्वेस्ट मौजूद है। ग्राहक की पूरी जानकारी WhatsApp पर भेजी गई होगी।':'अभी कोई बुकिंग रिक्वेस्ट सेव नहीं है।'; document.getElementById('adminMessage').textContent=d; }
+function focusPackages(){ const el=document.querySelector('.packages'); if(el)el.scrollIntoView({behavior:'smooth'}); document.getElementById('adminMessage').textContent='पैकेज सेक्शन खोल दिया गया है।'; }
+function downloadAdminData(){ const data={bookingRequested:localStorage.getItem('babluBookingRequested')||'no',bookingStatus:localStorage.getItem('babluBookingApproved')||'pending',exportedAt:new Date().toISOString()}; const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='bablu-studio-admin-data.json';a.click(); }
+function clearLocalBooking(){ if(confirm('क्या इस ब्राउज़र की बुकिंग स्थिति साफ करनी है?')){localStorage.removeItem('babluBookingRequested');localStorage.removeItem('babluBookingApproved');renderAdminPanel();} }
+function adminLogout(){ localStorage.removeItem('babluAdminLoggedIn'); document.getElementById('adminPanel').style.display='none'; document.getElementById('loginNotice').textContent='आप लॉगआउट हो गए हैं।'; }
+window.addEventListener('load',()=>{ if(localStorage.getItem('babluAdminLoggedIn')==='yes') renderAdminPanel(); });
 </script>
 </body>
 </html>
