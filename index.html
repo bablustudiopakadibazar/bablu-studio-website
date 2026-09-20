@@ -121,44 +121,6 @@ footer{
 }
 </style>
 
-<style>
-/* Highlight package details for better readability */
-.packages .card h3{
-  color:#8a5a00!important;
-  font-size:22px!important;
-  font-weight:800!important;
-  letter-spacing:.2px!important;
-  text-shadow:0 1px 0 #fff3c4!important;
-}
-.packages .card .price{
-  color:#b45309!important;
-  font-size:30px!important;
-  font-weight:900!important;
-  background:linear-gradient(90deg,#fff4c2,#fffaf0)!important;
-  border-left:5px solid #d4af37!important;
-  padding:6px 12px!important;
-  border-radius:8px!important;
-  display:inline-block!important;
-}
-.packages .card ul{
-  color:#263244!important;
-  font-size:16px!important;
-  font-weight:600!important;
-  line-height:1.9!important;
-}
-.packages .card ul li::marker{color:#b8860b!important}
-.packages .card ul li{
-  margin-bottom:3px!important;
-}
-.packages .card .select{
-  color:#6b4300!important;
-  font-weight:800!important;
-  font-size:16px!important;
-  border:1px solid #e3c76b!important;
-  background:linear-gradient(90deg,#fff3c4,#fffaf0)!important;
-}
-.packages .card .select input{accent-color:#b8860b!important}
-</style>
 
 <style>
 .payment-summary-highlight{font-weight:800!important;color:#b91c1c!important;background:#fff3cd!important;padding:4px 10px!important;border-radius:6px!important;display:inline-block!important;text-shadow:0 0 0.3px currentColor;}
@@ -196,20 +158,18 @@ footer{
 
 <section id="gallerySection" class="card" style="margin-top:24px;">
   <h2>📸 फोटो और वीडियो गैलरी</h2>
-  <p>हमारे स्टूडियो के फोटो और वीडियो डेमो देखें।</p>
-  <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px;"></div>
-  <button type="button" onclick="openGalleryAdmin()">🔐 Admin Gallery</button>
-  <div id="galleryAdminBox" style="display:none;margin-top:15px;padding:15px;border:1px dashed #b8860b;border-radius:12px;">
-    <h3>Gallery Admin</h3>
-    <label>फोटो/वीडियो चुनें:
+  <p>यहाँ अपने स्टूडियो के फोटो और वीडियो डेमो जोड़ें।</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+    <label>डेमो चुनें:
       <input type="file" id="galleryFiles" accept="image/*,video/*" multiple>
     </label>
     <button type="button" onclick="clearGallery()">🗑️ गैलरी साफ करें</button>
-    <p class="note">फाइलें इस ब्राउज़र के लोकल स्टोरेज में सेव होंगी।</p>
   </div>
+  <p class="note">नोट: अभी डेमो इसी ब्राउज़र में सेव रहेगा। दूसरे ग्राहकों को दिखाने के लिए फाइलें वेबसाइट/स्टोरेज पर अपलोड करनी होंगी।</p>
+  <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px;"></div>
 </section>
 
-<form id="bookingForm" onsubmit="createBill(event)">
+<form id="bookingForm" onsubmit="submitBookingRequest(event)">
 <h2>बुकिंग के लिए जानकारी भरें</h2>
 <div class="fieldgrid">
 <div><label>ग्राहक का नाम *</label><input id="name" required></div>
@@ -224,12 +184,11 @@ footer{
 </div>
 <label>अतिरिक्त जानकारी</label><textarea id="message" rows="3"></textarea>
 <p id="bookingStatus" class="note">बुकिंग स्थिति: स्टूडियो की अनुमति लंबित है।</p>
-<button type="button" onclick="submitBookingRequest()">📩 बुकिंग रिक्वेस्ट भेजें</button>
+<button type="submit">📩 Submit / WhatsApp पर बुकिंग भेजें</button>
 <button type="button" onclick="adminApproveBooking()">✅ एडमिन: बुकिंग स्वीकार करें</button>
 <button type="button" onclick="adminRejectBooking()">❌ एडमिन: बुकिंग अस्वीकार करें</button>
 <button type="button" onclick="adminVerify()">स्टूडियो एडमिन: पेमेंट वेरिफाई करें</button></div><div class="summary"><h2>पेमेंट सारांश</h2><p>कुल राशि: <span class="amount" id="total">₹0</span></p><p>25% एडवांस: <span class="amount" id="advance">₹0</span></p><p>बाकी राशि: <span class="amount" id="balance">₹0</span></p><p class="note">नोट: यह बिल/एडवांस कैलकुलेटर है। वास्तविक ऑनलाइन पेमेंट के लिए पेमेंट गेटवे कनेक्शन आवश्यक होगा।</p></div>
 <button id="billButton" type="submit" disabled>🔒 पेमेंट वेरिफिकेशन के बाद बिल बनाएं</button>
-<button type="button" onclick="sendWhatsApp()">WhatsApp पर बुकिंग भेजें</button>
 </form>
 </div>
 <footer>© बबलू स्टूडियो — सभी अधिकार सुरक्षित</footer>
@@ -264,10 +223,6 @@ function sendWhatsApp(){
 }
 updateTotal();
 
- const utr=document.getElementById('utr').value.trim();
- if(!utr){alert('कृपया UTR/ट्रांजैक्शन आईडी दर्ज करें।');return;}
- alert('पेमेंट विवरण सेव हो गया है। अब स्टूडियो से वेरिफिकेशन करवाइए।');
-}
 function adminVerify(){
  const pin=prompt('एडमिन PIN दर्ज करें:');
  if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
@@ -275,7 +230,7 @@ function adminVerify(){
  alert('पेमेंट वेरिफाई कर दिया गया है।');
 }
 window.addEventListener('load',()=>{
- if(status==='yes'){
+ if(localStorage.getItem('babluBookingApproved')==='yes'){
   const b=document.getElementById('billButton');b.disabled=false;b.textContent='✅ बुकिंग बिल बनाएं और डाउनलोड करें';
  }
 });
@@ -285,9 +240,9 @@ window.addEventListener('load',()=>{
 window.addEventListener('load',()=>{
  const mobile=localStorage.getItem('babluCustomerMobile');
  if(mobile){
-   document.getElementById('loginMobile').value=mobile;
+   const loginMobile=document.getElementById('loginMobile'); if(loginMobile) loginMobile.value=mobile;
    document.getElementById('phone').value=mobile;
-   document.getElementById('loginStatus').textContent='लॉगिन: '+mobile;
+   const loginStatus=document.getElementById('loginStatus'); if(loginStatus) loginStatus.textContent='लॉगिन: '+mobile;
  }
 });
 
@@ -478,14 +433,17 @@ if (stateSelect && citySelect) {
 
 
 <script>
-function submitBookingRequest(){
+function submitBookingRequest(event){
+  if(event) event.preventDefault();
   if(typeof window.validateBookingForm==='function' && !window.validateBookingForm()) return;
   const selected = getSelected();
   if(!selected.length){ alert('कृपया कम से कम एक पैकेज या सर्विस चुनें।'); return; }
   localStorage.setItem('babluBookingRequested','yes');
   localStorage.setItem('babluBookingApproved','pending');
   document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: रिक्वेस्ट भेज दी गई है। स्टूडियो की अनुमति का इंतजार करें।';
-  alert('बुकिंग रिक्वेस्ट स्टूडियो को भेजने के लिए सेव हो गई है।');
+  const d=details();
+  const text='नमस्ते बबलू स्टूडियो!%0Aबुकिंग रिक्वेस्ट%0Aनाम: '+encodeURIComponent(document.getElementById('name').value)+'%0Aपिता का नाम: '+encodeURIComponent(document.getElementById('father').value)+'%0Aमोबाइल: '+encodeURIComponent(document.getElementById('phone').value)+'%0Aपता: '+encodeURIComponent(document.getElementById('village').value+', '+document.getElementById('city').value+', '+document.getElementById('district').value+', '+document.getElementById('state').value+', '+document.getElementById('pincode').value)+'%0Aकार्यक्रम की तारीख: '+encodeURIComponent(document.getElementById('date').value)+'%0Aसर्विस: '+encodeURIComponent(d.selected.map(x=>x.name+' - ₹'+x.price).join(', '))+'%0Aकुल राशि: ₹'+d.total+'%0Aअतिरिक्त जानकारी: '+encodeURIComponent(document.getElementById('message').value);
+  window.location.href='https://wa.me/919565302930?text='+text;
 }
 function adminApproveBooking(){
   const pin=prompt('एडमिन PIN दर्ज करें:');
@@ -527,7 +485,7 @@ function renderGallery(){
     const media=document.createElement(item.type.startsWith('video/')?'video':'img');
     media.src=item.data; media.style.cssText='width:100%;height:180px;object-fit:cover;border-radius:8px;';
     if(item.type.startsWith('video/')){media.controls=true;media.preload='metadata';}
-    const del=document.createElement('button'); del.type='button';del.textContent='हटाएँ';del.style.marginTop='8px';del.style.display=document.getElementById('galleryAdminBox')?.style.display==='block'?'inline-block':'none';
+    const del=document.createElement('button'); del.type='button';del.textContent='हटाएँ';del.style.marginTop='8px';
     del.onclick=()=>{const arr=getGalleryItems();arr.splice(i,1);saveGalleryItems(arr);renderGallery();};
     box.appendChild(media);box.appendChild(del);grid.appendChild(box);
   });
@@ -542,13 +500,6 @@ document.getElementById('galleryFiles')?.addEventListener('change',async(e)=>{
   }
   saveGalleryItems(items);renderGallery();e.target.value='';
 });
-function openGalleryAdmin(){
-  const pin=prompt('Gallery Admin PIN दर्ज करें:');
-  if(pin!=='9565'){alert('गलत Admin PIN।');return;}
-  const box=document.getElementById('galleryAdminBox');
-  box.style.display='block';
-  renderGallery();
-}
 function clearGallery(){if(confirm('क्या पूरी गैलरी साफ करनी है?')){localStorage.removeItem(galleryKey);renderGallery();}}
 window.addEventListener('load',renderGallery);
 </script>
@@ -568,45 +519,6 @@ function sendBookingToWhatsApp(booking) {
   ].join("\n");
   window.open("https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message), "_blank");
 }
-</script>
-
-<!-- Bablu Studio Star Rating -->
-<style>
-.star-rating-widget{margin:20px 0;padding:16px;border:1px solid #e5e7eb;border-radius:14px;background:#fff}
-.star-rating-widget h3{margin:0 0 10px;font-size:18px}
-.star-rating-widget .stars{display:flex;gap:6px;flex-wrap:wrap}
-.star-rating-widget .star-btn{border:0;background:transparent;font-size:30px;cursor:pointer;color:#cbd5e1;padding:2px 5px}
-.star-rating-widget .star-btn.active{color:#f59e0b}
-.star-rating-widget .rating-message{margin-top:8px;font-size:14px;color:#475569}
-</style>
-<div class="star-rating-widget" id="star-rating-widget">
-  <h3>⭐ हमें रेटिंग दें</h3>
-  <div class="stars" aria-label="Star rating">
-    <button class="star-btn" data-rating="1" aria-label="1 star">★</button>
-    <button class="star-btn" data-rating="2" aria-label="2 stars">★</button>
-    <button class="star-btn" data-rating="3" aria-label="3 stars">★</button>
-    <button class="star-btn" data-rating="4" aria-label="4 stars">★</button>
-    <button class="star-btn" data-rating="5" aria-label="5 stars">★</button>
-  </div>
-  <div class="rating-message" id="rating-message">अपना अनुभव बताने के लिए स्टार चुनें।</div>
-</div>
-<script>
-(function(){
-  const box=document.getElementById('star-rating-widget');
-  if(!box) return;
-  const buttons=box.querySelectorAll('.star-btn');
-  const msg=box.querySelector('#rating-message');
-  buttons.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const rating=Number(btn.dataset.rating);
-      buttons.forEach(b=>b.classList.toggle('active',Number(b.dataset.rating)<=rating));
-      msg.textContent='धन्यवाद! आपने '+rating+' स्टार की रेटिंग दी।';
-      localStorage.setItem('babluStudioRating',String(rating));
-    });
-  });
-  const saved=Number(localStorage.getItem('babluStudioRating')||0);
-  if(saved){buttons.forEach(b=>b.classList.toggle('active',Number(b.dataset.rating)<=saved));msg.textContent='आपकी रेटिंग: '+saved+'/5 स्टार';}
-})();
 </script>
 </body>
 </html>
