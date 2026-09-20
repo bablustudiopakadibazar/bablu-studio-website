@@ -235,7 +235,7 @@ input,textarea,select{
 
 <style id="bablu-professional-dashboard-style">
 #secureAdminPanel.bablu-dashboard{
-  display:none;
+  display:block;
   max-width:1400px!important;
   margin:32px auto!important;
   padding:0!important;
@@ -350,25 +350,12 @@ input,textarea,select{
 <header><h1>बबलू स्टूडियो</h1><p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p><p>📞 9565302930</p></header>
 
 <div id="adminEntry" style="max-width:1100px;margin:14px auto;text-align:right;padding:0 16px;">
-  <button type="button" id="openAdminPanelBtn" onclick="toggleAdminPanel()"
+  <button type="button" id="openAdminPanelBtn" onclick="document.getElementById(\'secureAdminPanel\').scrollIntoView({behavior:\'smooth\',block:\'start\'});"
     style="background:#111827;color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:700;">
-    🔐 Admin Login
+    🔐 Admin Login / Dashboard
   </button>
 </div>
-<script>
-function toggleAdminPanel(){
-  const panel = document.getElementById("secureAdminPanel");
-  if (!panel) {
-    alert("Admin Panel अभी लोड नहीं हुआ है। कृपया पेज को एक बार Refresh करें।");
-    return;
-  }
-  const isHidden = getComputedStyle(panel).display === "none";
-  panel.style.display = isHidden ? "block" : "none";
-  if (isHidden) {
-    panel.scrollIntoView({behavior:"smooth", block:"start"});
-  }
-}
-</script>
+
 
 <div class="container">
 <div class="intro"><h2>वेडिंग पैकेज और सर्विस</h2><p>पैकेज या सर्विस चुनें और ऑनलाइन बुकिंग फॉर्म भरें।</p></div>
