@@ -124,40 +124,24 @@ footer{
 </style>
 
 </head>
-<body><section class="card" style="border-left:4px solid #b8860b;">
-<h3>🔐 Firebase कनेक्शन</h3>
-<p class="note">Firebase SDK कनेक्ट किया गया है। एडमिन ईमेल लॉगिन और ऑनलाइन बुकिंग सेव करने के लिए Firebase Console में Authentication तथा Firestore Security Rules सेट करना आवश्यक है।</p>
-</section>
+<body>
 
-<section id="loginSection" class="card" style="margin-top:24px;">
-  <h2>🔐 लॉगिन पोर्टल</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;">
+
     <div class="card" style="margin:0;">
-      <h3>👤 ग्राहक लॉगिन</h3>
-      <p class="note">अपनी बुकिंग की जानकारी देखने के लिए ग्राहक मोबाइल नंबर दर्ज करें।</p>
-      <label for="customerLoginMobile">मोबाइल नंबर</label>
-      <input id="customerLoginMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर">
-      <button type="button" onclick="customerPortalLogin()">ग्राहक लॉगिन</button>
-      <p id="customerLoginStatus" class="note">लॉगिन नहीं किया गया है।</p>
-      <button type="button" onclick="customerPortalLogout()">लॉगआउट</button>
-    </div>
-    <div class="card" style="margin:0;">
-      <h3>🛡️ एडमिन लॉगिन</h3>
+      <h3>🛡️ </h3>
       <p class="note">बुकिंग स्वीकार/अस्वीकार और पेमेंट वेरिफिकेशन के लिए।</p>
       
-      <label for="adminPhoneNumber">एडमिन मोबाइल नंबर</label>
-      <input id="adminPhoneNumber" type="tel" placeholder="+91XXXXXXXXXX" autocomplete="tel">
-      <button type="button" onclick="sendAdminOtp()">OTP भेजें</button>
+      
+      
+      
       <div id="adminOtpArea" style="display:none;">
-        <label for="adminOtpCode">OTP दर्ज करें</label>
-        <input id="adminOtpCode" type="text" inputmode="numeric" maxlength="6" placeholder="6 अंकों का OTP" autocomplete="one-time-code">
-        <button type="button" onclick="verifyAdminOtp()">OTP से लॉगिन करें</button>
+        
+        
+        
       </div>
-      <p id="adminLoginStatus" class="note">एडमिन लॉगिन नहीं किया गया है।</p>
-      <button type="button" onclick="firebaseAdminLogout()">लॉगआउट</button>
-    </div>
+      
   </div>
-  <p class="note">नोट: एडमिन लॉगिन Firebase Email/Password Authentication से होगा।</p>
+  <p class="note">नोट:  Firebase Email/Password Authentication से होगा।</p>
 </section>
 
 <section class="professional-hero" style="text-align:center;background:linear-gradient(135deg,#fffaf0,#ffffff);border:1px solid #ead9ad;">
@@ -269,7 +253,7 @@ function submitPayment(){
  alert('पेमेंट विवरण सेव हो गया है। अब स्टूडियो से वेरिफिकेशन करवाइए।');
 }
 function adminVerify(){
- const pin=prompt('एडमिन ईमेल और पासवर्ड दर्ज करें:');
+ const pin=prompt(' और पासवर्ड दर्ज करें:');
  
  if(!localStorage.getItem('babluPaymentUTR')){alert('पहले ग्राहक का UTR दर्ज होना चाहिए।');return;}
  localStorage.setItem('babluPaymentVerified','yes');
@@ -495,7 +479,7 @@ function submitBookingRequest(){
   alert('बुकिंग रिक्वेस्ट स्टूडियो को भेजने के लिए सेव हो गई है।');
 }
 function adminApproveBooking(){
-  const pin=prompt('एडमिन ईमेल और पासवर्ड दर्ज करें:');
+  const pin=prompt(' और पासवर्ड दर्ज करें:');
   
   if(localStorage.getItem('babluBookingRequested')!=='yes'){alert('पहले ग्राहक की बुकिंग रिक्वेस्ट होनी चाहिए।');return;}
   localStorage.setItem('babluBookingApproved','yes');
@@ -503,7 +487,7 @@ function adminApproveBooking(){
   alert('बुकिंग स्वीकार कर दी गई है। अब पेमेंट वेरिफिकेशन के बाद बिल बनाया जा सकता है।');
 }
 function adminRejectBooking(){
-  const pin=prompt('एडमिन ईमेल और पासवर्ड दर्ज करें:');
+  const pin=prompt(' और पासवर्ड दर्ज करें:');
   
   localStorage.setItem('babluBookingApproved','no');
   document.getElementById('bookingStatus').textContent='बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।';
@@ -573,10 +557,54 @@ function customerPortalLogout(){
   document.getElementById('customerLoginStatus').textContent='ग्राहक लॉगआउट हो गया है।';
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+<section id="secureAdminPanel" style="display:none;max-width:900px;margin:30px auto;padding:20px;border:1px solid #ddd;border-radius:16px;background:#fff;">
+  <h2>Bablu Studio — Admin Control Panel</h2>
+  <p id="adminAuthStatus">एडमिन लॉगिन नहीं किया गया है।</p>
+  <div id="adminPhoneBox">
+    <label>एडमिन मोबाइल नंबर</label>
+    <input id="adminPhone" type="tel" placeholder="+91XXXXXXXXXX">
+    <div id="adminRecaptcha"></div>
+    <button type="button" id="sendAdminOtpBtn">OTP भेजें</button>
+    <div id="adminOtpBox" style="display:none;margin-top:10px;">
+      <input id="adminOtp" type="text" inputmode="numeric" maxlength="6" placeholder="OTP दर्ज करें">
+      <button type="button" id="verifyAdminOtpBtn">लॉगिन करें</button>
+    </div>
+  </div>
+  <div id="adminTools" style="display:none;margin-top:20px;">
+    <button type="button" id="adminLogoutBtn">लॉगआउट</button>
+    <hr>
+    <h3>फोटो / वीडियो अपलोड</h3>
+    <input id="mediaFile" type="file" accept="image/*,video/*" multiple>
+    <input id="mediaTitle" type="text" placeholder="फोटो/वीडियो का नाम">
+    <button type="button" id="uploadMediaBtn">अपलोड करें</button>
+    <p id="uploadStatus"></p>
+    <h3>गैलरी कंट्रोल</h3>
+    <div id="mediaList"></div>
+    <h3>पैकेज और कीमतें</h3>
+    <textarea id="packageData" rows="8" style="width:100%;" placeholder='पैकेज की जानकारी JSON या साधारण टेक्स्ट में लिखें'></textarea>
+    <button type="button" id="savePackagesBtn">पैकेज सेव करें</button>
+    <p id="packageStatus"></p>
+  </div>
+</section>
+
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getStorage, ref, uploadBytes, getDownloadURL, listAll, deleteObject } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBoCErKm6vgUQa4DNiyjftEGFI1VtbCWoQ",
@@ -587,132 +615,95 @@ const firebaseConfig = {
   appId: "1:510616423703:web:59f5f609dab410c22d7b52",
   measurementId: "G-2HQFT3NXJJ"
 };
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const storage = getStorage(app);
 const db = getFirestore(app);
-window.babluFirebase = {
-  auth, db,
-  adminLogin: (email, password) => signInWithEmailAndPassword(auth, email, password),
-  logout: () => signOut(auth),
-  saveBooking: (data) => addDoc(collection(db, "bookingRequests"), {
-    ...data, status: "pending", createdAt: serverTimestamp()
-  })
-};
-onAuthStateChanged(auth, user => {
-  window.dispatchEvent(new CustomEvent("bablu-firebase-auth", {detail: user || null}));
+let confirmationResult = null;
+let verifier = null;
+
+const $ = id => document.getElementById(id);
+const status = msg => { if ($("adminAuthStatus")) $("adminAuthStatus").textContent = msg; };
+
+function showTools(user) {
+  $("secureAdminPanel").style.display = "block";
+  $("adminTools").style.display = user ? "block" : "none";
+  $("adminPhoneBox").style.display = user ? "none" : "block";
+  status(user ? "लॉगिन: " + user.phoneNumber : "मोबाइल OTP से लॉगिन करें।");
+}
+onAuthStateChanged(auth, user => showTools(user));
+
+$("sendAdminOtpBtn").addEventListener("click", async () => {
+  const phone = $("adminPhone").value.trim();
+  if (!/^\+[1-9]\d{7,14}$/.test(phone)) { status("नंबर +91XXXXXXXXXX फॉर्मेट में भरें।"); return; }
+  try {
+    if (!verifier) verifier = new RecaptchaVerifier(auth, "adminRecaptcha", {size:"normal"});
+    confirmationResult = await signInWithPhoneNumber(auth, phone, verifier);
+    $("adminOtpBox").style.display = "block";
+    status("OTP भेज दिया गया है।");
+  } catch (e) { status("OTP भेजने में समस्या: " + (e.code || e.message)); }
 });
-</script>
 
+$("verifyAdminOtpBtn").addEventListener("click", async () => {
+  if (!confirmationResult) { status("पहले OTP भेजें।"); return; }
+  try { await confirmationResult.confirm($("adminOtp").value.trim()); }
+  catch (e) { status("OTP गलत है या समाप्त हो गया है।"); }
+});
 
+$("adminLogoutBtn").addEventListener("click", () => signOut(auth));
 
-
-
-
-
-
-<script type="module">
-  import { RecaptchaVerifier, signInWithPhoneNumber, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
-  let confirmationResult = null;
-  let recaptchaVerifier = null;
-
-  function status(message) {
-    const el = document.getElementById("adminLoginStatus");
-    if (el) el.textContent = message;
-  }
-
-  function getAuthInstance() {
-    return window.babluFirebase && window.babluFirebase.auth
-      ? window.babluFirebase.auth
-      : null;
-  }
-
-  window.sendAdminOtp = async function () {
-    const phone = (document.getElementById("adminPhoneNumber")?.value || "").trim();
-    if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-      status("मोबाइल नंबर +91XXXXXXXXXX जैसे अंतरराष्ट्रीय फॉर्मेट में भरिए।");
-      return;
+$("uploadMediaBtn").addEventListener("click", async () => {
+  const user = auth.currentUser;
+  const files = Array.from($("mediaFile").files || []);
+  if (!user) { $("uploadStatus").textContent = "पहले लॉगिन करें।"; return; }
+  if (!files.length) { $("uploadStatus").textContent = "पहले फोटो या वीडियो चुनें।"; return; }
+  $("uploadStatus").textContent = "अपलोड हो रहा है...";
+  try {
+    for (const file of files) {
+      const safeName = Date.now() + "_" + file.name.replace(/[^\w.\-]/g, "_");
+      const fileRef = ref(storage, "gallery/" + safeName);
+      await uploadBytes(fileRef, file);
+      const url = await getDownloadURL(fileRef);
+      await addDoc(collection(db, "gallery"), {name: $("mediaTitle").value || file.name, fileName:safeName, url, type:file.type, createdAt:serverTimestamp()});
     }
-    const auth = getAuthInstance();
-    if (!auth) {
-      status("Firebase लोड नहीं हुआ। पेज रिफ्रेश करके फिर प्रयास करें।");
-      return;
-    }
-    try {
-      if (!recaptchaVerifier) {
-        recaptchaVerifier = new RecaptchaVerifier(auth, "adminLoginStatus", {});
-      }
-      confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier);
-      const area = document.getElementById("adminOtpArea");
-      if (area) area.style.display = "block";
-      status("OTP भेज दिया गया है।");
-    } catch (error) {
-      status("OTP भेजने में समस्या: " + (error.code || "कृपया नंबर जाँचें"));
-      if (recaptchaVerifier) {
-        try { recaptchaVerifier.clear(); } catch (e) {}
-        recaptchaVerifier = null;
-      }
-    }
-  };
+    $("uploadStatus").textContent = "अपलोड सफल।";
+    await refreshMedia();
+  } catch (e) { $("uploadStatus").textContent = "अपलोड असफल: " + (e.code || e.message); }
+});
 
-  window.verifyAdminOtp = async function () {
-    const otp = (document.getElementById("adminOtpCode")?.value || "").trim();
-    if (!confirmationResult || !otp) {
-      status("पहले OTP भेजें और OTP दर्ज करें।");
-      return;
-    }
-    try {
-      await confirmationResult.confirm(otp);
-      status("मोबाइल OTP से एडमिन लॉगिन सफल।");
-    } catch (error) {
-      status("OTP गलत है या समाप्त हो चुका है।");
-    }
-  };
-
-  window.firebaseAdminLogout = async function () {
-    const auth = getAuthInstance();
-    if (auth) await signOut(auth);
-    status("एडमिन लॉगआउट हो गया है।");
-  };
-
-  window.isAdminLoggedIn = function () {
-    const auth = getAuthInstance();
-    return !!(auth && auth.currentUser);
-  };
-
-  function guard() {
-    if (!window.isAdminLoggedIn()) {
-      alert("पहले मोबाइल नंबर और OTP से एडमिन लॉगिन करें।");
-      return false;
-    }
-    return true;
-  }
-
-  window.adminApproveBooking = function () {
-    if (!guard()) return;
-    localStorage.setItem("babluBookingApproved", "yes");
-    const el = document.getElementById("bookingStatus");
-    if (el) el.textContent = "बुकिंग स्थिति: स्टूडियो ने बुकिंग स्वीकार कर ली है।";
-    alert("बुकिंग स्वीकार कर दी गई है।");
-  };
-
-  window.adminRejectBooking = function () {
-    if (!guard()) return;
-    localStorage.setItem("babluBookingApproved", "no");
-    const el = document.getElementById("bookingStatus");
-    if (el) el.textContent = "बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।";
-    alert("बुकिंग अस्वीकार कर दी गई है।");
-  };
-
-  window.adminVerify = function () {
-    if (!guard()) return;
-    localStorage.setItem("babluPaymentVerified", "yes");
-    const el = document.getElementById("paymentStatus");
-    if (el) el.textContent = "स्थिति: पेमेंट वेरिफाई हो गया है।";
-    const bill = document.getElementById("billButton");
-    if (bill) bill.disabled = false;
-    alert("पेमेंट वेरिफाई कर दिया गया है।");
-  };
+async function refreshMedia() {
+  const list = $("mediaList");
+  list.innerHTML = "लोड हो रहा है...";
+  try {
+    const snap = await getDocs(collection(db, "gallery"));
+    list.innerHTML = "";
+    snap.forEach(item => {
+      const d = item.data();
+      const row = document.createElement("div");
+      row.style.cssText = "padding:8px;border-bottom:1px solid #ddd;margin-bottom:8px;";
+      row.innerHTML = `<b>${d.name || d.fileName}</b> — <a href="${d.url}" target="_blank" rel="noopener">देखें</a> `;
+      const btn = document.createElement("button");
+      btn.textContent = "डिलीट";
+      btn.onclick = async () => {
+        if (!confirm("इसे डिलीट करें?")) return;
+        try {
+          await deleteObject(ref(storage, "gallery/" + d.fileName));
+          await deleteDoc(doc(db, "gallery", item.id));
+          await refreshMedia();
+        } catch (e) { alert("डिलीट असफल: " + (e.code || e.message)); }
+      };
+      row.appendChild(btn); list.appendChild(row);
+    });
+  } catch (e) { list.textContent = "गैलरी लोड नहीं हुई: " + (e.code || e.message); }
+}
+$("savePackagesBtn").addEventListener("click", async () => {
+  try {
+    await setDoc(doc(db, "siteSettings", "packages"), {content:$("packageData").value, updatedAt:serverTimestamp()});
+    $("packageStatus").textContent = "पैकेज सेव हो गए।";
+  } catch (e) { $("packageStatus").textContent = "सेव असफल: " + (e.code || e.message); }
+});
+onAuthStateChanged(auth, user => { if (user) refreshMedia(); });
 </script>
 
 </body>
