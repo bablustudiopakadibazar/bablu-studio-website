@@ -151,7 +151,7 @@ footer{
       <button type="button" onclick="adminPortalLogout()">लॉगआउट</button>
     </div>
   </div>
-  <p class="note">नोट: यह अभी डेमो लॉगिन है। वास्तविक सुरक्षित लॉगिन के लिए Firebase/Supabase जैसे बैकएंड की जरूरत होगी।</p>
+  <p class="note">नोट: एडमिन लॉगिन Firebase Email/Password Authentication से होगा।</p>
 </section>
 
 <section class="professional-hero" style="text-align:center;background:linear-gradient(135deg,#fffaf0,#ffffff);border:1px solid #ead9ad;">
@@ -641,6 +641,116 @@ window.babluFirebase = {
 onAuthStateChanged(auth, user => {
   window.dispatchEvent(new CustomEvent("bablu-firebase-auth", {detail: user || null}));
 });
+</script>
+
+
+<script type="module">
+  import { getApps, getApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+  let auth = null;
+  function setAdminStatus(message) {
+    const el = document.getElementById("adminLoginStatus");
+    if (el) el.textContent = message;
+  }
+  function readyAuth() {
+    try {
+      if (!getApps().length) return null;
+      auth = getAuth(getApp());
+      return auth;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  window.firebaseAdminLogin = async function () {
+    const email = (document.getElementById("adminLoginEmail")?.value || "").trim();
+    const password = document.getElementById("adminLoginPassword")?.value || "";
+    if (!email || !password) {
+      setAdminStatus("ईमेल और पासवर्ड भरिए।");
+      return;
+    }
+    const a = readyAuth();
+    if (!a) {
+      setAdminStatus("Firebase अभी तैयार नहीं है। पेज रिफ्रेश करके फिर प्रयास करें।");
+      return;
+    }
+    try {
+      await signInWithEmailAndPassword(a, email, password);
+      setAdminStatus("Firebase एडमिन लॉगिन सफल।");
+      const p = document.getElementById("adminLoginPassword");
+      if (p) p.value = "";
+    } catch (error) {
+      setAdminStatus("लॉगिन असफल: " + (error.code || "कृपया ईमेल/पासवर्ड जाँचें।"));
+    }
+  };
+
+  window.firebaseAdminLogout = async function () {
+    const a = readyAuth();
+    if (a) await signOut(a);
+    setAdminStatus("एडमिन लॉगआउट हो गया है।");
+  };
+
+  // Remove the old local PIN gate completely.
+  window.isAdminLoggedIn = function () {
+    const a = readyAuth();
+    return !!(a && a.currentUser);
+  };
+
+  function requireFirebaseAdmin() {
+    if (!window.isAdminLoggedIn()) {
+      alert("पहले Firebase एडमिन लॉगिन करें।");
+      return false;
+    }
+    return true;
+  }
+
+  window.adminApproveBooking = function () {
+    if (!requireFirebaseAdmin()) return;
+    if (localStorage.getItem("babluBookingRequested") !== "yes") {
+      alert("पहले ग्राहक की बुकिंग रिक्वेस्ट होनी चाहिए।");
+      return;
+    }
+    localStorage.setItem("babluBookingApproved", "yes");
+    const el = document.getElementById("bookingStatus");
+    if (el) el.textContent = "बुकिंग स्थिति: स्टूडियो ने बुकिंग स्वीकार कर ली है।";
+    alert("बुकिंग स्वीकार कर दी गई है।");
+  };
+
+  window.adminRejectBooking = function () {
+    if (!requireFirebaseAdmin()) return;
+    localStorage.setItem("babluBookingApproved", "no");
+    const el = document.getElementById("bookingStatus");
+    if (el) el.textContent = "बुकिंग स्थिति: स्टूडियो ने बुकिंग अस्वीकार कर दी है।";
+    const bill = document.getElementById("billButton");
+    if (bill) bill.disabled = true;
+    alert("बुकिंग अस्वीकार कर दी गई है।");
+  };
+
+  window.adminVerify = function () {
+    if (!requireFirebaseAdmin()) return;
+    if (!localStorage.getItem("babluPaymentUTR")) {
+      alert("पहले ग्राहक का UTR दर्ज होना चाहिए।");
+      return;
+    }
+    localStorage.setItem("babluPaymentVerified", "yes");
+    const el = document.getElementById("paymentStatus");
+    if (el) el.textContent = "स्थिति: पेमेंट वेरिफाई हो गया है। अब बिल बनाया जा सकता है।";
+    const b = document.getElementById("billButton");
+    if (b) {
+      b.disabled = false;
+      b.textContent = "✅ बुकिंग बिल बनाएं और डाउनलोड करें";
+      b.classList.remove("locked");
+    }
+    alert("पेमेंट वेरिफाई कर दिया गया है।");
+  };
+
+  const a = readyAuth();
+  if (a) {
+    onAuthStateChanged(a, user => {
+      setAdminStatus(user ? ("Firebase एडमिन लॉगिन सक्रिय: " + user.email) : "एडमिन लॉगिन नहीं किया गया है।");
+    });
+  }
 </script>
 
 </body>
