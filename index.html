@@ -123,6 +123,68 @@ footer{
 }
 </style>
 
+
+<style id="bablu-polish-style">
+:root{
+  --bablu-navy:#172554;
+  --bablu-blue:#2563eb;
+  --bablu-gold:#d97706;
+  --bablu-cream:#fffaf0;
+  --bablu-text:#1f2937;
+  --bablu-muted:#64748b;
+}
+body{
+  background:linear-gradient(180deg,#fffaf0 0%,#f8fafc 45%,#eef2ff 100%) !important;
+  color:var(--bablu-text) !important;
+  font-family:"Segoe UI","Noto Sans Devanagari",Arial,sans-serif !important;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(135deg,#172554,#2563eb) !important;
+  color:#fff !important;
+  border-radius:0 0 24px 24px;
+  padding:28px 18px !important;
+  box-shadow:0 10px 30px rgba(23,37,84,.18);
+}
+header h1, header p{color:#fff !important;}
+h1,h2,h3{color:var(--bablu-navy) !important;}
+button{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:#fff !important;
+  border:0 !important;
+  border-radius:10px !important;
+  padding:11px 18px !important;
+  font-weight:700 !important;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(37,99,235,.18);
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+button:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(37,99,235,.28);}
+input,textarea,select{
+  border:1px solid #cbd5e1 !important;
+  border-radius:10px !important;
+  padding:11px !important;
+  background:#fff !important;
+  color:#111827 !important;
+}
+#adminEntry{max-width:1100px;margin:18px auto !important;text-align:right;padding:0 18px;}
+#openAdminPanelBtn{
+  background:linear-gradient(135deg,#b45309,#d97706) !important;
+  font-size:15px !important;
+  padding:12px 20px !important;
+}
+#secureAdminPanel{
+  background:rgba(255,255,255,.98) !important;
+  border:1px solid #dbeafe !important;
+  box-shadow:0 15px 45px rgba(15,23,42,.12) !important;
+}
+#secureAdminPanel h2{border-bottom:2px solid #fbbf24;padding-bottom:10px;}
+.professional-hero,.container>section,.card,.package-card{
+  border-radius:18px !important;
+  box-shadow:0 8px 24px rgba(15,23,42,.06);
+}
+</style>
+
 </head>
 <body>
 
@@ -153,22 +215,24 @@ footer{
 <header><h1>बबलू स्टूडियो</h1><p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p><p>📞 9565302930</p></header>
 
 <div id="adminEntry" style="max-width:1100px;margin:14px auto;text-align:right;padding:0 16px;">
-  <button type="button" id="openAdminPanelBtn"
+  <button type="button" id="openAdminPanelBtn" onclick="toggleAdminPanel()"
     style="background:#111827;color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:700;">
     🔐 Admin Login
   </button>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const btn = document.getElementById("openAdminPanelBtn");
+function toggleAdminPanel(){
   const panel = document.getElementById("secureAdminPanel");
-  if (btn && panel) {
-    btn.addEventListener("click", function () {
-      panel.style.display = "block";
-      panel.scrollIntoView({behavior:"smooth", block:"start"});
-    });
+  if (!panel) {
+    alert("Admin Panel अभी लोड नहीं हुआ है। कृपया पेज को एक बार Refresh करें।");
+    return;
   }
-});
+  const isHidden = getComputedStyle(panel).display === "none";
+  panel.style.display = isHidden ? "block" : "none";
+  if (isHidden) {
+    panel.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
 </script>
 
 <div class="container">
