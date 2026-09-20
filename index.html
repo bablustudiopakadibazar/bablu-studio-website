@@ -134,6 +134,31 @@ label,strong,b,.title,.heading,.section-title{font-weight:700;color:#7c3aed}
 p,li,span,td,th{color:inherit}
 button,.btn{font-weight:700;letter-spacing:.2px}
 </style>
+
+<style id="bablu-admin-control-style">
+.bablu-admin-control-btn{display:inline-block!important;padding:12px 18px!important;border:0!important;border-radius:10px!important;background:linear-gradient(135deg,#7c3aed,#db2777)!important;color:#fff!important;font-weight:800!important;text-decoration:none!important;cursor:pointer!important;box-shadow:0 5px 14px rgba(124,58,237,.25)!important}
+</style>
+<script id="bablu-admin-control-script">
+(function(){
+  function enableAdminButton(){
+    const candidates=[...document.querySelectorAll('button,a,[role="button"]')];
+    candidates.forEach(el=>{
+      const t=(el.textContent||'').trim().toLowerCase();
+      if(t.includes('admin control')||t.includes('admin panel')||t.includes('एडमिन')){
+        el.classList.add('bablu-admin-control-btn');
+        if(el.tagName.toLowerCase()==='a' && !el.getAttribute('href')) el.setAttribute('href','#admin-panel');
+        el.addEventListener('click',function(){
+          const target=document.querySelector('#admin-panel,[id*="admin"],[class*="admin"]');
+          if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+          else alert('Admin Panel खोलने के लिए लॉगिन सेक्शन उपलब्ध करें।');
+        });
+      }
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',enableAdminButton);
+  else enableAdminButton();
+})();
+</script>
 </head>
 <body>
 <section class="professional-hero" style="text-align:center;background:linear-gradient(135deg,#fffaf0,#ffffff);border:1px solid #ead9ad;">
