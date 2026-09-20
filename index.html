@@ -151,6 +151,26 @@ footer{
 </section>
 
 <header><h1>बबलू स्टूडियो</h1><p>पकड़ी बाजार, शोहरतगढ़, सिद्धार्थ नगर — पिन 272205</p><p>📞 9565302930</p></header>
+
+<div id="adminEntry" style="max-width:1100px;margin:14px auto;text-align:right;padding:0 16px;">
+  <button type="button" id="openAdminPanelBtn"
+    style="background:#111827;color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:700;">
+    🔐 Admin Login
+  </button>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const btn = document.getElementById("openAdminPanelBtn");
+  const panel = document.getElementById("secureAdminPanel");
+  if (btn && panel) {
+    btn.addEventListener("click", function () {
+      panel.style.display = "block";
+      panel.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+  }
+});
+</script>
+
 <div class="container">
 <div class="intro"><h2>वेडिंग पैकेज और सर्विस</h2><p>पैकेज या सर्विस चुनें और ऑनलाइन बुकिंग फॉर्म भरें।</p></div>
 
