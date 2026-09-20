@@ -121,44 +121,48 @@ footer{
 }
 </style>
 
+<style>
+/* Highlight package details for better readability */
+.packages .card h3{
+  color:#8a5a00!important;
+  font-size:22px!important;
+  font-weight:800!important;
+  letter-spacing:.2px!important;
+  text-shadow:0 1px 0 #fff3c4!important;
+}
+.packages .card .price{
+  color:#b45309!important;
+  font-size:30px!important;
+  font-weight:900!important;
+  background:linear-gradient(90deg,#fff4c2,#fffaf0)!important;
+  border-left:5px solid #d4af37!important;
+  padding:6px 12px!important;
+  border-radius:8px!important;
+  display:inline-block!important;
+}
+.packages .card ul{
+  color:#263244!important;
+  font-size:16px!important;
+  font-weight:600!important;
+  line-height:1.9!important;
+}
+.packages .card ul li::marker{color:#b8860b!important}
+.packages .card ul li{
+  margin-bottom:3px!important;
+}
+.packages .card .select{
+  color:#6b4300!important;
+  font-weight:800!important;
+  font-size:16px!important;
+  border:1px solid #e3c76b!important;
+  background:linear-gradient(90deg,#fff3c4,#fffaf0)!important;
+}
+.packages .card .select input{accent-color:#b8860b!important}
+</style>
 
 <style>
 .payment-summary-highlight{font-weight:800!important;color:#b91c1c!important;background:#fff3cd!important;padding:4px 10px!important;border-radius:6px!important;display:inline-block!important;text-shadow:0 0 0.3px currentColor;}
 </style>
-
-<style id="bablu-colorful-fonts">
-/* Bablu Studio colorful highlighted typography */
-body{color:#1e293b}
-h1,h2,h3,h4,h5,h6{font-weight:800;background:linear-gradient(90deg,#7c3aed,#db2777,#ea580c);-webkit-background-clip:text;background-clip:text;color:transparent}
-label,strong,b,.title,.heading,.section-title{font-weight:700;color:#7c3aed}
-p,li,span,td,th{color:inherit}
-button,.btn{font-weight:700;letter-spacing:.2px}
-</style>
-
-<style id="bablu-admin-control-style">
-.bablu-admin-control-btn{display:inline-block!important;padding:12px 18px!important;border:0!important;border-radius:10px!important;background:linear-gradient(135deg,#7c3aed,#db2777)!important;color:#fff!important;font-weight:800!important;text-decoration:none!important;cursor:pointer!important;box-shadow:0 5px 14px rgba(124,58,237,.25)!important}
-</style>
-<script id="bablu-admin-control-script">
-(function(){
-  function enableAdminButton(){
-    const candidates=[...document.querySelectorAll('button,a,[role="button"]')];
-    candidates.forEach(el=>{
-      const t=(el.textContent||'').trim().toLowerCase();
-      if(t.includes('admin control')||t.includes('admin panel')||t.includes('एडमिन')){
-        el.classList.add('bablu-admin-control-btn');
-        if(el.tagName.toLowerCase()==='a' && !el.getAttribute('href')) el.setAttribute('href','#admin-panel');
-        el.addEventListener('click',function(){
-          const target=document.querySelector('#admin-panel,[id*="admin"],[class*="admin"]');
-          if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
-          else alert('Admin Panel खोलने के लिए लॉगिन सेक्शन उपलब्ध करें।');
-        });
-      }
-    });
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',enableAdminButton);
-  else enableAdminButton();
-})();
-</script>
 </head>
 <body>
 <section class="professional-hero" style="text-align:center;background:linear-gradient(135deg,#fffaf0,#ffffff);border:1px solid #ead9ad;">
@@ -602,50 +606,6 @@ function sendBookingToWhatsApp(booking) {
   });
   const saved=Number(localStorage.getItem('babluStudioRating')||0);
   if(saved){buttons.forEach(b=>b.classList.toggle('active',Number(b.dataset.rating)<=saved));msg.textContent='आपकी रेटिंग: '+saved+'/5 स्टार';}
-})();
-</script>
-
-<!-- Booking Status Admin Controls -->
-<style>
-#booking-status-admin{margin:20px 0;padding:18px;border:1px solid #dbe3ef;border-radius:14px;background:#f8fafc}
-#booking-status-admin h3{margin:0 0 12px}
-#booking-status-admin select,#booking-status-admin input{padding:9px;border:1px solid #cbd5e1;border-radius:8px;margin:4px 0}
-#booking-status-admin button{padding:9px 14px;border:0;border-radius:8px;background:#1d4ed8;color:#fff;cursor:pointer}
-#booking-status-admin .status-note{margin-top:10px;font-weight:600}
-</style>
-<section id="booking-status-admin">
-  <h3>📋 बुकिंग स्थिति प्रबंधन</h3>
-  <label>बुकिंग आईडी / ग्राहक का मोबाइल:</label><br>
-  <input id="booking-id-admin" placeholder="बुकिंग आईडी या मोबाइल नंबर">
-  <br>
-  <label>स्थिति चुनें:</label><br>
-  <select id="booking-status-select">
-    <option value="pending">लंबित — स्टूडियो की अनुमति लंबित है</option>
-    <option value="approved">स्वीकृत — बुकिंग कन्फर्म है</option>
-    <option value="cancelled">रद्द — बुकिंग रद्द कर दी गई है</option>
-  </select>
-  <br>
-  <button type="button" id="save-booking-status">स्थिति सेव करें</button>
-  <div class="status-note" id="booking-status-admin-message">बुकिंग की स्थिति यहाँ अपडेट होगी।</div>
-</section>
-<script>
-(function(){
-  const save=document.getElementById('save-booking-status');
-  if(!save) return;
-  save.addEventListener('click',function(){
-    const id=document.getElementById('booking-id-admin').value.trim();
-    const status=document.getElementById('booking-status-select').value;
-    const labels={
-      pending:'स्टूडियो की अनुमति लंबित है।',
-      approved:'बुकिंग स्वीकृत है।',
-      cancelled:'बुकिंग रद्द कर दी गई है।'
-    };
-    if(!id){document.getElementById('booking-status-admin-message').textContent='कृपया बुकिंग आईडी या मोबाइल नंबर दर्ज करें।';return;}
-    const all=JSON.parse(localStorage.getItem('babluStudioBookingStatuses')||'{}');
-    all[id]=status;
-    localStorage.setItem('babluStudioBookingStatuses',JSON.stringify(all));
-    document.getElementById('booking-status-admin-message').textContent='सेव हो गया: '+labels[status];
-  });
 })();
 </script>
 </body>
