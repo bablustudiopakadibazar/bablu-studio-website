@@ -125,6 +125,31 @@ footer{
 
 </head>
 <body>
+<section id="loginSection" class="card" style="margin-top:24px;">
+  <h2>🔐 लॉगिन पोर्टल</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;">
+    <div class="card" style="margin:0;">
+      <h3>👤 ग्राहक लॉगिन</h3>
+      <p class="note">अपनी बुकिंग की जानकारी देखने के लिए ग्राहक मोबाइल नंबर दर्ज करें।</p>
+      <label for="customerLoginMobile">मोबाइल नंबर</label>
+      <input id="customerLoginMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर">
+      <button type="button" onclick="customerPortalLogin()">ग्राहक लॉगिन</button>
+      <p id="customerLoginStatus" class="note">लॉगिन नहीं किया गया है।</p>
+      <button type="button" onclick="customerPortalLogout()">लॉगआउट</button>
+    </div>
+    <div class="card" style="margin:0;">
+      <h3>🛡️ एडमिन लॉगिन</h3>
+      <p class="note">बुकिंग स्वीकार/अस्वीकार और पेमेंट वेरिफिकेशन के लिए।</p>
+      <label for="adminLoginPin">एडमिन PIN</label>
+      <input id="adminLoginPin" type="password" inputmode="numeric" maxlength="8" placeholder="एडमिन PIN">
+      <button type="button" onclick="adminPortalLogin()">एडमिन लॉगिन</button>
+      <p id="adminLoginStatus" class="note">एडमिन लॉगिन नहीं किया गया है।</p>
+      <button type="button" onclick="adminPortalLogout()">लॉगआउट</button>
+    </div>
+  </div>
+  <p class="note">नोट: यह अभी डेमो लॉगिन है। वास्तविक सुरक्षित लॉगिन के लिए Firebase/Supabase जैसे बैकएंड की जरूरत होगी।</p>
+</section>
+
 <section class="professional-hero" style="text-align:center;background:linear-gradient(135deg,#fffaf0,#ffffff);border:1px solid #ead9ad;">
   <div style="display:inline-block;padding:6px 14px;border-radius:30px;background:#fff1c7;color:#7a5200;font-weight:700;font-size:13px;">WEDDING • PHOTO • VIDEO • CINEMATIC</div>
   <h2 style="font-size:clamp(26px,4vw,42px)!important;margin:14px 0 8px!important;">आपके खास पलों की प्रोफेशनल यादें</h2>
@@ -516,6 +541,71 @@ document.getElementById('galleryFiles')?.addEventListener('change',async(e)=>{
 });
 function clearGallery(){if(confirm('क्या पूरी गैलरी साफ करनी है?')){localStorage.removeItem(galleryKey);renderGallery();}}
 window.addEventListener('load',renderGallery);
+</script>
+
+
+<script>
+const CUSTOMER_LOGIN_KEY='babluCustomerPortalMobile';
+const ADMIN_LOGIN_KEY='babluAdminPortalLoggedIn';
+
+function customerPortalLogin(){
+  const mobile=(document.getElementById('customerLoginMobile').value||'').trim();
+  if(!/^[6-9]\d{9}$/.test(mobile)){
+    alert('कृपया सही 10 अंकों का मोबाइल नंबर दर्ज करें।'); return;
+  }
+  localStorage.setItem(CUSTOMER_LOGIN_KEY,mobile);
+  const phone=document.getElementById('phone');
+  if(phone) phone.value=mobile;
+  document.getElementById('customerLoginStatus').textContent='ग्राहक लॉगिन सफल: '+mobile;
+}
+function customerPortalLogout(){
+  localStorage.removeItem(CUSTOMER_LOGIN_KEY);
+  document.getElementById('customerLoginStatus').textContent='ग्राहक लॉगआउट हो गया है।';
+}
+function adminPortalLogin(){
+  const pin=(document.getElementById('adminLoginPin').value||'').trim();
+  if(pin!=='9565'){alert('गलत एडमिन PIN।');return;}
+  localStorage.setItem(ADMIN_LOGIN_KEY,'yes');
+  document.getElementById('adminLoginStatus').textContent='एडमिन लॉगिन सफल।';
+  document.getElementById('adminLoginPin').value='';
+}
+function adminPortalLogout(){
+  localStorage.removeItem(ADMIN_LOGIN_KEY);
+  document.getElementById('adminLoginStatus').textContent='एडमिन लॉगआउट हो गया है।';
+}
+function isAdminLoggedIn(){return localStorage.getItem(ADMIN_LOGIN_KEY)==='yes';}
+
+window.addEventListener('load',()=>{
+  const mobile=localStorage.getItem(CUSTOMER_LOGIN_KEY);
+  if(mobile){
+    document.getElementById('customerLoginMobile').value=mobile;
+    document.getElementById('customerLoginStatus').textContent='ग्राहक लॉगिन सक्रिय: '+mobile;
+    const phone=document.getElementById('phone'); if(phone && !phone.value) phone.value=mobile;
+  }
+  if(isAdminLoggedIn()) document.getElementById('adminLoginStatus').textContent='एडमिन लॉगिन सक्रिय है।';
+});
+
+const oldApprove=window.adminApproveBooking;
+if(typeof oldApprove==='function'){
+  window.adminApproveBooking=function(){
+    if(!isAdminLoggedIn()){alert('पहले एडमिन लॉगिन करें।');return;}
+    return oldApprove.apply(this,arguments);
+  };
+}
+const oldReject=window.adminRejectBooking;
+if(typeof oldReject==='function'){
+  window.adminRejectBooking=function(){
+    if(!isAdminLoggedIn()){alert('पहले एडमिन लॉगिन करें।');return;}
+    return oldReject.apply(this,arguments);
+  };
+}
+const oldVerify=window.adminVerify;
+if(typeof oldVerify==='function'){
+  window.adminVerify=function(){
+    if(!isAdminLoggedIn()){alert('पहले एडमिन लॉगिन करें।');return;}
+    return oldVerify.apply(this,arguments);
+  };
+}
 </script>
 
 </body>
